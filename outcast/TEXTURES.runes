@@ -1,0 +1,324 @@
+
+// Strength
+
+graphic RUNEIC00, 12, 16
+{
+	xscale 0.52
+	yscale 0.52
+	patch STRRA000, 0, 0
+}
+graphic RUNEIC01, 12, 16
+{
+	xscale 0.52
+	yscale 0.52
+	patch STRRB000, 0, 0
+}
+graphic RUNEIC02, 12, 16
+{
+	xscale 0.52
+	yscale 0.52
+	patch STRRC000, 0, 0
+}
+graphic RUNEIC03, 12, 16
+{
+	xscale 0.52
+	yscale 0.52
+	patch STRRD000, 0, 0
+}
+graphic RUNEIC04, 12, 16
+{
+	xscale 0.52
+	yscale 0.52
+	patch STRRE000, 0, 0
+}
+
+// Rage
+
+graphic RUNEIC10, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRA000, 0, 0
+}
+
+graphic RUNEIC11, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRB000, 0, 0
+}
+
+graphic RUNEIC12, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRC000, 0, 0
+}
+
+graphic RUNEIC13, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRD000, 0, 0
+}
+
+graphic RUNEIC14, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRE000, 0, 0
+}
+
+graphic RUNEIC15, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRF000, 0, 0
+}
+
+graphic RUNEIC16, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRG000, 0, 0
+}
+
+graphic RUNEIC17, 18, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RAGRH000, 0, 0
+}
+
+// Drain
+
+graphic RUNEIC20, 25, 37
+{
+	xscale 0.72
+	yscale 0.72
+	patch DRARA000, 0, 0
+}
+
+graphic RUNEIC21, 25, 37
+{
+	xscale 0.72
+	yscale 0.72
+	patch DRARB000, 0, 0
+}
+
+graphic RUNEIC22, 25, 37
+{
+	xscale 0.72
+	yscale 0.72
+	patch DRARC000, 0, 0
+}
+
+// Spread
+
+graphic RUNEIC30, 31, 23
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPRRA000, 0, 0
+}
+
+graphic RUNEIC31, 31, 23
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPRRB000, 0, 0
+}
+
+graphic RUNEIC32, 31, 23
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPRRC000, 0, 0
+}
+
+graphic RUNEIC33, 31, 23
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPRRD000, 0, 0
+}
+
+// Resistance
+
+graphic RUNEIC40, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRA0, 0, 4
+}
+
+graphic RUNEIC41, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRB0, 0, 4
+}
+
+graphic RUNEIC42, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRC0, 0, 4
+}
+
+graphic RUNEIC43, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRD0, 0, 4
+}
+
+graphic RUNEIC44, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRE0, 0, 4
+}
+
+graphic RUNEIC45, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRF0, 0, 4
+}
+
+graphic RUNEIC46, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRG0, 0, 4
+}
+
+graphic RUNEIC47, 16, 22
+{
+	xscale 0.6
+	yscale 0.6
+	patch RESRH0, 0, 4
+}
+
+// Regeneration
+
+graphic RUNEIC50, 32, 32
+{
+	xscale 0.7
+	yscale 0.7
+	patch REGRA000, 0, 0
+}
+
+graphic RUNEIC51, 32, 32
+{
+	xscale 0.7
+	yscale 0.7
+	patch REGRB000, 0, 0
+}
+
+// Prosperity
+
+graphic RUNEIC60, 16, 24
+{
+	xscale 0.6
+	yscale 0.6
+	patch PRSRA000, 0, 0
+}
+
+graphic RUNEIC61, 16, 24
+{
+	xscale 0.6
+	yscale 0.6
+	patch PRSRB000, 0, 0
+}
+
+graphic RUNEIC62, 16, 24
+{
+	xscale 0.6
+	yscale 0.6
+	patch PRSRC000, 0, 0
+}
+
+graphic RUNEIC63, 16, 24
+{
+	xscale 0.6
+	yscale 0.6
+	patch PRSRD000, 0, 0
+}
+
+graphic RUNEIC64, 16, 24
+{
+	xscale 0.6
+	yscale 0.6
+	patch PRSRE000, 0, 0
+}
+
+// Reflection
+
+graphic RUNEIC70, 33, 35
+{
+	xscale 0.7
+	yscale 0.7
+	patch REFRA000, 0, 0
+}
+
+// High Jump
+
+graphic RUNEIC80, 37, 36
+{
+	xscale 0.72
+	yscale 0.72
+	patch HIJRA000, 0, 0
+}
+
+graphic RUNEIC81, 37, 36
+{
+	xscale 0.72
+	yscale 0.72
+	patch HIJRB000, 0, 0
+}
+
+graphic RUNEIC82, 37, 36
+{
+	xscale 0.72
+	yscale 0.72
+	patch HIJRC000, 0, 0
+}
+
+graphic RUNEIC83, 37, 36
+{
+	xscale 0.72
+	yscale 0.72
+	patch HIJRD000, 0, 0
+}
+
+// Haste
+
+graphic RUNEIC90, 36, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch HASRA000, 0, 0
+}
+
+graphic RUNEIC91, 36, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch HASRB000, 0, 0
+}
+
+graphic RUNEIC92, 36, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch HASRC000, 0, 0
+}
+
+graphic RUNEIC93, 36, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch HASRD000, 0, 0
+}

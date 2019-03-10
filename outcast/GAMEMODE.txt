@@ -1,0 +1,6 @@
+
+terminator
+{
+	//addflag playersearnpoints
+	addflag mapresets
+}

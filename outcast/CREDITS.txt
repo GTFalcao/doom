@@ -1,0 +1,61 @@
+/*
+*****************************
+
+********   OUTCAST   ********
+
+*****************************
+
+was created and is developed by SwordGrunt, also known as Gui or simply Sword.
+
+Anything that is not credited here has been made by me, including the entirety
+of the ACS and Decorate in this mod.
+
+You may reuse any content from this mod in your own projects, as long as credit
+is given for whatever you use.
+
+--------------------------------------------------------------------------------
+
+CREDITS:
+
+id, Raven and Rogue for creating the fantastic games we have on this engine.
+Almost all graphics used on this mod were based on resources from the IWADs for
+Doom, Heretic, Hexen and Strife, as well as Doom 64 by Midway Games.
+
+Phobus, for creating Virus, the Doom mod that is practically a new game itself.
+Although he never released the finished mod, the monsters were seen on the ZDoom
+Wars faction and are now playable as the Virus class on Outcast.
+
+
+Jonathan - a fuckton of testing and feedback
+
+Icon of sin 666 - extensive testing and feedback, also this guy is not human
+
+Turret_Master - also helped with testing and feedback a bunch
+
+
+Repo Man - testing, suggestions, and overall heavily contributing for this mod
+to be what it is today. I used the healthbar graphics (edited the edge slightly)
+he made for ZDoom Wars, too.
+
+
+Ransu - provided the remastered ORB (Hexen loading song) used in this mod, and
+many of his other tracks were a wonder to listen to while working countless
+hours on this. Thank you for the fantastic work and keep it up!
+
+
+Resource credits:
+
+Xim - Mancubus arm sprite
+
+Ghastly_dragon / TheDarkArchon - Rifle sprite (minor edits by me)
+
+Gothic - D'Sparil staff sprite (major edits)
+
+Action Doom 2: Urban Brawl (by Stephen Browning) - Bottle sprite (major edits)
+
+
+Titlemap music: At World's End - from Magicka, by Arrowhead Game Studios
+
+
+
+*/

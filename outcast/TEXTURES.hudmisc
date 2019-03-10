@@ -1,0 +1,410 @@
+
+// Help screens
+
+graphic f1_1fctf, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_coop, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_ctf, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_dm, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_duel, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_inv, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_lms, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_poss, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_scp, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_st, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_tdm, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_term, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_tlms, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic f1_tposs, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+// Class portraits
+
+graphic P_DOOM, 578, 604
+{
+	xscale 3.5
+	yscale 3.5
+	patch P_DOOM0, 0, 0
+}
+
+graphic P_HTIC, 578, 604
+{
+	xscale 3.5
+	yscale 3.5
+	patch P_HTIC0, 0, 0
+}
+
+graphic P_HEXEN, 578, 604
+{
+	xscale 3.5
+	yscale 3.5
+	patch P_HEXN0, 0, 0
+}
+
+graphic P_STRIFE, 578, 604
+{
+	xscale 3.5
+	yscale 3.5
+	patch P_STRF0, 0, 0
+}
+
+graphic P_VIRUS, 578, 604
+{
+	xscale 3.5
+	yscale 3.5
+	patch P_VIRS0, 0, 0
+}
+
+// Menu graphics
+
+graphic OUTHELP, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch OUTHELP0, 0, 0
+}
+
+graphic CONBACK, 960, 600
+{
+	xscale 3
+	yscale 3
+	patch CONBACK0, 0, 0
+}
+
+graphic M_DOOM, 173, 110
+{
+	xscale 1.4
+	yscale 1.4
+	patch M_OUTCST, 6, 0
+}
+
+graphic M_HTIC, 173, 110
+{
+	xscale 1.4
+	yscale 1.4
+	patch M_OUTCST, 6, 0
+}
+
+graphic M_STRIFE, 173, 110
+{
+	xscale 1.4
+	yscale 1.4
+	patch M_OUTCST, 6, 0
+}
+
+// Arch-vile weapon
+
+Sprite WPD1D0, 83, 28
+{
+	XScale 0.26
+	YScale 0.13
+	Offset 0, 0
+	Patch WPD1A0, 0, 0
+}
+
+Sprite WPD1E0, 86, 28
+{
+	XScale 0.26
+	YScale 0.13
+	Offset 0, 0
+	Patch WPD1B0, 0, 0
+}
+
+Sprite WPD1F0, 86, 29
+{
+	XScale 0.26
+	YScale 0.13
+	Offset 0, 1
+	Patch WPD1C0, 0, 0
+}
+
+// Misc bars
+
+graphic FILLSPC2, 24, 126
+{
+	xscale 2
+	yscale 2
+	offset 0, -1
+	patch FILLSPEC, 0, 0
+}
+
+graphic FILLBCK2, 24, 126
+{
+	xscale 2
+	yscale 2
+	offset 0, -1
+	patch FILLBACK, 0, 0
+}
+
+graphic FILLBRD2, 24, 128
+{
+	xscale 2
+	yscale 2
+	patch FILLBORD, 0, 0
+}
+
+// Doom Keys
+
+graphic STKEYS0, 14, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch BKEY00, 0, 0
+}
+
+graphic STKEYS1, 14, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch YKEY00, 0, 0
+}
+
+graphic STKEYS2, 14, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch RKEY00, 0, 0
+}
+
+graphic STKEYS3, 13, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch BSKU00, 0, 0
+}
+
+graphic STKEYS4, 13, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch YSKU00, 0, 0
+}
+
+graphic STKEYS5, 13, 16
+{
+	xscale 0.7
+	yscale 0.7
+	patch RSKU00, 0, 0
+}
+
+// Heretic Keys
+
+graphic GKEYICON, 10, 6
+{
+	xscale 0.4
+	yscale 0.4
+	patch GKEYHT00, 0, 0
+}
+
+graphic BKEYICON, 10, 6
+{
+	xscale 0.4
+	yscale 0.4
+	patch BKEYHT00, 0, 0
+}
+
+graphic YKEYICON, 10, 6
+{
+	xscale 0.4
+	yscale 0.4
+	patch YKEYHT00, 0, 0
+}
+
+// Hexen Armor
+
+graphic HEXNARM1, 32, 24
+{
+	xscale 0.8
+	yscale 0.8
+	patch AR_1A0, 0, 0
+}
+
+graphic HEXNARM2, 24, 28
+{
+	xscale 0.8
+	yscale 0.8
+	patch AR_2A0, 0, 0
+}
+
+graphic HEXNARM3, 22, 15
+{
+	xscale 0.8
+	yscale 0.8
+	patch AR_3A0, 0, 0
+}
+
+graphic HEXNARM4, 16, 30
+{
+	xscale 0.8
+	yscale 0.8
+	patch AR_4A0, 0, 0
+}
+
+// Inventory icons
+
+graphic ARTISPID, 195, 110
+{
+	xscale 1.2
+	yscale 1.2
+	patch ARTISPI0, 0, 0
+}
+
+graphic ARTIMNAL, 270, 200
+{
+	xscale 1.67
+	yscale 1.67
+	patch ARTIMNL0, 0, 0
+}
+
+graphic ARTILCHR, 255, 197
+{
+	xscale 1.6
+	yscale 1.6
+	patch ARTILCH0, 0, 0
+}
+
+graphic ARTILCAR, 256, 127
+{
+	xscale 1.6
+	yscale 1.6
+	patch ARTILCR0, 0, 0
+}
+
+graphic ARTIPWBK, 25, 23
+{
+	xscale 0.65
+	yscale 0.65
+	patch ARTIPBK0, 0, 0
+}
+
+graphic ARTIQRTZ, 15, 19
+{
+	xscale 0.65
+	yscale 0.65
+	patch ARTIPTN2, 0, 0
+}
+
+graphic ARTIMYST, 19, 25
+{
+	xscale 0.65
+	yscale 0.65
+	patch ARTISPHL, 0, 0
+}
+
+graphic ARTIARMH, 22, 22
+{
+	xscale 0.65
+	yscale 0.65
+	patch ARTIBRAC, 0, 0
+}
+
+graphic ARTIKRAT, 23, 22
+{
+	xscale 0.65
+	yscale 0.65
+	patch BMANA0, 0, 0
+}
+
+// Strife's rank bar
+
+graphic RBARSTRF, 402, 96
+{
+	xscale 1.2
+	yscale 1.2
+	patch RBARSTF0, 0, 0
+}
+
+graphic RBARSBAK, 362, 54
+{
+	xscale 1.2
+	yscale 1.2
+	patch RBARSBK0, 0, 0
+}
+
+graphic RBARSFIL, 362, 54
+{
+	xscale 1.2
+	yscale 1.2
+	patch RBARSFL0, 0, 0
+}

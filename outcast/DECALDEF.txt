@@ -1,0 +1,144 @@
+
+generator StandardBullet				BulletChip
+generator StandardBulletNoPain			BulletChip
+generator ZombiemanBulletPowered		BulletChip
+
+generator Rocket0						Scorch
+generator Rocket02						Scorch
+generator ArachnotronPlasma0			ArachnotronScorch
+generator ArachnotronPlasma02			ArachnotronScorch
+generator BaronBall0					BaronScorch
+generator BaronBall02					BaronScorch
+generator CacodemonBall0				CacoScorch
+generator CacodemonBall02				CacoScorch
+generator CacodemonBall03				CacoScorch
+generator DoomImpBall0					DoomImpScorch
+generator FatShot0						Scorch
+generator RevenantTracer0				RevenantScorch
+generator RevenantTracer02				RevenantScorch
+generator RevenantTracer03				RevenantScorch
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+generator HereticImpBall0				HImpScorch
+generator HereticImpBall02				HImpScorch
+generator MummyFX01						MummyScorch
+generator MummyFX02						MummyScorch
+generator KnightAxe0					AxeScorch
+generator KnightAxe02					AxeScorch
+generator RedAxe0						BloodSmear
+generator RedAxe02						BloodSmear
+generator WizardFX01					WizardScorch
+generator SnakeProjA0					SnakeScorch1
+generator SnakeProjPowered				SnakeScorch1
+generator SnakeProjB0					SnakeScorch2
+generator BeastBall0					DoomImpScorch
+generator WeredragonPoweredFlame		PhoenixThrowerScorch
+generator HeadFX10						SnakeScorch2
+generator HeadFX12						SnakeScorch2
+generator HeadFX30						CacoScorch
+generator HeadFX31						CacoScorch
+generator HeadFX32						CacoScorch
+generator HeadFX33						CacoScorch
+generator HeadFX34						CacoScorch
+generator HeadFX35						CacoScorch
+generator HeadFX36						CacoScorch
+generator HeadFX37						CacoScorch
+generator HeadFX38						CacoScorch
+generator HeadFX39						CacoScorch
+generator HeadFX40						CacoScorch
+generator HeadFX41						CacoScorch
+generator HeadFX42						CacoScorch
+generator MinotaurFX10					MinotaurScorch
+generator MinotaurFX20					Scorch
+generator MinotaurFX21					Scorch
+generator MinotaurFX22					Scorch
+generator SorcererFX10					RevenantScorch
+generator SorcererFX12					RevenantScorch
+generator Sorcerer2FX10					SorcererLightning
+generator Sorcerer2FX11					SorcererLightning
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+generator FSwordMissile0				SwordLightning
+generator FSwordMissile02				SwordLightning
+generator MageStaffFX20					Scorch
+generator MageStaffFX21					Scorch
+generator SorcFX01						RevenantScorch
+generator SorcFX04						RevenantScorch
+generator CentaurFX0					CentaurScorch
+generator CentaurFX02					CentaurScorch
+generator CentaurFX03					CentaurScorch
+generator CentaurFX04					CentaurScorch
+generator CentaurFX05					CentaurScorch
+generator Demon1FX10					RevenantScorch
+generator Demon2FX10					Demon2Scorch
+generator WraithFX10					Demon2Scorch
+generator WraithFX12					Demon2Scorch
+generator BishopFX0						BishopScorch
+generator FireDemonMissile0				FireDemonScorch
+generator FireDemonMissile02			FireDemonScorch
+generator DragonFireball0				CacoScorch
+generator DragonFireball02				CacoScorch
+generator SerpentFX0					DoomImpScorch
+generator SerpentFX02					DoomImpScorch
+
+generator KCentaurFX					CentaurScorch
+generator KDemon1FX						RevenantScorch
+generator KDemon2FX						Demon2Scorch
+generator KWraithFX						Demon2Scorch
+generator KFireDemonMissile				FireDemonScorch
+generator KSerpentFX					DoomImpScorch
+generator KCentaurFX2					CentaurScorch
+generator KDemon1FX2					RevenantScorch
+generator KDemon2FX2					Demon2Scorch
+generator KWraithFX2					Demon2Scorch
+generator KFireDemonMissile2			FireDemonScorch
+generator KSerpentFX2					DoomImpScorch
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+generator StandardBulletStrife			BulletChip
+generator StandardBulletStrifePowered	BulletChip
+generator TemplarMaulerBullet			RailScorchLower
+generator ReaverBullet0					BulletChip
+generator ReaverBullet02				BulletChip
+generator SentinelFX20					PlasmaScorchLower
+generator SentinelFX40					PlasmaScorchLower
+generator FastFlameMissile0				CacoScorch
+generator FastFlameMissile02			CacoScorch
+generator CrusaderMissile0				BaronScorch
+generator CrusaderMissile02				BaronScorch
+generator CrusaderMissile03				BaronScorch
+generator CrusaderMissile04				BaronScorch
+generator BishopMissile0				Scorch
+generator BishopMissile02				Scorch
+
+generator SpectralLightningV10			BaronScorch
+generator SpectralLightningV20			BaronScorch
+
+generator SpectralLightningBall20		BaronScorch
+generator SpectralLightningBall21		BaronScorch
+generator SpectralLightningV11			BaronScorch
+
+generator SpectralLightningH30			BaronScorch
+generator SpectralLightningH32			BaronScorch
+generator SpectralLightningH33			BaronScorch
+generator SpectralLightningH34			BaronScorch
+
+generator SpectralLightningBigV20		BaronScorch
+generator SpectralLightningBigV21		BaronScorch
+generator SpectralLightningBigV22		BaronScorch
+generator SpectralLightningBigV23		BaronScorch
+generator SpectralLightningBigV24		BaronScorch
+generator SpectralLightningBigV25		BaronScorch
+
+generator SpectralLightningBigBall20	BaronScorch
+generator SpectralLightningBigBall21	BaronScorch
+generator SpectralLightningBigBall22	BaronScorch

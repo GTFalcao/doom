@@ -1,0 +1,322 @@
+/*
+
+
+
+
+
+--------------------------------------------------------------
+####   version 1.5   ####
+
+1.5b: bugfixes
+
+- Fixed Acolyte tip message also showing on later ranks
+
+- Fixed keeping Land Carrier's Air Carrier summon after changing class
+
+- Fixed the exploit on D'Sparil, Entity and Land Carrier where suiciding while
+frozen could then unfreeze you in the spawn state, allowing you to run through
+maps invulnerable and untargetable
+
+
+
+*** General ***
+
+- Dynamic damagefactors have been implemented separately for each class.
+You have a base damagefactor and it is increased by a fixed amount each rank.
+See CVarInfo to read more on this. This is particularly useful for Survival.
+Damagefactors are only applied in cooperative modes, and are enabled by default.
+
+- Bandwidth usage from the main HUD script should be considerably lower now
+
+- Players cannot pick up another Tome of Power if they have done so in the last
+10 seconds. This makes it much easier to share Tomes particularly when multiple
+spawn on the same spot (i.e. replacing BFG). Thanks to WaTaKiD for this idea!
+
+
+*** Hexen ***
+
+- Chaos Serpents, Zedek, Traductus and Menelkir morphs should no longer mess the
+automatic morph order sync online, notably happened with higher packet loss.
+
+- Fixed Wendigo projectiles missing the puff trail
+
+- Zedek, Traductus, Menelkir and Korax can now strafe, but at half strafe speed.
+
+- Korax projectiles are now much easier to hit as they are properly adjusted to
+be aimed at enemies in your crosshair
+
+
+*** Strife ***
+
+- Sigil 5 offshots have limited lifespan now, hopefully reducing FPS lag on
+insanely large areas and/or with spread rune (you still probably don't want to
+shoot it with sv_fastweapons 2...)
+
+- Fixed being able to keep the path-chooser morphs after a level change
+
+
+*** Virus ***
+
+- The Virus class has been added! Its monsters are all around the toughest, but
+also the slowest of any class, and their damage is slightly higher than Doom's.
+
+- Currently, none of the Virus monsters have HUD sprites for their weapons; most
+of them have no hands or weapons that can be seen in first person at all anyway.
+
+
+
+--------------------------------------------------------------
+####   version 1.4   ####
+
+*** General ***
+
+- All species changing mistakes should finally be corrected for Terminator.
+Players with radius damage can still hurt each other but there is nothing to
+gain from doing so. Suiciding should be disabled for this gamemode to avoid
+purposely denying the Terminator a frag, too.
+
+- Every instance of A_FadeOut was made to fully fade out the actor manually
+instead of relying on the function itself to remove the actor automatically.
+This should fix the massive FPS drops seemingly caused by the Wraithverge on
+large levels. Not sure how I never noticed this, but it shouldn't happen anymore
+
+- sv_fastweapons 2 would freeze the game whenever spawning, since it skips all
+weapon frames without codepointers, and the spawn class weapon's states had NO
+codepointers... I really let this one slide through. A_RailWait takes care of it
+
+- Fixed bots not receiving a species change unless they were Strife (i.e. they
+couldn't harm each other). Gotta love typos
+
+
+*** Heretic ***
+
+- Iron Lich's ice shards are now shot slightly downwards like the original
+
+- Maulotaur now moves slightly faster (45% instead of 40% speed)
+
+
+*** Hexen ***
+
+- Added a check on the Heresiarch's script so his cubes should no longer spin
+faster than normal as was happening occasionally
+
+
+
+
+
+
+--------------------------------------------------------------
+####   version 1.3   ####
+
+v1.3 -> v1.31: fixed Terminator species change bug
+
+v1.31 -> v1.32: fixed Terminator round winners only appearing to the Terminator,
+and another minor species change bug. Increased the fastspeed of a large portion
+of the projectiles. Entity moves at 30% speed again and sub-Entity receives the
+full 2970 health instead of only 990 on competitive modes.
+
+
+
+*** General ***
+
+- Heavy work on the Terminator gamemode:
+
+-> Added outcast_fraglimit CVar: this is the amount of frags the Terminator needs
+to win, default 10. These frags are now displayed on the top right of the screen
+and announcer sounds are played to replicate the original fraglimit behavior.
+
+-> Terminator round winner(s) (either the Terminator, or everyone else) earn one
+point, displayed on the HUD (not scoreboard). The level resets on round end, as
+in LMS, and a pointlimit should be set for the map to end (defaults to 3 points)
+
+-> If the terminator dies before morphing into his monster, they will receive it
+again on respawning, and can morph into a smaller monster if there is no room as
+they will keep receiving their Terminator morph until used.
+
+- Tome of Power now takes 80 seconds to respawn instead of the default 30,
+and its use sound should be working again
+
+
+*** Doom ***
+
+- Arch-Vile is now limited to attacking within 896 units. The original had this
+maxtargetrange but could retaliate beyond it if hurt with pain (JUSTHIT)
+
+
+*** Heretic ***
+
+- Fixed Weredragon's powered-up fire sound looping endlessly if killed
+
+
+*** Hexen ***
+
+- Fixed Heresiarch sometimes not receiving his tracking item due to packet loss.
+Hopefully this is the last time his internal coding will be touched
+
+- Heresiarch's powered-up flame attack now bounces and seeks target as the lava
+heads. It should actually be useful now for its high mana cost
+
+
+*** Strife ***
+
+- Fixed an issue where Strife's HUD would sometimes not show up at all
+
+- Fixed sub-Entity sometimes becoming fully invisible
+
+
+
+
+
+
+--------------------------------------------------------------
+####   version 1.2   ####
+
+
+
+*** General ***
+
+- New gamemode: Terminator! As in the original gamemode, the Terminator sphere
+spawns at a random player start, but whoever picks it up gains one of the top
+monsters of their class, while the other players remain at their starting rank.
+It is effectively one vs. all, as all other players are technically counted as
+enemies but are unable to damage each other. The game ends if the Terminator is
+killed, in which case all the other players are declared victorious, or if the
+fraglimit is reached, granting the Terminator victory. The startrank variable
+should be kept at low numbers, and there is no rank progression.
+
+- Fixed bots never receiving a species change (they'd shoot through each other)
+
+- Morph items are now always in the proper order and the new monster will always
+be highlighted when ranking up. Additionally, vanilla artifacts are sorted in a
+predetermined order when this rearrangement occurs (i.e. spawning or ranking up)
+and the Tome of Power, if available, is the first to be selected after morphing.
+Thanks to Empyre for commenting on this!
+
+- Added outcast_tomefrag CVar, off by default: controls whether or not players
+receive a Tome of Power upon fragging another player.
+
+- Tome of Powers should now respawn like normal items with proper DMFlags set
+
+- Skulltag help screens (when provided) no longer replace Outcast's default.
+Futurely, gamemode-specific help screens will be added
+
+
+*** Doom ***
+
+- Arch-Vile now moves at 20% speed while attacking
+
+- Arachnotron and Spider Mastermind no longer alert monsters when using altfire
+(readying their weapons)
+
+
+*** Heretic ***
+
+- Gargoyle's powered-up attack wasn't working as intended and was dealing absurd
+damage. It now shoots 2 fireballs instead of 4 upon hitting the melee attack.
+
+- Ophidian's powered-up attack range reduced from 1200 to 800, and damage also
+reduced slightly (12-20 instead of 4-32, average 16 instead of 18). It will now
+seek targets more consistently, though
+
+- Fixed GLDefs for D'Sparil's powered-up Hellstaff rain
+
+- D'Sparil can now create teleport destinations by using an inventory item.
+There is no limit to how many you can create, but the actual teleportation still
+costs 10 mana of each type, and will use these destinations in the order they
+were created. The spots are only visible to D'Sparil and can only be destroyed
+by him. Note that multiple D'Sparil players will share these spots and can see
+and destroy each others' teleport destinations as well.
+
+
+*** Hexen ***
+
+- Stalker consumes mana faster while submerged (every 34 tics instead of 40)
+and heals only 1 health point per 1 mana (instead of 2)
+
+- Fixed infinite morphing on Zedek, Traductus and Menelkir with hitboxes on
+
+- Korax's regular projectiles didn't have fastspeeds. Whoops!
+
+
+*** Strife ***
+
+- Hopefully fixed all issues regarding sub-Entity swapping and health control
+
+- Fixed Strife puffs spawning on actors for real this time
+
+- Fixed the last instance of the "where's my rank bar?" bug, again on Strife.
+You can now safely switch between classes and have your progress properly stored
+
+- Fixed the Inquisitor's flight sound looping endlessly if killed while flying
+
+- The Entity moves slightly slower now (27.5% instead of 30% speed)
+
+- Fixed missing sub-Entity pain sound
+
+
+
+
+
+
+--------------------------------------------------------------
+####   version 1.11   ####
+
+
+v1.10 -> v1.11: fixed bots starting with no mana; they now start with full mana.
+
+
+*** General ***
+
+- Added full support for the outcast_hitbox CVar. Competitive gamemodes are now
+fully playable.
+
+- Added outcast_morphrandom CVar: when enabled, ranks are discarded entirely and
+players instead receive a random monster of their class when spawning.
+(If there is not enough room for that monster, another will be randomly chosen.)
+
+- Added outcast_startmana CVar: this is the minimum amount of mana you will have
+every time you (re)spawn or rank up.
+
+- some Doom and Heretic fastspeeds were adjusted, and many were added to Hexen
+projectiles. Strife's only projectiles that needed it were Crusader missiles.
+sv_fastmonsters 1 is essential for competitive gamemodes
+
+- Proper gibhealth values added to all monsters that can be gibbed - Doom's
+are equal to their negative health and other games', half their negative health
+
+- Regeneration sound is now the item pickup sound for each class (instead of the
+game default's item pickup sound)
+
+
+*** Doom ***
+
+- Cyberdemon's powered-up rocket no longer inflicts self damage
+
+- Green mana is now properly highlighted as the Cacodemon's ammo type on the HUD
+
+
+*** Heretic ***
+
+- Fixed Ophidian weapon sprites appearing for the Iron Lich when out of mana
+
+- Fixed D'Sparil's weapon staying powered-up after the Tome of Power expired
+
+
+*** Hexen ***
+
+- Reiver now has the floatbob flag to further emulate the creature's movement
+
+
+*** Strife ***
+
+- Strife gib sprites fixed. They will all be transferred to resources eventually
+
+- Fixed Strife points being lost if changing class before a sub-rank was chosen
+
+- Fixed a number of Strife issues with startrank
+
+- Strife bullets no longer spawn a puff when hitting shootable actors
+
+
+
+*/

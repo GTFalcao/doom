@@ -1,0 +1,4 @@
+
+load = "outcast_resourcesv1.1.pk3"
+startuptype = Hexen
+startupsong = "OUTLOAD"

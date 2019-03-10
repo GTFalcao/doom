@@ -1,0 +1,25 @@
+
+LightGreenRaven
+{
+	#10601A  #90FFA0
+}
+
+YellowRaven
+{
+	#705A00  #FFE000
+}
+
+OrangeRaven
+{
+	#603000  #FFB000
+}
+
+LightBlueRaven
+{
+	#1B1B70  #B4B4FF
+}
+
+LighterBlue
+{
+	#000060  #0000FF
+}

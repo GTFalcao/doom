@@ -1,0 +1,19 @@
+
+alias o_chasedefault "chase_dist 90; chase_height -8; rebind o_chaseadj1"
+alias o_chaseadj1 "chase_dist 105; chase_height 0; rebind o_chaseadj2"
+alias o_chaseadj2 "chase_dist 120; chase_height 8; rebind o_chaseadj3"
+alias o_chaseadj3 "chase_dist 140; chase_height 16; rebind o_chaseadj4"
+alias o_chaseadj4 "chase_dist 160; chase_height 24; rebind o_chaseadj5"
+alias o_chaseadj5 "chase_dist 200; chase_height 32; rebind o_chasedefault"
+
+addkeysection "Outcast: customization" OutcastKeysection
+addmenukey "Change chasecam view" o_chaseadj1
+defaultbind P o_chaseadj1
+
+
+clearplayerclasses
+addplayerclass DoomSpawnClass
+addplayerclass HereticSpawnClass
+addplayerclass HexenSpawnClass
+addplayerclass StrifeSpawnClass
+addplayerclass VirusSpawnClass

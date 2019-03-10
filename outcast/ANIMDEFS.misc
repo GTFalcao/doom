@@ -1,0 +1,57 @@
+
+texture RAVHEAL0
+pic RAVHEAL0 tics 5
+pic RAVHEAL1 tics 5
+pic RAVHEAL2 tics 5
+
+texture MAN1A0
+pic MAN1A0 tics 4
+pic MAN1B0 tics 4
+pic MAN1C0 tics 4
+pic MAN1D0 tics 4
+pic MAN1E0 tics 4
+pic MAN1F0 tics 4
+pic MAN1G0 tics 4
+pic MAN1H0 tics 4
+pic MAN1I0 tics 4
+
+texture MAN2A0
+pic MAN2A0 tics 4
+pic MAN2B0 tics 4
+pic MAN2C0 tics 4
+pic MAN2D0 tics 4
+pic MAN2E0 tics 4
+pic MAN2F0 tics 4
+pic MAN2G0 tics 4
+pic MAN2H0 tics 4
+pic MAN2I0 tics 4
+pic MAN2J0 tics 4
+pic MAN2K0 tics 4
+pic MAN2L0 tics 4
+pic MAN2M0 tics 4
+pic MAN2N0 tics 4
+pic MAN2O0 tics 4
+pic MAN2P0 tics 4
+
+texture FELXWP1
+pic FELXWP10 tics 3
+pic FELXWP11 tics 3
+pic FELXWP12 tics 3
+pic FELXWP13 tics 3
+pic FELXWP14 tics 3
+pic FELXWP00 tics 12
+
+texture FELXWP2
+pic FELXWP20 tics 3
+pic FELXWP21 tics 3
+pic FELXWP22 tics 3
+pic FELXWP23 tics 3
+pic FELXWP24 tics 3
+pic FELXWP25 tics 3
+pic FELXWP00 tics 12
+
+texture FELXWP3
+pic FELXWP30 tics 4
+pic FELXWP31 tics 4
+pic FELXWP32 tics 4
+pic FELXWP33 tics 4

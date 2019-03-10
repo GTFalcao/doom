@@ -1,0 +1,81 @@
+
+texture SPTOME0
+pic SPTOME0 tics 3
+pic SPTOME1 tics 3
+pic SPTOME2 tics 3
+pic SPTOME3 tics 3
+pic SPTOME4 tics 3
+pic SPTOME5 tics 3
+pic SPTOME6 tics 3
+pic SPTOME7 tics 3
+pic SPTOME8 tics 3
+pic SPTOME9 tics 3
+pic SPTOME10 tics 3
+pic SPTOME11 tics 3
+pic SPTOME12 tics 3
+pic SPTOME13 tics 3
+pic SPTOME14 tics 3
+pic SPTOME15 tics 3
+
+texture SPINVU0
+pic SPINVU0 tics 3
+pic SPINVU1 tics 3
+pic SPINVU2 tics 3
+pic SPINVU3 tics 3
+pic SPINVU4 tics 3
+pic SPINVU5 tics 3
+pic SPINVU6 tics 3
+pic SPINVU7 tics 3
+pic SPINVU8 tics 3
+pic SPINVU9 tics 3
+pic SPINVU10 tics 3
+pic SPINVU11 tics 3
+pic SPINVU12 tics 3
+pic SPINVU13 tics 3
+pic SPINVU14 tics 3
+pic SPINVU15 tics 3
+
+texture SPHRINV0
+pic SPHRINV0 tics 6
+pic SPHRINV1 tics 6
+pic SPHRINV2 tics 6
+pic SPHRINV3 tics 6
+
+texture SPHRINS0
+pic SPHRINS0 tics 6
+pic SPHRINS1 tics 6
+pic SPHRINS2 tics 6
+pic SPHRINS3 tics 6
+
+texture SPHRGHS0
+pic SPHRGHS0 tics 8
+pic SPHRGHS1 tics 8
+
+texture ARMSHAD0
+pic ARMSHAD0 tics 8
+pic ARMSHAD1 tics 8
+
+texture RINGINV0
+pic RINGINV0 tics 6
+pic RINGINV1 tics 6
+pic RINGINV2 tics 6
+pic RINGINV3 tics 6
+
+texture CHALINV0
+pic CHALINV0 tics 8
+pic CHALINV1 tics 8
+pic CHALINV2 tics 8
+pic CHALINV1 tics 8
+
+texture VIRSVUL0
+pic VIRSVUL0 tics 8
+pic VIRSVUL1 tics 8
+
+texture PWLIGHT0
+pic PWLIGHT0 tics 8
+pic PWLIGHT1 tics 8
+
+texture PWTORCH0
+pic PWTORCH0 tics 3
+pic PWTORCH1 tics 3
+pic PWTORCH2 tics 3

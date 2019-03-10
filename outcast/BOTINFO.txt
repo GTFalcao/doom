@@ -1,0 +1,75 @@
+
+{
+	name = "\cgDoom"
+	class = "Doom"
+	script = sausgbot
+	gender = "cyborg"
+	revealed = true
+	color = "d0 00 00"
+	accuracy = 3
+	intellect = 3
+	evade = 3
+	anticipation = 3
+	reactiontime = 3
+	perception = 3
+}
+
+{
+	name = "\chHeretic"
+	class = "Heretic"
+	script = sausgbot
+	gender = "cyborg"
+	revealed = true
+	color = "00 00 d0"
+	accuracy = 3
+	intellect = 3
+	evade = 3
+	anticipation = 3
+	reactiontime = 3
+	perception = 3
+}
+
+{
+	name = "\cdHexen"
+	class = "Hexen"
+	script = sausgbot
+	gender = "cyborg"
+	revealed = true
+	color = "00 d0 00"
+	accuracy = 3
+	intellect = 3
+	evade = 3
+	anticipation = 3
+	reactiontime = 3
+	perception = 3
+}
+
+{
+	name = "\ckStrife"
+	class = "Strife"
+	script = sausgbot
+	revealed = true
+	gender = "cyborg"
+	color = "d0 d0 00"
+	accuracy = 3
+	intellect = 3
+	evade = 3
+	anticipation = 3
+	reactiontime = 3
+	perception = 3
+}
+
+{
+	name = "\ccVirus"
+	class = "Virus"
+	script = sausgbot
+	revealed = true
+	gender = "cyborg"
+	color = "d0 d0 d0"
+	accuracy = 3
+	intellect = 3
+	evade = 3
+	anticipation = 3
+	reactiontime = 3
+	perception = 3
+}

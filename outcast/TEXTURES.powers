@@ -1,0 +1,441 @@
+
+graphic SPTOME0, 24, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM00, 0, 0
+}
+
+graphic SPTOME1, 22, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM01, 0, 0
+}
+
+graphic SPTOME2, 16, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM02, 0, 0
+}
+
+graphic SPTOME3, 13, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM03, 0, 0
+}
+
+graphic SPTOME4, 17, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM04, 0, 0
+}
+
+graphic SPTOME5, 22, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM05, 0, 0
+}
+
+graphic SPTOME6, 24, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM06, 0, 0
+}
+
+graphic SPTOME7, 23, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM07, 0, 0
+}
+
+graphic SPTOME8, 24, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM08, 0, 0
+}
+
+graphic SPTOME9, 22, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM09, 0, 0
+}
+
+graphic SPTOME10, 17, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM010, 0, 0
+}
+
+graphic SPTOME11, 12, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM011, 0, 0
+}
+
+graphic SPTOME12, 16, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM012, 0, 0
+}
+
+graphic SPTOME13, 21, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM013, 0, 0
+}
+
+graphic SPTOME14, 25, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM014, 0, 0
+}
+
+graphic SPTOME15, 24, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPTOM015, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic SPINVU0, 23, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV00, 0, 0
+}
+
+graphic SPINVU1, 21, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV01, 0, 0
+}
+
+graphic SPINVU2, 19, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV02, 0, 0
+}
+
+graphic SPINVU3, 16, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV03, 0, 0
+}
+
+graphic SPINVU4, 18, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV04, 0, 0
+}
+
+graphic SPINVU5, 21, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV05, 0, 0
+}
+
+graphic SPINVU6, 22, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV06, 0, 0
+}
+
+graphic SPINVU7, 24, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV07, 0, 0
+}
+
+graphic SPINVU8, 22, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV08, 0, 0
+}
+
+graphic SPINVU9, 21, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV09, 0, 0
+}
+
+graphic SPINVU10, 18, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV010, 0, 0
+}
+
+graphic SPINVU11, 15, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV011, 0, 0
+}
+
+graphic SPINVU12, 18, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV012, 0, 0
+}
+
+graphic SPINVU13, 21, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV013, 0, 0
+}
+
+graphic SPINVU14, 23, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV014, 0, 0
+}
+
+graphic SPINVU15, 23, 24
+{
+	xscale 0.65
+	yscale 0.65
+	patch SPINV015, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic SPHRINV0, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIN00, 0, 0
+}
+
+graphic SPHRINV1, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIN01, 0, 0
+}
+
+graphic SPHRINV2, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIN02, 0, 0
+}
+
+graphic SPHRINV3, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIN03, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic RINGINV0, 19, 15
+{
+	xscale 0.58
+	yscale 0.58
+	patch RINGIN00, 0, 0
+}
+
+graphic RINGINV1, 19, 15
+{
+	xscale 0.58
+	yscale 0.58
+	patch RINGIN01, 0, 0
+}
+
+graphic RINGINV2, 19, 15
+{
+	xscale 0.58
+	yscale 0.58
+	patch RINGIN02, 0, 0
+}
+
+graphic RINGINV3, 19, 15
+{
+	xscale 0.58
+	yscale 0.58
+	patch RINGIN03, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic CHALINV0, 16, 30
+{
+	xscale 0.8
+	yscale 0.8
+	patch CHALIN00, 0, 0
+}
+
+graphic CHALINV1, 16, 30
+{
+	xscale 0.8
+	yscale 0.8
+	patch CHALIN01, 0, 0
+}
+
+graphic CHALINV2, 16, 30
+{
+	xscale 0.8
+	yscale 0.8
+	patch CHALIN02, 0, 0
+}
+
+graphic CHALINV3, 16, 30
+{
+	xscale 0.8
+	yscale 0.8
+	patch CHALIN03, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic VIRSVUL0, 24, 24
+{
+	xscale 0.67
+	yscale 0.67
+	patch VIRSIN00, 0, 0
+}
+
+graphic VIRSVUL1, 24, 24
+{
+	xscale 0.67
+	yscale 0.67
+	patch VIRSIN01, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic ARMSHAD0, 24, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch ARMSHA00, 0, 0
+}
+
+graphic ARMSHAD1, 24, 32
+{
+	xscale 0.72
+	yscale 0.72
+	patch ARMSHA01, 0, 0
+}
+
+graphic SPHRGHS0, 34, 27
+{
+	xscale 0.8
+	yscale 0.8
+	patch SPHRGH00, 0, 0
+}
+
+graphic SPHRGHS1, 34, 27
+{
+	xscale 0.8
+	yscale 0.8
+	patch SPHRGH01, 0, 0
+}
+
+graphic SPHRINS0, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIS00, 0, 0
+}
+
+graphic SPHRINS1, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIS01, 0, 0
+}
+
+graphic SPHRINS2, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIS02, 0, 0
+}
+
+graphic SPHRINS3, 25, 25
+{
+	xscale 0.67
+	yscale 0.67
+	patch SPHRIS03, 0, 0
+}
+
+/////////////////////////////////////////////////////////
+
+graphic PWLIGHT0, 28, 13
+{
+	xscale 0.65
+	yscale 0.65
+	patch PWLITE00, 0, 0
+}
+
+graphic PWLIGHT1, 28, 13
+{
+	xscale 0.65
+	yscale 0.65
+	patch PWLITE01, 0, 0
+}
+
+graphic PWLIGHT2, 28, 13
+{
+	xscale 0.65
+	yscale 0.65
+	patch PWLITE02, 0, 0
+}
+
+graphic PWTORCH0, 15, 21
+{
+	xscale 0.7
+	yscale 0.7
+	patch PWTRCH00, 0, 0
+}
+
+graphic PWTORCH1, 15, 21
+{
+	xscale 0.7
+	yscale 0.7
+	patch PWTRCH01, 0, 0
+}
+
+graphic PWTORCH2, 15, 21
+{
+	xscale 0.7
+	yscale 0.7
+	patch PWTRCH02, 0, 0
+}
+
+graphic PWTORCH3, 15, 21
+{
+	xscale 0.7
+	yscale 0.7
+	patch PWTRCH03, 0, 0
+}

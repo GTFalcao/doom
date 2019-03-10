@@ -1,0 +1,28 @@
+
+DoomHudFont0
+{
+	base 33
+	count 58
+	template FDOOM%03d
+}
+
+RavenHudFont0
+{
+	base 33
+	count 58
+	template FRAV%03d
+}
+
+StrifeHudFont0
+{
+	base 33
+	count 58
+	template FSTRF%03d
+}
+
+VirusHudFont0
+{
+	base 33
+	count 58
+	template FVIRU%03d
+}

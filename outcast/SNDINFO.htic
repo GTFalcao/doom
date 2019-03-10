@@ -1,0 +1,703 @@
+
+unmorph/heretic			TELEHTIC
+pickup/heretic			itemup
+pickup2/heretic			gntact
+
+//misc/teleport			none
+
+$ifdoom
+misc/invget				artiup
+misc/invuse				artiuse
+misc/teleportreal		dstelept
+$endif
+
+$ifheretic
+misc/invget				artiup
+misc/invuse				artiuse
+misc/teleportreal		telept
+$endif
+
+$ifhexen
+misc/invget				art1
+misc/invuse				artact1
+misc/teleportreal		tport1
+$endif
+
+$ifstrife
+misc/invget				art1
+misc/invuse				artact1
+misc/teleportreal		dstelept
+$endif
+
+himp/sight				impsit
+himp/attack				impat1
+himp/pain				imppai
+himp/death				impdth
+himp/active				impsit
+himp/leaderattack		impat2
+
+mummy/sight				mumsit
+mummy/attack1			mumat1
+mummy/attack2			mumat2
+mummy/pain				mumpai
+mummy/death				mumdth
+mummy/active			mumsit
+mummy/head				mumhed
+
+clink/sight				clksit
+clink/attack			clkatk
+clink/pain				clkpai
+clink/death				clkdth
+clink/active			clkact
+
+wizard/sight			wizsit
+wizard/attack			wizatk
+wizard/death			wizdth
+wizard/pain				wizpai
+wizard/active			wizact
+wizard/powsplit			hrnsht
+
+hknight/sight			kgtsit
+hknight/attack			kgtatk
+hknight/melee			kgtat2
+hknight/pain			kgtpai
+hknight/death			kgtdth
+hknight/active			kgtsit
+hknight/hit				hrnhit
+hknight/axe				kgtatk
+
+beast/sight				bstsit
+beast/attack			bstatk
+beast/pain				bstpai
+beast/death				bstdth
+beast/active			bstact
+beast/flame				phopow
+
+snake/attack			snkatk
+snake/sight				snksit
+snake/pain				snkpai
+snake/death				snkdth
+snake/active			snkact
+snake/power				gntuse
+snake/zap				sorzap
+$limit	snake/zap		0
+
+ironlich/sight			hedsit
+ironlich/attack1		hedat1
+ironlich/attack2		hedat2
+ironlich/attack3		hedat3
+ironlich/pain			hedpai
+ironlich/death			heddth
+ironlich/active			hedact
+
+minotaur/sight			minsit
+minotaur/melee			stfhit
+minotaur/attack1		minat1
+minotaur/attack2		minat2
+minotaur/attack3		minat3
+minotaur/pain			minpai
+minotaur/death			mindth
+minotaur/active			minact
+minotaur/fx2hit			phohit
+minotaur/fx3hit			phohit
+
+dsparilserpent/sight	bstsit
+dsparilserpent/fireb	bstatk
+dsparilserpent/pain		sbtpai
+dsparilserpent/death	sbtdth
+dsparilserpent/active	sbtact
+
+$limit 	dsparilserpent/fireb	0
+$limit 	himp/leaderattack		0
+$limit 	beast/attack			0
+$limit	snake/attack			0
+$limit	clink/attack			0
+$limit	hknight/axe				0
+$limit	hknight/hit				0
+$limit	minotaur/fx2hit			0
+$limit	minotaur/fx3hit			0
+$limit	mummy/head				4
+
+
+dsparil/sight			sorsit
+dsparil/attack			soratk2
+dsparil/atk				soratk2
+dsparil/pain			sorpai
+dsparil/active			soract
+dsparil/rise			sorrise
+dsparil/zap				sorzap
+dsparil/zaphit			gnthit
+dsparil/scream			sordsph
+dsparil/explode			sordexp
+dsparil/bones			sordbon
+dsparil/spawntele		sortspaw
+$limit dsparil/zap 			0
+$limit dsparil/zaphit 		0
+$limit dsparil/spawntele	4
+
+
+$playersounddup	htic		male	*land		*grunt
+$playersounddup	htic		female	*land		*grunt
+$playersounddup	htic		other	*land		*grunt
+$playersound	htic		other	*death		dsbarexp
+$playersound	htic		female	*death		dsbarexp
+$playersound	htic		male	*death		dsbarexp
+$playersound	htic		female	*xdeath		dsbarexp
+$playersound	htic		male	*xdeath		dsbarexp
+$playersound	htic		other	*xdeath		dsbarexp
+$playersound	htic		female	*gibbed 	ddbarexp
+$playersound	htic		male	*gibbed		ddbarexp
+$playersound	htic		other	*gibbed		ddbarexp
+$playersound	htic		male	*pain100	dsflamst
+$playersound	htic		male	*pain75		dsflamst
+$playersound	htic		female	*pain100	dsflamst
+$playersound	htic		female	*pain75		dsflamst
+$playersound	htic		other	*pain100	dsflamst
+$playersound	htic		other	*pain75		dsflamst
+$playersound	htic		male	*pain50		dsflamst
+$playersound	htic		female	*pain50		dsflamst
+$playersound	htic		other	*pain50		dsflamst
+$playersound	htic		male	*pain25		dsflamst
+$playersound	htic		female	*pain25		dsflamst
+$playersound	htic		other	*pain25		dsflamst
+$playersound	htic		male	*grunt		artiuse
+$playersound	htic		female	*grunt		artiuse
+$playersound	htic		other	*grunt		artiuse
+$playersound	htic		male	*usefail	artiuse
+$playersound	htic		female	*usefail	artiuse
+$playersound	htic 		other	*usefail	artiuse
+$playersound	htic		male	*taunt		artiup
+$playersound	htic		female	*taunt		artiup
+$playersound	htic		other	*taunt		artiup
+$playeralias	htic		male	*fist		pickup/heretic
+$playeralias	htic		female	*fist		pickup/heretic
+$playeralias	htic		other	*fist		pickup/heretic
+$playeralias	htic		male	*fistgrunt	pickup2/heretic
+$playeralias	htic		female	*fistgrunt	pickup2/heretic
+$playeralias	htic		other	*fistgrunt	pickup2/heretic
+$playersounddup	htic		male	*puzzfail	*usefail
+$playersounddup	htic		female	*puzzfail	*usefail
+$playersounddup	htic		other	*puzzfail	*usefail
+$playersounddup	htic		male	*falling	*pain25
+$playersounddup	htic		female	*falling	*pain25
+$playersounddup	htic		other	*falling	*pain25
+$playersounddup	htic		male	*poison		*pain25
+$playersounddup	htic		female	*poison		*pain25
+$playersounddup	htic		other	*poison		*pain25
+
+
+$playeralias	garg		other	*death		himp/death
+$playeralias	garg		female	*death		himp/death
+$playeralias	garg		male	*death		himp/death
+$playeralias	garg		female	*xdeath		himp/death
+$playeralias	garg		male	*xdeath		himp/death
+$playeralias	garg		other	*xdeath		himp/death
+$playeralias	garg		male	*grunt		himp/active
+$playeralias	garg		female	*grunt		himp/active
+$playeralias	garg		other	*grunt		himp/active
+$playeralias	garg		male	*usefail	himp/active
+$playeralias	garg		female	*usefail	himp/active
+$playeralias	garg	 	other	*usefail	himp/active
+$playeralias	garg		male	*taunt		himp/sight
+$playeralias	garg		female	*taunt		himp/sight
+$playeralias	garg		other	*taunt		himp/sight
+$playeralias	garg		male	*fist		pickup/heretic
+$playeralias	garg		female	*fist		pickup/heretic
+$playeralias	garg		other	*fist		pickup/heretic
+$playeralias	garg		male	*fistgrunt	pickup2/heretic
+$playeralias	garg		female	*fistgrunt	pickup2/heretic
+$playeralias	garg		other	*fistgrunt	pickup2/heretic
+$playersounddup	garg		male	*puzzfail	*usefail
+$playersounddup	garg		female	*puzzfail	*usefail
+$playersounddup	garg		other	*puzzfail	*usefail
+$playeralias	garg		male	*falling	himp/pain
+$playeralias	garg		female	*falling	himp/pain
+$playeralias	garg		other	*falling	himp/pain
+$playeralias	garg		male	*poison		himp/pain
+$playeralias	garg		female	*poison		himp/pain
+$playeralias	garg		other	*poison		himp/pain
+$playersounddup	garg		male	*evillaugh	*taunt
+$playersounddup	garg		female	*evillaugh	*taunt
+$playersounddup	garg		other	*evillaugh	*taunt
+$playersounddup	garg		male	*wimpydeath	*death
+$playersounddup	garg		female	*wimpydeath	*death
+$playersounddup	garg		other	*wimpydeath	*death
+$playersounddup	garg		male	*land		*grunt
+$playersounddup	garg		female	*land		*grunt
+$playersounddup	garg		other	*land		*grunt
+$playersound	garg		male	*jump		none
+$playersound	garg		female	*jump		none
+$playersound	garg		other	*jump		none
+$playersounddup	garg		male	*regenerate	*fist
+$playersounddup	garg		female	*regenerate	*fist
+$playersounddup garg		other	*regenerate	*fist
+
+
+$playeralias	golem		other	*death		mummy/death
+$playeralias	golem		female	*death		mummy/death
+$playeralias	golem		male	*death		mummy/death
+$playeralias	golem		female	*xdeath		mummy/death
+$playeralias	golem		male	*xdeath		mummy/death
+$playeralias	golem		other	*xdeath		mummy/death
+$playeralias	golem		male	*grunt		mummy/active
+$playeralias	golem		female	*grunt		mummy/active
+$playeralias	golem		other	*grunt		mummy/active
+$playeralias	golem		male	*usefail	mummy/active
+$playeralias	golem		female	*usefail	mummy/active
+$playeralias	golem	 	other	*usefail	mummy/active
+$playeralias	golem		male	*taunt		mummy/sight
+$playeralias	golem		female	*taunt		mummy/sight
+$playeralias	golem		other	*taunt		mummy/sight
+$playeralias	golem		male	*fist		pickup/heretic
+$playeralias	golem		female	*fist		pickup/heretic
+$playeralias	golem		other	*fist		pickup/heretic
+$playeralias	golem		male	*fistgrunt	pickup2/heretic
+$playeralias	golem		female	*fistgrunt	pickup2/heretic
+$playeralias	golem		other	*fistgrunt	pickup2/heretic
+$playersounddup	golem		male	*puzzfail	*usefail
+$playersounddup	golem		female	*puzzfail	*usefail
+$playersounddup	golem		other	*puzzfail	*usefail
+$playeralias	golem		male	*falling	mummy/pain
+$playeralias	golem		female	*falling	mummy/pain
+$playeralias	golem		other	*falling	mummy/pain
+$playeralias	golem		male	*poison		mummy/pain
+$playeralias	golem		female	*poison		mummy/pain
+$playeralias	golem		other	*poison		mummy/pain
+$playersounddup	golem		male	*evillaugh	*taunt
+$playersounddup	golem		female	*evillaugh	*taunt
+$playersounddup	golem		other	*evillaugh	*taunt
+$playersounddup	golem		male	*wimpydeath	*death
+$playersounddup	golem		female	*wimpydeath	*death
+$playersounddup	golem		other	*wimpydeath	*death
+$playersounddup	golem		male	*land		*grunt
+$playersounddup	golem		female	*land		*grunt
+$playersounddup	golem		other	*land		*grunt
+$playersound	golem		male	*jump		none
+$playersound	golem		female	*jump		none
+$playersound	golem		other	*jump		none
+$playersounddup	golem		male	*regenerate	*fist
+$playersounddup	golem		female	*regenerate	*fist
+$playersounddup golem		other	*regenerate	*fist
+
+
+$playeralias	clink		other	*death		clink/death
+$playeralias	clink		female	*death		clink/death
+$playeralias	clink		male	*death		clink/death
+$playeralias	clink		female	*xdeath		clink/death
+$playeralias	clink		male	*xdeath		clink/death
+$playeralias	clink		other	*xdeath		clink/death
+$playeralias	clink		male	*grunt		clink/active
+$playeralias	clink		female	*grunt		clink/active
+$playeralias	clink		other	*grunt		clink/active
+$playeralias	clink		male	*usefail	clink/active
+$playeralias	clink		female	*usefail	clink/active
+$playeralias	clink	 	other	*usefail	clink/active
+$playeralias	clink		male	*taunt		clink/sight
+$playeralias	clink		female	*taunt		clink/sight
+$playeralias	clink		other	*taunt		clink/sight
+$playeralias	clink		male	*fist		pickup/heretic
+$playeralias	clink		female	*fist		pickup/heretic
+$playeralias	clink		other	*fist		pickup/heretic
+$playeralias	clink		male	*fistgrunt	pickup2/heretic
+$playeralias	clink		female	*fistgrunt	pickup2/heretic
+$playeralias	clink		other	*fistgrunt	pickup2/heretic
+$playersounddup	clink		male	*puzzfail	*usefail
+$playersounddup	clink		female	*puzzfail	*usefail
+$playersounddup	clink		other	*puzzfail	*usefail
+$playeralias	clink		male	*falling	clink/pain
+$playeralias	clink		female	*falling	clink/pain
+$playeralias	clink		other	*falling	clink/pain
+$playeralias	clink		male	*poison		clink/pain
+$playeralias	clink		female	*poison		clink/pain
+$playeralias	clink		other	*poison		clink/pain
+$playersound	clink		male	*evillaugh	*taunt
+$playersounddup	clink		female	*evillaugh	*taunt
+$playersounddup	clink		other	*evillaugh	*taunt
+$playersounddup	clink		male	*wimpydeath	*death
+$playersounddup	clink		female	*wimpydeath	*death
+$playersounddup	clink		other	*wimpydeath	*death
+$playersounddup	clink		male	*land		*grunt
+$playersounddup	clink		female	*land		*grunt
+$playersounddup	clink		other	*land		*grunt
+$playersound	clink		male	*jump		none
+$playersound	clink		female	*jump		none
+$playersound	clink		other	*jump		none
+$playersounddup	clink		male	*regenerate	*fist
+$playersounddup	clink		female	*regenerate	*fist
+$playersounddup clink		other	*regenerate	*fist
+
+
+$playeralias	wzrd		other	*death		wizard/death
+$playeralias	wzrd		female	*death		wizard/death
+$playeralias	wzrd		male	*death		wizard/death
+$playeralias	wzrd		female	*xdeath		wizard/death
+$playeralias	wzrd		male	*xdeath		wizard/death
+$playeralias	wzrd		other	*xdeath		wizard/death
+$playeralias	wzrd		male	*grunt		wizard/active
+$playeralias	wzrd		female	*grunt		wizard/active
+$playeralias	wzrd		other	*grunt		wizard/active
+$playeralias	wzrd		male	*usefail	wizard/active
+$playeralias	wzrd		female	*usefail	wizard/active
+$playeralias	wzrd	 	other	*usefail	wizard/active
+$playeralias	wzrd		male	*taunt		wizard/sight
+$playeralias	wzrd		female	*taunt		wizard/sight
+$playeralias	wzrd		other	*taunt		wizard/sight
+$playeralias	wzrd		male	*fist		pickup/heretic
+$playeralias	wzrd		female	*fist		pickup/heretic
+$playeralias	wzrd		other	*fist		pickup/heretic
+$playeralias	wzrd		male	*fistgrunt	pickup2/heretic
+$playeralias	wzrd		female	*fistgrunt	pickup2/heretic
+$playeralias	wzrd		other	*fistgrunt	pickup2/heretic
+$playersounddup	wzrd		male	*puzzfail	*usefail
+$playersounddup	wzrd		female	*puzzfail	*usefail
+$playersounddup	wzrd		other	*puzzfail	*usefail
+$playeralias	wzrd		male	*falling	wizard/pain
+$playeralias	wzrd		female	*falling	wizard/pain
+$playeralias	wzrd		other	*falling	wizard/pain
+$playeralias	wzrd		male	*poison		wizard/pain
+$playeralias	wzrd		female	*poison		wizard/pain
+$playeralias	wzrd		other	*poison		wizard/pain
+$playersounddup	wzrd		male	*evillaugh	*taunt
+$playersounddup	wzrd		female	*evillaugh	*taunt
+$playersounddup	wzrd		other	*evillaugh	*taunt
+$playersounddup	wzrd		male	*wimpydeath	*death
+$playersounddup	wzrd		female	*wimpydeath	*death
+$playersounddup	wzrd		other	*wimpydeath	*death
+$playersounddup	wzrd		male	*land		*grunt
+$playersounddup	wzrd		female	*land		*grunt
+$playersounddup	wzrd		other	*land		*grunt
+$playersound	wzrd		male	*jump		none
+$playersound	wzrd		female	*jump		none
+$playersound	wzrd		other	*jump		none
+$playersounddup	wzrd		male	*regenerate	*fist
+$playersounddup	wzrd		female	*regenerate	*fist
+$playersounddup wzrd		other	*regenerate	*fist
+
+
+$playeralias	knig		other	*death		hknight/death
+$playeralias	knig		female	*death		hknight/death
+$playeralias	knig		male	*death		hknight/death
+$playeralias	knig		female	*xdeath		hknight/death
+$playeralias	knig		male	*xdeath		hknight/death
+$playeralias	knig		other	*xdeath		hknight/death
+$playeralias	knig		male	*grunt		hknight/active
+$playeralias	knig		female	*grunt		hknight/active
+$playeralias	knig		other	*grunt		hknight/active
+$playeralias	knig		male	*usefail	hknight/active
+$playeralias	knig		female	*usefail	hknight/active
+$playeralias	knig	 	other	*usefail	hknight/active
+$playeralias	knig		male	*taunt		hknight/sight
+$playeralias	knig		female	*taunt		hknight/sight
+$playeralias	knig		other	*taunt		hknight/sight
+$playeralias	knig		male	*fist		pickup/heretic
+$playeralias	knig		female	*fist		pickup/heretic
+$playeralias	knig		other	*fist		pickup/heretic
+$playeralias	knig		male	*fistgrunt	pickup2/heretic
+$playeralias	knig		female	*fistgrunt	pickup2/heretic
+$playeralias	knig		other	*fistgrunt	pickup2/heretic
+$playersounddup	knig		male	*puzzfail	*usefail
+$playersounddup	knig		female	*puzzfail	*usefail
+$playersounddup	knig		other	*puzzfail	*usefail
+$playeralias	knig		male	*falling	hknight/pain
+$playeralias	knig		female	*falling	hknight/pain
+$playeralias	knig		other	*falling	hknight/pain
+$playeralias	knig		male	*poison		hknight/pain
+$playeralias	knig		female	*poison		hknight/pain
+$playeralias	knig		other	*poison		hknight/pain
+$playersounddup	knig		male	*evillaugh	*taunt
+$playersounddup	knig		female	*evillaugh	*taunt
+$playersounddup	knig		other	*evillaugh	*taunt
+$playersounddup	knig		male	*wimpydeath	*death
+$playersounddup	knig		female	*wimpydeath	*death
+$playersounddup	knig		other	*wimpydeath	*death
+$playersounddup	knig		male	*land		*grunt
+$playersounddup	knig		female	*land		*grunt
+$playersounddup	knig		other	*land		*grunt
+$playersound	knig		male	*jump		none
+$playersound	knig		female	*jump		none
+$playersound	knig		other	*jump		none
+$playersounddup knig		male	*regenerate	*fist
+$playersounddup	knig		female	*regenerate	*fist
+$playersounddup knig		other	*regenerate	*fist
+
+
+$playeralias	beast		other	*death		beast/death
+$playeralias	beast		female	*death		beast/death
+$playeralias	beast		male	*death		beast/death
+$playeralias	beast		female	*xdeath		beast/death
+$playeralias	beast		male	*xdeath		beast/death
+$playeralias	beast		other	*xdeath		beast/death
+$playeralias	beast		male	*grunt		beast/active
+$playeralias	beast		female	*grunt		beast/active
+$playeralias	beast		other	*grunt		beast/active
+$playeralias	beast		male	*usefail	beast/active
+$playeralias	beast		female	*usefail	beast/active
+$playeralias	beast	 	other	*usefail	beast/active
+$playeralias	beast		male	*taunt		beast/sight
+$playeralias	beast		female	*taunt		beast/sight
+$playeralias	beast		other	*taunt		beast/sight
+$playeralias	beast		male	*fist		pickup/heretic
+$playeralias	beast		female	*fist		pickup/heretic
+$playeralias	beast		other	*fist		pickup/heretic
+$playeralias	beast		male	*fistgrunt	pickup2/heretic
+$playeralias	beast		female	*fistgrunt	pickup2/heretic
+$playeralias	beast		other	*fistgrunt	pickup2/heretic
+$playersounddup	beast		male	*puzzfail	*usefail
+$playersounddup	beast		female	*puzzfail	*usefail
+$playersounddup	beast		other	*puzzfail	*usefail
+$playeralias	beast		male	*falling	beast/pain
+$playeralias	beast		female	*falling	beast/pain
+$playeralias	beast		other	*falling	beast/pain
+$playeralias	beast		male	*poison		beast/pain
+$playeralias	beast		female	*poison		beast/pain
+$playeralias	beast		other	*poison		beast/pain
+$playersounddup	beast		male	*evillaugh	*taunt
+$playersounddup	beast		female	*evillaugh	*taunt
+$playersounddup	beast		other	*evillaugh	*taunt
+$playersounddup	beast		male	*wimpydeath	*death
+$playersounddup	beast		female	*wimpydeath	*death
+$playersounddup	beast		other	*wimpydeath	*death
+$playersounddup	beast		male	*land		*grunt
+$playersounddup	beast		female	*land		*grunt
+$playersounddup	beast		other	*land		*grunt
+$playersound	beast		male	*jump		none
+$playersound	beast		female	*jump		none
+$playersound	beast		other	*jump		none
+$playersounddup	beast		male	*regenerate	*fist
+$playersounddup	beast		female	*regenerate	*fist
+$playersounddup beast		other	*regenerate	*fist
+
+
+$playeralias	snake		other	*death		snake/death
+$playeralias	snake		female	*death		snake/death
+$playeralias	snake		male	*death		snake/death
+$playeralias	snake		female	*xdeath		snake/death
+$playeralias	snake		male	*xdeath		snake/death
+$playeralias	snake		other	*xdeath		snake/death
+$playeralias	snake		male	*grunt		snake/active
+$playeralias	snake		female	*grunt		snake/active
+$playeralias	snake		other	*grunt		snake/active
+$playeralias	snake		male	*usefail	snake/active
+$playeralias	snake		female	*usefail	snake/active
+$playeralias	snake	 	other	*usefail	snake/active
+$playeralias	snake		male	*taunt		snake/sight
+$playeralias	snake		female	*taunt		snake/sight
+$playeralias	snake		other	*taunt		snake/sight
+$playeralias	snake		male	*fist		pickup/heretic
+$playeralias	snake		female	*fist		pickup/heretic
+$playeralias	snake		other	*fist		pickup/heretic
+$playeralias	snake		male	*fistgrunt	pickup2/heretic
+$playeralias	snake		female	*fistgrunt	pickup2/heretic
+$playeralias	snake		other	*fistgrunt	pickup2/heretic
+$playersounddup	snake		male	*puzzfail	*usefail
+$playersounddup	snake		female	*puzzfail	*usefail
+$playersounddup	snake		other	*puzzfail	*usefail
+$playeralias	snake		male	*falling	snake/pain
+$playeralias	snake		female	*falling	snake/pain
+$playeralias	snake		other	*falling	snake/pain
+$playeralias	snake		male	*poison		snake/pain
+$playeralias	snake		female	*poison		snake/pain
+$playeralias	snake		other	*poison		snake/pain
+$playersounddup	snake		male	*evillaugh	*taunt
+$playersounddup	snake		female	*evillaugh	*taunt
+$playersounddup	snake		other	*evillaugh	*taunt
+$playersounddup	snake		male	*wimpydeath	*death
+$playersounddup	snake		female	*wimpydeath	*death
+$playersounddup	snake		other	*wimpydeath	*death
+$playersounddup	snake		male	*land		*grunt
+$playersounddup	snake		female	*land		*grunt
+$playersounddup	snake		other	*land		*grunt
+$playersound	snake		male	*jump		none
+$playersound	snake		female	*jump		none
+$playersound	snake		other	*jump		none
+$playersounddup	snake		male	*regenerate	*fist
+$playersounddup	snake		female	*regenerate	*fist
+$playersounddup snake		other	*regenerate	*fist
+
+
+$playeralias	lich		other	*death		ironlich/death
+$playeralias	lich		female	*death		ironlich/death
+$playeralias	lich		male	*death		ironlich/death
+$playeralias	lich		female	*xdeath		ironlich/death
+$playeralias	lich		male	*xdeath		ironlich/death
+$playeralias	lich		other	*xdeath		ironlich/death
+$playersound	lich		male	*grunt		hedact2
+$playersound	lich		female	*grunt		hedact2
+$playersound	lich		other	*grunt		hedact2
+$playeralias	lich		male	*usefail	ironlich/active
+$playeralias	lich		female	*usefail	ironlich/active
+$playeralias	lich	 	other	*usefail	ironlich/active
+$playeralias	lich		male	*taunt		ironlich/sight
+$playeralias	lich		female	*taunt		ironlich/sight
+$playeralias	lich		other	*taunt		ironlich/sight
+$playeralias	lich		male	*fist		pickup/heretic
+$playeralias	lich		female	*fist		pickup/heretic
+$playeralias	lich		other	*fist		pickup/heretic
+$playeralias	lich		male	*fistgrunt	pickup2/heretic
+$playeralias	lich		female	*fistgrunt	pickup2/heretic
+$playeralias	lich		other	*fistgrunt	pickup2/heretic
+$playersound	lich		male	*puzzfail	hedact2
+$playersound	lich		female	*puzzfail	hedact2
+$playersound	lich		other	*puzzfail	hedact2
+$playeralias	lich		male	*falling	ironlich/pain
+$playeralias	lich		female	*falling	ironlich/pain
+$playeralias	lich		other	*falling	ironlich/pain
+$playeralias	lich		male	*poison		ironlich/pain
+$playeralias	lich		female	*poison		ironlich/pain
+$playeralias	lich		other	*poison		ironlich/pain
+$playersounddup	lich		male	*evillaugh	*taunt
+$playersounddup	lich		female	*evillaugh	*taunt
+$playersounddup	lich		other	*evillaugh	*taunt
+$playersounddup	lich		male	*wimpydeath	*death
+$playersounddup	lich		female	*wimpydeath	*death
+$playersounddup	lich		other	*wimpydeath	*death
+$playersounddup	lich		male	*land		*grunt
+$playersounddup	lich		female	*land		*grunt
+$playersounddup	lich		other	*land		*grunt
+$playersound	lich		male	*jump		none
+$playersound	lich		female	*jump		none
+$playersound	lich		other	*jump		none
+$playersounddup	lich		male	*regenerate	*fist
+$playersounddup	lich		female	*regenerate	*fist
+$playersounddup lich		other	*regenerate	*fist
+
+
+$playeralias	maulo		other	*death		minotaur/death
+$playeralias	maulo		female	*death		minotaur/death
+$playeralias	maulo		male	*death		minotaur/death
+$playeralias	maulo		female	*xdeath		minotaur/death
+$playeralias	maulo		male	*xdeath		minotaur/death
+$playeralias	maulo		other	*xdeath		minotaur/death
+$playeralias	maulo		male	*grunt		minotaur/active
+$playeralias	maulo		female	*grunt		minotaur/active
+$playeralias	maulo		other	*grunt		minotaur/active
+$playeralias	maulo		male	*usefail	minotaur/active
+$playeralias	maulo		female	*usefail	minotaur/active
+$playeralias	maulo	 	other	*usefail	minotaur/active
+$playeralias	maulo		male	*taunt		minotaur/sight
+$playeralias	maulo		female	*taunt		minotaur/sight
+$playeralias	maulo		other	*taunt		minotaur/sight
+$playeralias	maulo		male	*fist		pickup/heretic
+$playeralias	maulo		female	*fist		pickup/heretic
+$playeralias	maulo		other	*fist		pickup/heretic
+$playeralias	maulo		male	*fistgrunt	pickup2/heretic
+$playeralias	maulo		female	*fistgrunt	pickup2/heretic
+$playeralias	maulo		other	*fistgrunt	pickup2/heretic
+$playersounddup	maulo		male	*puzzfail	*usefail
+$playersounddup	maulo		female	*puzzfail	*usefail
+$playersounddup	maulo		other	*puzzfail	*usefail
+$playeralias	maulo		male	*falling	minotaur/pain
+$playeralias	maulo		female	*falling	minotaur/pain
+$playeralias	maulo		other	*falling	minotaur/pain
+$playeralias	maulo		male	*poison		minotaur/pain
+$playeralias	maulo		female	*poison		minotaur/pain
+$playeralias	maulo		other	*poison		minotaur/pain
+$playersounddup	maulo		male	*evillaugh	*taunt
+$playersounddup	maulo		female	*evillaugh	*taunt
+$playersounddup	maulo		other	*evillaugh	*taunt
+$playersounddup	maulo		male	*wimpydeath	*death
+$playersounddup	maulo		female	*wimpydeath	*death
+$playersounddup	maulo		other	*wimpydeath	*death
+$playersounddup	maulo		male	*land		*grunt
+$playersounddup	maulo		female	*land		*grunt
+$playersounddup	maulo		other	*land		*grunt
+$playersound	maulo		male	*jump		none
+$playersound	maulo		female	*jump		none
+$playersound	maulo		other	*jump		none
+$playersounddup	maulo		male	*regenerate	*fist
+$playersounddup	maulo		female	*regenerate	*fist
+$playersounddup maulo		other	*regenerate	*fist
+
+
+$playeralias	srcr		other	*death		dsparilserpent/death
+$playeralias	srcr		female	*death		dsparilserpent/death
+$playeralias	srcr		male	*death		dsparilserpent/death
+$playeralias	srcr		female	*xdeath		dsparilserpent/death
+$playeralias	srcr		male	*xdeath		dsparilserpent/death
+$playeralias	srcr		other	*xdeath		dsparilserpent/death
+$playeralias	srcr		male	*grunt		dsparilserpent/active
+$playeralias	srcr		female	*grunt		dsparilserpent/active
+$playeralias	srcr		other	*grunt		dsparilserpent/active
+$playeralias	srcr		male	*usefail	dsparilserpent/active
+$playeralias	srcr		female	*usefail	dsparilserpent/active
+$playeralias	srcr	 	other	*usefail	dsparilserpent/active
+$playeralias	srcr		male	*taunt		dsparilserpent/sight
+$playeralias	srcr		female	*taunt		dsparilserpent/sight
+$playeralias	srcr		other	*taunt		dsparilserpent/sight
+$playeralias	srcr		male	*fist		pickup/heretic
+$playeralias	srcr		female	*fist		pickup/heretic
+$playeralias	srcr		other	*fist		pickup/heretic
+$playeralias	srcr		male	*fistgrunt	pickup2/heretic
+$playeralias	srcr		female	*fistgrunt	pickup2/heretic
+$playeralias	srcr		other	*fistgrunt	pickup2/heretic
+$playersounddup	srcr		male	*puzzfail	*usefail
+$playersounddup	srcr		female	*puzzfail	*usefail
+$playersounddup	srcr		other	*puzzfail	*usefail
+$playeralias	srcr		male	*falling	dsparilserpent/pain
+$playeralias	srcr		female	*falling	dsparilserpent/pain
+$playeralias	srcr		other	*falling	dsparilserpent/pain
+$playeralias	srcr		male	*poison		dsparilserpent/pain
+$playeralias	srcr		female	*poison		dsparilserpent/pain
+$playeralias	srcr		other	*poison		dsparilserpent/pain
+$playersounddup	srcr		male	*evillaugh	*taunt
+$playersounddup	srcr		female	*evillaugh	*taunt
+$playersounddup	srcr		other	*evillaugh	*taunt
+$playersounddup	srcr		male	*wimpydeath	*death
+$playersounddup	srcr		female	*wimpydeath	*death
+$playersounddup	srcr		other	*wimpydeath	*death
+$playersounddup	srcr		male	*land		*grunt
+$playersounddup	srcr		female	*land		*grunt
+$playersounddup	srcr		other	*land		*grunt
+$playersound	srcr		male	*jump		none
+$playersound	srcr		female	*jump		none
+$playersound	srcr		other	*jump		none
+$playersounddup	srcr		male	*regenerate	*fist
+$playersounddup	srcr		female	*regenerate	*fist
+$playersounddup srcr		other	*regenerate	*fist
+
+
+$playeralias	tyson		other	*death		dsparil/scream
+$playeralias	tyson		female	*death		dsparil/scream
+$playeralias	tyson		male	*death		dsparil/scream
+$playeralias	tyson		female	*xdeath		dsparil/scream
+$playeralias	tyson		male	*xdeath		dsparil/scream
+$playeralias	tyson		other	*xdeath		dsparil/scream
+$playeralias	tyson		male	*grunt		dsparil/active
+$playeralias	tyson		female	*grunt		dsparil/active
+$playeralias	tyson		other	*grunt		dsparil/active
+$playeralias	tyson		male	*usefail	dsparil/active
+$playeralias	tyson		female	*usefail	dsparil/active
+$playeralias	tyson	 	other	*usefail	dsparil/active
+$playeralias	tyson		male	*taunt		dsparil/sight
+$playeralias	tyson		female	*taunt		dsparil/sight
+$playeralias	tyson		other	*taunt		dsparil/sight
+$playeralias	tyson		male	*fist		pickup/heretic
+$playeralias	tyson		female	*fist		pickup/heretic
+$playeralias	tyson		other	*fist		pickup/heretic
+$playeralias	tyson		male	*fistgrunt	pickup2/heretic
+$playeralias	tyson		female	*fistgrunt	pickup2/heretic
+$playeralias	tyson		other	*fistgrunt	pickup2/heretic
+$playersounddup	tyson		male	*puzzfail	*usefail
+$playersounddup	tyson		female	*puzzfail	*usefail
+$playersounddup	tyson		other	*puzzfail	*usefail
+$playeralias	tyson		male	*falling	dsparil/pain
+$playeralias	tyson		female	*falling	dsparil/pain
+$playeralias	tyson		other	*falling	dsparil/pain
+$playeralias	tyson		male	*poison		dsparil/pain
+$playeralias	tyson		female	*poison		dsparil/pain
+$playeralias	tyson		other	*poison		dsparil/pain
+$playersound	tyson		male	*evillaugh	none
+$playersound	tyson		female	*evillaugh	none
+$playersound	tyson		other	*evillaugh	none
+$playersounddup	tyson		male	*wimpydeath	*death
+$playersounddup	tyson		female	*wimpydeath	*death
+$playersounddup	tyson		other	*wimpydeath	*death
+$playersounddup	tyson		male	*land		*grunt
+$playersounddup	tyson		female	*land		*grunt
+$playersounddup	tyson		other	*land		*grunt
+$playersound	tyson		male	*jump		none
+$playersound	tyson		female	*jump		none
+$playersound	tyson		other	*jump		none
+$playersounddup	tyson		male	*regenerate	*fist
+$playersounddup	tyson		female	*regenerate	*fist
+$playersounddup tyson		other	*regenerate	*fist

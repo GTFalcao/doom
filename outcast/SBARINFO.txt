@@ -1,0 +1,3584 @@
+
+//monospacefonts true, "0";
+interpolatehealth true;
+completeborder true;
+Height 0;
+resolution 1024, 768;
+
+statusbar normal, forcescaled, fullscreenoffsets
+{
+
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------					D O O M					-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	
+	ininventory IsDoom, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, DoomHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "DOOMINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory ZombiemanMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "DOOMINV0", "DOOMINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "DOOMINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "DOOMINV0", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "DOOMINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "doomheal", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, DoomHudFont0, untranslated, Health, whennotzero, -3, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, DoomHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, DoomHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, DoomHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, DoomHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "DOOMKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring DoomHudFont0, untranslated, "SCORE", -3, -372, 0;
+				drawnumber 5, DoomHudFont0, untranslated, TerminatorScoreTracker, -4, -344;
+			}
+			
+			else
+			{
+				drawstring DoomHudFont0, untranslated, "FRAGS", -3, -372, 0;
+				drawnumber 5, DoomHudFont0, untranslated, frags, -4, -344;
+			}
+		}
+		
+		else
+		{
+			drawstring DoomHudFont0, untranslated, "SCORE", -3, -372, 0;
+			drawnumber 5, DoomHudFont0, untranslated, DoomDamagePoint0, interpolate(2), -4, -344;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, DoomHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -344; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, DoomHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, DoomHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, DoomHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "SPHRINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "SPHRINV0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "SPHRINV0", 212, -118, center; }
+			
+					else {
+						drawimage "SPHRINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Pain Elemental counter
+		
+		ininventory soullimit, 1
+		{
+			drawimage "SKU0A8A2", 24, -384, centerbottom;
+			drawnumber 2, DoomHudFont0, untranslated, soullimit, 76, -408;
+		}
+		
+		// Vile revive counter
+		
+		ininventory reviveattempt, 1
+		{
+			drawimage "VLR0B8", 38, -384, centerbottom;
+			drawnumber 2, DoomHudFont0, untranslated, reviveattempt, 96, -408;
+		}
+		
+		// Rank progress bars
+		
+		ininventory DoomRank0, 1 {
+			alpha 0.4 { drawimage "ARTISPOS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank0, 493, 71;
+			drawstring DoomHudFont0, untranslated, "40", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank0, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank1, 1 {
+			alpha 0.4 { drawimage "ARTITROO", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank1, 493, 71;
+			drawstring DoomHudFont0, untranslated, "50", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank1, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank2, 1 {
+			alpha 0.4 { drawimage "ARTISARG", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank2, 493, 71;
+			drawstring DoomHudFont0, untranslated, "60", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank2, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank3, 1 {
+			alpha 0.4 { drawimage "ARTICPOS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank3, 493, 71;
+			drawstring DoomHudFont0, untranslated, "70", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank3, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank4, 1 {
+			alpha 0.4 { drawimage "ARTIHEAD", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank4, 493, 71;
+			drawstring DoomHudFont0, untranslated, "160", 574, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank4, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank5, 1 {
+			alpha 0.4 { drawimage "ARTISKEL", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank5, 493, 71;
+			drawstring DoomHudFont0, untranslated, "170", 574, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank5, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank6, 1 {
+			alpha 0.4 { drawimage "ARTIBOS2", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank6, 493, 71;
+			drawstring DoomHudFont0, untranslated, "200", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank6, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank7, 1 {
+			alpha 0.4 { drawimage "ARTIBOSS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank7, 493, 71;
+			drawstring DoomHudFont0, untranslated, "270", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank7, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank8, 1 {
+			alpha 0.4 { drawimage "ARTIFATT", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank8, 493, 71;
+			drawstring DoomHudFont0, untranslated, "330", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank8, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank9, 1 {
+			alpha 0.4 { drawimage "ARTIBSPI", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank9, 493, 71;
+			drawstring DoomHudFont0, untranslated, "550", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank9, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank10, 1 {
+			alpha 0.4 { drawimage "ARTIVILE", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank10, 493, 71;
+			drawstring DoomHudFont0, untranslated, "800", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank10, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank11, 1 {
+			alpha 0.4 { drawimage "ARTISPID", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank11, 493, 71;
+			drawstring DoomHudFont0, untranslated, "1800", 592, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank11, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank12, 1 {
+			alpha 0.4 { drawimage "ARTICYBR", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank12, 493, 71;
+			drawstring DoomHudFont0, untranslated, "2500", 595, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank12, horizontal, interpolate(1), 417, 7; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring DoomHudFont0, yellow, "damage:", 946, 8;
+			drawnumber 1, DoomHudFont0, green, MyDamageFactorUnit, interpolate(1), 975, 8;
+			drawstring DoomHudFont0, green, ".", 985, 16;
+			drawnumber 2, DoomHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1018, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				H E R E T I C				-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsHeretic, 1
+	{
+		
+		drawselectedinventory alternateonempty, center, drawshadow, RavenHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "HTICINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory GargoyleMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "HTICINV0", "HTICINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "HTICINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "HTICINV0", 245, -88, center; } }
+		
+		else { alpha 0.125 {
+			drawimage "HTICINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "ravheal0", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, RavenHudFont0, untranslated, Health, whennotzero, -6, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, OrangeRaven, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, YellowRaven, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, RavenHudFont0, LightBlueRaven, Armor, whennotzero, interpolate(5), -80, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, RavenHudFont0, LightGreenRaven, Armor, whennotzero, interpolate(4), -80, -148;
+			}
+		}
+		
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "HTICKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, TerminatorScoreTracker, -8, -348;
+			}
+			
+			else
+			{
+				drawstring RavenHudFont0, untranslated, "FRAGS", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, frags, -8, -348;
+			}
+		}
+		
+		else
+		{
+			drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+			drawnumber 5, RavenHudFont0, untranslated, HereticDamagePoint0, interpolate(2), -8, -348;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlueRaven, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlue, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, LightGreenRaven, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "RINGINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "RINGINV0", 212, -118, center; }
+					
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "RINGINV0", 212, -118, center; }
+			
+					else {
+						drawimage "RINGINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		
+		// D'Sparil Disciple counter
+		
+		ininventory wizlimit, 1
+		{
+			drawimage "WZRDA1", 26, -384, centerbottom;
+			drawnumber 2, RavenHudFont0, untranslated, wizlimit, 72, -416;
+		}
+		
+		// Rank progress bars
+		
+		ininventory HereticRank0, 1 {
+			alpha 0.4 { drawimage "ARTIIMP2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank0, 493, 75;
+			drawstring RavenHudFont0, untranslated, "30", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank0, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank1, 1 {
+			alpha 0.4 { drawimage "ARTIMUMM", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank1, 493, 75;
+			drawstring RavenHudFont0, untranslated, "50", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank1, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank2, 1 {
+			alpha 0.4 { drawimage "ARTIMUM2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank2, 493, 75;
+			drawstring RavenHudFont0, untranslated, "60", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank2, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank3, 1 {
+			alpha 0.4 { drawimage "ARTICLNK", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank3, 493, 75;
+			drawstring RavenHudFont0, untranslated, "90", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank3, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank4, 1 {
+			alpha 0.4 { drawimage "ARTIWZRD", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank4, 493, 75;
+			drawstring RavenHudFont0, untranslated, "140", 561, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank4, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank5, 1 {
+			alpha 0.4 { drawimage "ARTIKNIG", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank5, 493, 75;
+			drawstring RavenHudFont0, untranslated, "170", 561, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank5, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank6, 1 {
+			alpha 0.4 { drawimage "ARTIKNI2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank6, 493, 75;
+			drawstring RavenHudFont0, untranslated, "200", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank6, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank7, 1 {
+			alpha 0.4 { drawimage "ARTIBEAS", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank7, 493, 75;
+			drawstring RavenHudFont0, untranslated, "300", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank7, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank8, 1 {
+			alpha 0.4 { drawimage "ARTISNKE", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank8, 493, 75;
+			drawstring RavenHudFont0, untranslated, "500", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank8, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank9, 1 {
+			alpha 0.4 { drawimage "ARTILICH", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank9, 493, 75;
+			drawstring RavenHudFont0, untranslated, "850", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank9, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank10, 1 {
+			alpha 0.4 { drawimage "ARTIMNTR", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank10, 493, 75;
+			drawstring RavenHudFont0, untranslated, "1400", 571, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank10, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank11, 1 {
+			alpha 0.4 { drawimage "ARTISRCR", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank11, 493, 75;
+			drawstring RavenHudFont0, untranslated, "2000", 573, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank11, horizontal, interpolate(1), 362, 43; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring RavenHudFont0, white, "damage:", 952, 10;
+			drawnumber 1, RavenHudFont0, untranslated, MyDamageFactorUnit, interpolate(1), 976, 8;
+			drawstring RavenHudFont0, untranslated, ".", 986, 20;
+			drawnumber 2, RavenHudFont0, untranslated, MyDamageFactorDecimal, interpolate(1), fillzeros, 1016, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				  H E X E N		 		    -------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsHexen, 1
+	{
+		
+		drawselectedinventory alternateonempty, center, drawshadow, RavenHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "HEXNINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory AfritMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "HEXNINV0", "HEXNINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "HEXNINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "HEXNINV2", 245, -88, center; } }
+		
+		else { alpha 0.125 {
+			drawimage "HEXNINV2", 245, -88, center; } }
+			
+		
+		// Health and armor
+		
+		drawimage "ravheal0", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, RavenHudFont0, untranslated, Health, whennotzero, drawshadow, -6, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, OrangeRaven, Armor, whennotzero, drawshadow, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, YellowRaven, Armor, whennotzero, drawshadow, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, RavenHudFont0, LightBlueRaven, Armor, whennotzero, drawshadow, interpolate(5), -80, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, RavenHudFont0, LightGreenRaven, Armor, whennotzero, drawshadow, interpolate(4), -80, -148;
+			}
+		}
+		
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlueRaven, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlue, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, LightGreenRaven, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+		
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "HEXNKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, TerminatorScoreTracker, -8, -348;
+			}
+			
+			else
+			{
+				drawstring RavenHudFont0, untranslated, "FRAGS", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, frags, -8, -348;
+			}
+		}
+		
+		else
+		{
+			drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+			drawnumber 5, RavenHudFont0, untranslated, HexenDamagePoint0, interpolate(2), -8, -348;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "SPINVU0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "SPINVU0", 212, -118, center; }
+					
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "SPINVU0", 212, -118, center; }
+			
+					else {
+						drawimage "SPINVU0", 245, -88, center; }
+				}
+			}
+			
+			// Heresiarch Invulnerability timer
+			
+			ininventory IsSorcerer, 1
+			{
+				drawimage "centbrd0", 0, -212;
+				ininventory IsSorcererPowered, 1 {
+					drawbar "fillsorc", "centbck0", PowerupTime SorcShieldPowered, horizontal, 0, -212; }
+				else {
+					drawbar "fillsorc", "centbck0", PowerupTime SorcShield, horizontal, 0, -212; }
+			}
+		}
+		
+		
+		// Heresiarch Bishop counter
+		
+		ininventory bishlimit, 1
+		{
+			drawimage "BISHA1", 26, -384, centerbottom;
+			drawnumber 2, RavenHudFont0, LightGreenRaven, bishlimit, drawshadow, 64, -416;
+		}
+		
+		
+		// Centaur Shield timer
+		
+		ininventory CentaurDoingShield, 1
+		{
+			drawimage "centbrd0", 0, -212;
+			drawbar "fillcnt0", "centbck0", CentaurShieldTimer, horizontal, interpolate(2), 0, -212;
+		}
+		
+		
+		// Rank progress bars
+		
+		ininventory HexenRank0, 1 {
+			alpha 0.4 { drawimage "ARTIETTN", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank0, 493, 74;
+			drawstring RavenHudFont0, untranslated, "50", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank0, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank1, 1 {
+			alpha 0.4 { drawimage "ARTICENT", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank1, 493, 74;
+			drawstring RavenHudFont0, untranslated, "65", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank1, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank2, 1 {
+			alpha 0.4 { drawimage "ARTICEN2", 600, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank2, 493, 74;
+			drawstring RavenHudFont0, untranslated, "85", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank2, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank3, 1 {
+			alpha 0.4 { drawimage "ARTIDEM2", 640, 112, center; }
+			alpha 0.4 { drawimage "ARTIDEMN", 616, 112, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank3, 493, 74;
+			drawstring RavenHudFont0, untranslated, "120", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank3, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank4, 1 {
+			alpha 0.4 { drawimage "ARTISSPT", 608, 100, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank4, 493, 74;
+			drawstring RavenHudFont0, untranslated, "150", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank4, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank5, 1 {
+			alpha 0.4 { drawimage "ARTIBISH", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank5, 493, 74;
+			drawstring RavenHudFont0, untranslated, "180", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank5, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank6, 1 {
+			alpha 0.4 { drawimage "ARTIICEY", 608, 108, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank6, 493, 74;
+			drawstring RavenHudFont0, untranslated, "240", 563, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank6, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank7, 1 {
+			alpha 0.4 { drawimage "ARTIWRTH", 604, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank7, 493, 74;
+			drawstring RavenHudFont0, untranslated, "400", 563, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank7, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank8, 1 {
+			alpha 0.4 { drawimage "ARTIMAGE", 646, 104, center; }
+			alpha 0.4 { drawimage "ARTICLER", 618, 104, center; }
+			alpha 0.4 { drawimage "ARTIFIGH", 592, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank8, 493, 74;
+			drawstring RavenHudFont0, untranslated, "410", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank8, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank9, 1 {
+			alpha 0.4 { drawimage "ARTIDRAG", 624, 112, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank9, 493, 74;
+			drawstring RavenHudFont0, untranslated, "1850", 573, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank9, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank10, 1 {
+			alpha 0.4 { drawimage "ARTISORC", 628, 116, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank10, 493, 74;
+			drawstring RavenHudFont0, untranslated, "1950", 573, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank10, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank11, 1 {
+			alpha 0.4 { drawimage "ARTIKORX", 644, 124, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank11, 493, 74;
+			drawstring RavenHudFont0, untranslated, "2000", 575, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank11, horizontal, interpolate(1), 393, 28; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring RavenHudFont0, white, "damage:", 952, 10;
+			drawnumber 1, RavenHudFont0, untranslated, MyDamageFactorUnit, interpolate(1), 976, 8;
+			drawstring RavenHudFont0, untranslated, ".", 986, 20;
+			drawnumber 2, RavenHudFont0, untranslated, MyDamageFactorDecimal, interpolate(1), fillzeros, 1016, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				  S T R I F E		 	    -------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsStrife, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, StrifeHudFont0, 82, -88, 136, -32, red { alpha 0.125 {
+			drawimage "STRFINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory BeggarMorph, 1 || PeasantMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "STRFINV0", "STRFINV1", 82, -88, center; } }
+			
+			else
+			{
+				ininventory ChooseSentinel, 1 || EntityMorph, 1 { alpha 0.5 {
+					drawswitchableimage RankingUp, "STRFINV0", "STRFINV1", 82, -88, center; } }
+				
+				else { alpha 0.3 {
+					drawimage "STRFINV0", 82, -88, center; } }
+			}
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "STRFINV2", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "STRFINV2", 245, -88, center; } }
+			
+		// Health
+		
+		drawimage "strfheal", -52, -92, centerbottom;
+		drawimage "fillbord", -30, -127;
+			
+		ininventory SubEntity0Tracker, 1
+		{
+			drawimage "fillbrd2", -70, -63;
+			drawbar "fillspc2", "fillbck2", SubEntity0Tracker, vertical, interpolate(5), -70, -62;
+		}
+			
+		ininventory SubEntity1Tracker, 1
+		{
+			drawimage "fillbrd2", -50, -63;
+			drawbar "fillspc2", "fillbck2", SubEntity1Tracker, vertical, interpolate(5), -50, -62;
+		}
+			
+		ininventory SubEntity2Tracker, 1
+		{
+			drawbar "fillheal", "fillback", SubEntity2Tracker, vertical, interpolate(8), -30, -125;	
+			drawnumber 3, StrifeHudFont0, Red, SubEntity2Tracker, -3, -148;
+		}
+		
+		else
+		{
+			drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+			drawnumber 5, StrifeHudFont0, red, Health, whennotzero, -3, -148;
+		}
+		
+		// Armor
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, StrifeHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, StrifeHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, StrifeHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, StrifeHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "STRFKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring StrifeHudFont0, red, "SCORE", -4, -378, 0;
+				drawnumber 5, StrifeHudFont0, red, TerminatorScoreTracker, -4, -350;
+			}
+			
+			else
+			{
+				drawstring StrifeHudFont0, red, "FRAGS", -4, -378, 0;
+				drawnumber 5, StrifeHudFont0, red, frags, -4, -350;
+			}
+		}
+		
+		else
+		{
+			drawstring StrifeHudFont0, red, "SCORE", -4, -378, 0;
+			drawnumber 5, StrifeHudFont0, red, StrifeDamagePoint0, interpolate(2), -4, -350;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 28, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, StrifeHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 28, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, StrifeHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 28, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, StrifeHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 28, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, StrifeHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "CHALINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "CHALINV0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "CHALINV0", 212, -118, center; }
+			
+					else {
+						drawimage "CHALINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Rank progress bars
+		
+		ininventory StrifeRank0, 1 {
+			alpha 0.4 { drawimage "ARTIHMN1", 688, 4; }
+			drawimage "RBARSTRF", 345, 0; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0, 493, 90;
+			drawstring StrifeHudFont0, red, "30", 558, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1, 1 {
+			alpha 0.4 { drawimage "ARTISTLK", 688, 40; }
+			alpha 0.4 { drawimage "ARTIAGRD", 710, 4; }
+			alpha 0.4 { drawimage "ARTISEWR", 732, 20; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 91, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1, 493, 90;
+			drawstring StrifeHudFont0, red, "70", 558, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_1, 1 {
+			alpha 0.4 { drawimage "ARTIROB1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_1, 493, 90;
+			drawstring StrifeHudFont0, red, "150", 576, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_1, 1 {
+			alpha 0.4 { drawimage "ARTIPRST", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_1, 493, 90;
+			drawstring StrifeHudFont0, red, "400", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_1, 1 {
+			alpha 0.4 { drawimage "ARTIROB3", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_1, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_1, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_1, 493, 90;
+			drawstring StrifeHudFont0, red, "1750", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_1, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_1, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_2, 1 {
+			alpha 0.4 { drawimage "ARTILEAD", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_2, 493, 90;
+			drawstring StrifeHudFont0, red, "200", 576, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_2, 1 {
+			alpha 0.4 { drawimage "ARTIPGRD", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_2, 493, 90;
+			drawstring StrifeHudFont0, red, "400", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_2, 1 {
+			alpha 0.4 { drawimage "ARTIPRGR", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_2, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_2, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_2, 493, 90;
+			drawstring StrifeHudFont0, red, "1800", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_2, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_2, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_3, 1 {
+			alpha 0.4 { drawimage "ARTIROB2", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_3, 493, 90;
+			drawstring StrifeHudFont0, red, "250", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_3, 1 {
+			alpha 0.4 { drawimage "ARTIMLDR", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_3, 493, 90;
+			drawstring StrifeHudFont0, red, "500", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_3, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_3, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_3, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_3, 493, 90;
+			drawstring StrifeHudFont0, red, "1800", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_3, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_3, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_3, horizontal, interpolate(1), 362, 17; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring StrifeHudFont0, yellow, "damage:", 946, 8;
+			drawnumber 1, StrifeHudFont0, green, MyDamageFactorUnit, interpolate(1), 974, 8;
+			drawstring StrifeHudFont0, green, ".", 982, 16;
+			drawnumber 2, StrifeHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1020, 8;
+		}
+		
+	}
+
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------					V I R U S				-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	
+	ininventory IsVirus, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, VirusHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "VIRSINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory DroneMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "VIRSINV0", "VIRSINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "VIRSINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "VIRSINV0", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "VIRSINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "virsheal", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, VirusHudFont0, untranslated, Health, whennotzero, -3, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, VirusHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, VirusHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, VirusHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, VirusHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "VIRSKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring VirusHudFont0, untranslated, "SCORE", -3, -372, 0;
+				drawnumber 5, VirusHudFont0, untranslated, TerminatorScoreTracker, -4, -344;
+			}
+			
+			else
+			{
+				drawstring VirusHudFont0, untranslated, "FRAGS", -3, -372, 0;
+				drawnumber 5, VirusHudFont0, untranslated, frags, -4, -344;
+			}
+		}
+		
+		else
+		{
+			drawstring VirusHudFont0, untranslated, "SCORE", -3, -372, 0;
+			drawnumber 5, VirusHudFont0, untranslated, VirusDamagePoint0, interpolate(2), -4, -344;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, VirusHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -344; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, VirusHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, VirusHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, VirusHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "VIRSVUL0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "VIRSVUL0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "VIRSVUL0", 212, -118, center; }
+			
+					else {
+						drawimage "VIRSVUL0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Air & Land Carrier drone counter
+		
+		ininventory dronelimit, 1
+		{
+			drawimage "DRONA1", 12, -384, centerbottom;
+			drawnumber 2, VirusHudFont0, untranslated, dronelimit, 56, -400;
+		}
+		
+		// Rank progress bars
+		
+		ininventory VirusRank0, 1 {
+			alpha 0.4 { drawimage "ARTIPRSM", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank0, 493, 73;
+			drawstring VirusHudFont0, untranslated, "40", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank0, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank1, 1 {
+			alpha 0.4 { drawimage "ARTISPOR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank1, 493, 73;
+			drawstring VirusHudFont0, untranslated, "50", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank1, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank2, 1 {
+			alpha 0.4 { drawimage "ARTIGPRS", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank2, 493, 73;
+			drawstring VirusHudFont0, untranslated, "60", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank2, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank3, 1 {
+			alpha 0.4 { drawimage "ARTIMILL", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank3, 493, 73;
+			drawstring VirusHudFont0, untranslated, "150", 574, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank3, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank4, 1 {
+			alpha 0.4 { drawimage "ARTIVIRU", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank4, 493, 73;
+			drawstring VirusHudFont0, untranslated, "180", 574, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank4, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank5, 1 {
+			alpha 0.4 { drawimage "ARTIACAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank5, 493, 73;
+			drawstring VirusHudFont0, untranslated, "220", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank5, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank6, 1 {
+			alpha 0.4 { drawimage "ARTITMLL", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank6, 493, 73;
+			drawstring VirusHudFont0, untranslated, "270", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank6, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank7, 1 {
+			alpha 0.4 { drawimage "ARTIMSHF", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank7, 493, 73;
+			drawstring VirusHudFont0, untranslated, "390", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank7, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank8, 1 {
+			alpha 0.4 { drawimage "ARTIMESH", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank8, 493, 73;
+			drawstring VirusHudFont0, untranslated, "640", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank8, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank9, 1 {
+			alpha 0.4 { drawimage "ARTILEAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank9, 493, 73;
+			drawstring VirusHudFont0, untranslated, "800", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank9, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank10, 1 {
+			alpha 0.4 { drawimage "ARTILCAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank10, 493, 73;
+			drawstring VirusHudFont0, untranslated, "2000", 592, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank10, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank11, 1 {
+			alpha 0.4 { drawimage "ARTIFELX", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank11, 493, 73;
+			drawstring VirusHudFont0, untranslated, "2200", 592, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank11, horizontal, interpolate(1), 365, 14; }
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring VirusHudFont0, yellow, "damage:", 954, 8;
+			drawnumber 1, VirusHudFont0, green, MyDamageFactorUnit, interpolate(1), 982, 8;
+			drawstring VirusHudFont0, green, ".", 988, 8;
+			drawnumber 2, VirusHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1020, 8;
+		}
+		
+		
+		// Felix weapons
+		
+		ininventory FelixWeaponAlpha, 1 {
+			drawimage "felxwp1", 20, -192, centerbottom;
+			drawimage "felxwp2", 60, -192, centerbottom;
+			drawimage "felxwp3", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom;
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 5 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom; }
+			drawimage "felxwp50", 180, -192, centerbottom;
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 4 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom; }
+			drawimage "felxwp40", 140, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 3 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom; }
+			drawimage "felxwp3", 100, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 2 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom; }
+			drawimage "felxwp2", 60, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 1 {
+			drawimage "felxwp1", 20, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		}
+			
+		} } } } }
+		
+	}
+	
+	
+	// Hexen Armor
+	
+	ininventory HasHexenArmor, 1
+	{
+		ininventory not BasicArmor, 1 { alpha 0.2 {
+			
+			drawimage "HEXNARM1", -60, -264, center;
+			drawimage "HEXNARM2", -60, -212, center;
+			drawimage "HEXNARM3", -20, -264, center;
+			drawimage "HEXNARM4", -20, -212, center; } }
+				
+		else {
+					
+			ininventory HasHexenArmor1, 1 {
+				drawimage "HEXNARM1", -60, -264, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM1", -60, -264, center; } }
+					
+			ininventory HasHexenArmor2, 1 {
+				drawimage "HEXNARM2", -60, -212, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM2", -60, -212, center; } }
+					
+			ininventory HasHexenArmor3, 1 {
+				drawimage "HEXNARM3", -20, -264, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM3", -20, -264, center; } }
+					
+			ininventory HasHexenArmor4, 1 {
+				drawimage "HEXNARM4", -20, -212, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM4", -20, -212, center; } }
+					
+		}
+				
+	}
+	
+	
+	// Light Amplification Visor & Torch
+	
+	ininventory PowerLightAmp, 1
+	{
+		alpha 0.4 { drawimage "PWLIGHT0", -63, -313; }
+		
+		drawbar "PWLIGHT0", "PWLIGHT2", PowerupTime InfraRed, horizontal, -63, -313;
+	}
+		
+	else { ininventory PowerTorch, 1 {
+		
+			alpha 0.4 { drawimage "PWTORCH0", -53, -318; }
+		
+			drawbar "PWTORCH0", "PWTORCH3", PowerupTime ArtiTorch, vertical, reverse, -53, -318; } }
+			
+			
+	// Backpack icons. The engine forbids carrying more than one type ever so
+	// no need for else blocks here
+		
+	ininventory Backpack0, 1 { drawimage "BPK0A0", 144, -280; }
+		
+	ininventory BagOfHolding0, 1 { drawimage "BAGHA0", 144, -274; }
+		
+	ininventory AmmoSatchel0, 1 { drawimage "BKPKA0", 144, -274; } // idk why
+			
+	
+	// Tome of Power
+		
+	ininventory PowerWeaponLevel20, 1
+	{
+		ininventory RuneTracker, 1 {
+			drawimage "SPTOME0", 278, -118, center; }
+			
+		else
+		{
+			ininventory PowerInvulnerable, 1 || PowerInvisibility, 1 {
+				drawimage "SPTOME0", 278, -118, center; }
+					
+			else
+			{
+				ininventory PowerGhost, 1 || PowerShadow, 1 {
+					drawimage "SPTOME0", 278, -118, center; }
+			
+				else {
+					drawimage "SPTOME0", 245, -88, center; }
+			}
+		}
+	}
+	
+	
+	// Ghost Sphere: overlaps Invisibility (when not playing Heretic) and Shadow Armor.
+	
+	ininventory PowerGhost, 1
+	{
+		ininventory not IsHeretic, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "SPHRGHS0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "SPHRGHS0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "SPHRGHS0", 245, -88, center; } }
+			}
+		}
+				
+		else
+		{
+			ininventory not PowerInvisibility, 1
+			{
+				ininventory RuneTracker, 1 { alpha 0.6 {
+					drawimage "SPHRGHS0", 212, -58, center; } }
+				
+				else
+				{
+					ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+						drawimage "SPHRGHS0", 212, -58, center; } }
+			
+					else { alpha 0.6 {
+						drawimage "SPHRGHS0", 245, -88, center; } }
+				}
+			}
+		}
+	}
+	
+	
+	// Invisibility Sphere: overlaps Ghost (when playing Heretic) and Shadow Armor.
+		
+	ininventory PowerInvisibility, 1
+	{
+		ininventory IsHeretic, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "SPHRINS0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "SPHRINS0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "SPHRINS0", 245, -88, center; } }
+			}
+		}
+				
+		else
+		{
+			ininventory not PowerGhost, 1
+			{
+				ininventory RuneTracker, 1 { alpha 0.6 {
+					drawimage "SPHRINS0", 212, -58, center; } }
+				
+				else
+				{
+					ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+						drawimage "SPHRINS0", 212, -58, center; } }
+			
+					else { alpha 0.6 {
+						drawimage "SPHRINS0", 245, -88, center; } }
+				}
+			}
+		}
+	}
+	
+	
+	// Shadow Armor
+		
+	ininventory PowerShadow, 1
+	{
+		ininventory not PowerInvisibility, 1 || PowerGhost, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "ARMSHAD0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "ARMSHAD0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "ARMSHAD0", 245, -88, center; } }
+			}
+		}
+	}
+	
+	
+	// Skulltag Runes
+	
+	ininventory runedoubledamage, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC00", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC00", 245, -88, center; }
+	}
+	
+	ininventory runedoublefiringspeed, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC10", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC10", 245, -88, center; }
+	}
+	
+	ininventory runedrain, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC20", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC20", 245, -88, center; }
+	}
+	
+	ininventory runespread, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC30", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC30", 245, -88, center; }
+	}
+	
+	ininventory runehalfdamage, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC40", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC40", 245, -88, center; }
+	}
+	
+	ininventory runeregeneration, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC50", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC50", 245, -88, center; }
+	}
+	
+	ininventory runeprosperity, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC60", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC60", 245, -88, center; }
+	}
+	
+	ininventory runereflection, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC70", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC70", 245, -88, center; }
+	}
+	
+	ininventory runehighjump, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC80", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC80", 245, -88, center; }
+	}
+	
+	ininventory runespeed25, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC90", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC90", 245, -88, center; }
+	}
+	
+	
+	// Terminator health bar
+	
+	ininventory TerminatorHealthTracker, 1
+	{
+		drawimage "RBARHEXN", 512, 44, center;
+		drawbar "RBARXFIL", "RBARXBAK", TerminatorHealthTracker, horizontal, interpolate(1), 393, 36;
+		
+		drawstring bigfont, white, "terminator frags:", 900, 12;
+		drawstring RavenHudFont0, untranslated, "/", 978, 12;
+		drawnumber 3, RavenHudFont0, untranslated, TerminatorFragTrackerNum, 956, 10;
+		drawnumber 3, RavenHudFont0, untranslated, TerminatorFragTrackerMax, 1020, 10;
+		
+		drawstring bigfont, red, "terminator health", 606, 5;
+		drawstring RavenHudFont0, untranslated, "/", 519, 85, 0;
+		drawnumber 4, RavenHudFont0, untranslated, TerminatorHealthTrackerNum, 493, 83;
+		drawnumber 4, RavenHudFont0, untranslated, TerminatorHealthTrackerMax, 575, 83;
+	}
+		
+	
+}
+
+
+
+statusbar fullscreen, forcescaled, fullscreenoffsets
+{
+
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------					D O O M					-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	
+	ininventory IsDoom, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, DoomHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "DOOMINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory ZombiemanMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "DOOMINV0", "DOOMINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "DOOMINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "DOOMINV0", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "DOOMINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "doomheal", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, DoomHudFont0, untranslated, Health, whennotzero, -3, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, DoomHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, DoomHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, DoomHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, DoomHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "DOOMKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring DoomHudFont0, untranslated, "SCORE", -3, -372, 0;
+				drawnumber 5, DoomHudFont0, untranslated, TerminatorScoreTracker, -4, -344;
+			}
+			
+			else
+			{
+				drawstring DoomHudFont0, untranslated, "FRAGS", -3, -372, 0;
+				drawnumber 5, DoomHudFont0, untranslated, frags, -4, -344;
+			}
+		}
+		
+		else
+		{
+			drawstring DoomHudFont0, untranslated, "SCORE", -3, -372, 0;
+			drawnumber 5, DoomHudFont0, untranslated, DoomDamagePoint0, interpolate(2), -4, -344;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, DoomHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -344; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, DoomHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, DoomHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, DoomHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "SPHRINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "SPHRINV0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "SPHRINV0", 212, -118, center; }
+			
+					else {
+						drawimage "SPHRINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Pain Elemental counter
+		
+		ininventory soullimit, 1
+		{
+			drawimage "SKU0A8A2", 24, -384, centerbottom;
+			drawnumber 2, DoomHudFont0, untranslated, soullimit, 76, -408;
+		}
+		
+		// Vile revive counter
+		
+		ininventory reviveattempt, 1
+		{
+			drawimage "VLR0B8", 38, -384, centerbottom;
+			drawnumber 2, DoomHudFont0, untranslated, reviveattempt, 96, -408;
+		}
+		
+		// Rank progress bars
+		
+		ininventory DoomRank0, 1 {
+			alpha 0.4 { drawimage "ARTISPOS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank0, 493, 71;
+			drawstring DoomHudFont0, untranslated, "40", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank0, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank1, 1 {
+			alpha 0.4 { drawimage "ARTITROO", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank1, 493, 71;
+			drawstring DoomHudFont0, untranslated, "50", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank1, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank2, 1 {
+			alpha 0.4 { drawimage "ARTISARG", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank2, 493, 71;
+			drawstring DoomHudFont0, untranslated, "60", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank2, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank3, 1 {
+			alpha 0.4 { drawimage "ARTICPOS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank3, 493, 71;
+			drawstring DoomHudFont0, untranslated, "70", 559, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank3, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank4, 1 {
+			alpha 0.4 { drawimage "ARTIHEAD", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank4, 493, 71;
+			drawstring DoomHudFont0, untranslated, "160", 574, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank4, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank5, 1 {
+			alpha 0.4 { drawimage "ARTISKEL", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank5, 493, 71;
+			drawstring DoomHudFont0, untranslated, "170", 574, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank5, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank6, 1 {
+			alpha 0.4 { drawimage "ARTIBOS2", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank6, 493, 71;
+			drawstring DoomHudFont0, untranslated, "200", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank6, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank7, 1 {
+			alpha 0.4 { drawimage "ARTIBOSS", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank7, 493, 71;
+			drawstring DoomHudFont0, untranslated, "270", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank7, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank8, 1 {
+			alpha 0.4 { drawimage "ARTIFATT", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank8, 493, 71;
+			drawstring DoomHudFont0, untranslated, "330", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank8, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank9, 1 {
+			alpha 0.4 { drawimage "ARTIBSPI", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank9, 493, 71;
+			drawstring DoomHudFont0, untranslated, "550", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank9, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank10, 1 {
+			alpha 0.4 { drawimage "ARTIVILE", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank10, 493, 71;
+			drawstring DoomHudFont0, untranslated, "800", 577, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank10, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank11, 1 {
+			alpha 0.4 { drawimage "ARTISPID", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank11, 493, 71;
+			drawstring DoomHudFont0, untranslated, "1800", 592, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank11, horizontal, interpolate(1), 417, 7; }
+		
+		ininventory DoomRank12, 1 {
+			alpha 0.4 { drawimage "ARTICYBR", 680, 4; }
+			drawimage "RBARDOOM", 512, 33, center; 
+			drawstring DoomHudFont0, untranslated, "/", 519, 71, 0;
+			drawnumber 4, DoomHudFont0, untranslated, DoomRank12, 493, 71;
+			drawstring DoomHudFont0, untranslated, "2500", 595, 71, 0;
+			drawbar "RBARDFIL", "RBARDBAK", DoomRank12, horizontal, interpolate(1), 417, 7; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring DoomHudFont0, yellow, "damage:", 946, 8;
+			drawnumber 1, DoomHudFont0, green, MyDamageFactorUnit, interpolate(1), 975, 8;
+			drawstring DoomHudFont0, green, ".", 985, 16;
+			drawnumber 2, DoomHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1018, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				H E R E T I C				-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsHeretic, 1
+	{
+		
+		drawselectedinventory alternateonempty, center, drawshadow, RavenHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "HTICINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory GargoyleMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "HTICINV0", "HTICINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "HTICINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "HTICINV0", 245, -88, center; } }
+		
+		else { alpha 0.125 {
+			drawimage "HTICINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "ravheal0", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, RavenHudFont0, untranslated, Health, whennotzero, -6, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, OrangeRaven, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, YellowRaven, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, RavenHudFont0, LightBlueRaven, Armor, whennotzero, interpolate(5), -80, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, RavenHudFont0, LightGreenRaven, Armor, whennotzero, interpolate(4), -80, -148;
+			}
+		}
+		
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "HTICKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, TerminatorScoreTracker, -8, -348;
+			}
+			
+			else
+			{
+				drawstring RavenHudFont0, untranslated, "FRAGS", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, frags, -8, -348;
+			}
+		}
+		
+		else
+		{
+			drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+			drawnumber 5, RavenHudFont0, untranslated, HereticDamagePoint0, interpolate(2), -8, -348;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlueRaven, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlue, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, LightGreenRaven, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "RINGINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "RINGINV0", 212, -118, center; }
+					
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "RINGINV0", 212, -118, center; }
+			
+					else {
+						drawimage "RINGINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		
+		// D'Sparil Disciple counter
+		
+		ininventory wizlimit, 1
+		{
+			drawimage "WZRDA1", 26, -384, centerbottom;
+			drawnumber 2, RavenHudFont0, untranslated, wizlimit, 72, -416;
+		}
+		
+		// Rank progress bars
+		
+		ininventory HereticRank0, 1 {
+			alpha 0.4 { drawimage "ARTIIMP2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank0, 493, 75;
+			drawstring RavenHudFont0, untranslated, "30", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank0, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank1, 1 {
+			alpha 0.4 { drawimage "ARTIMUMM", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank1, 493, 75;
+			drawstring RavenHudFont0, untranslated, "50", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank1, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank2, 1 {
+			alpha 0.4 { drawimage "ARTIMUM2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank2, 493, 75;
+			drawstring RavenHudFont0, untranslated, "60", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank2, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank3, 1 {
+			alpha 0.4 { drawimage "ARTICLNK", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank3, 493, 75;
+			drawstring RavenHudFont0, untranslated, "90", 551, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank3, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank4, 1 {
+			alpha 0.4 { drawimage "ARTIWZRD", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank4, 493, 75;
+			drawstring RavenHudFont0, untranslated, "140", 561, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank4, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank5, 1 {
+			alpha 0.4 { drawimage "ARTIKNIG", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank5, 493, 75;
+			drawstring RavenHudFont0, untranslated, "170", 561, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank5, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank6, 1 {
+			alpha 0.4 { drawimage "ARTIKNI2", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank6, 493, 75;
+			drawstring RavenHudFont0, untranslated, "200", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank6, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank7, 1 {
+			alpha 0.4 { drawimage "ARTIBEAS", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank7, 493, 75;
+			drawstring RavenHudFont0, untranslated, "300", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank7, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank8, 1 {
+			alpha 0.4 { drawimage "ARTISNKE", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank8, 493, 75;
+			drawstring RavenHudFont0, untranslated, "500", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank8, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank9, 1 {
+			alpha 0.4 { drawimage "ARTILICH", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank9, 493, 75;
+			drawstring RavenHudFont0, untranslated, "850", 563, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank9, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank10, 1 {
+			alpha 0.4 { drawimage "ARTIMNTR", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank10, 493, 75;
+			drawstring RavenHudFont0, untranslated, "1400", 571, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank10, horizontal, interpolate(1), 362, 43; }
+		
+		ininventory HereticRank11, 1 {
+			alpha 0.4 { drawimage "ARTISRCR", 680, 4; }
+			drawimage "RBARHTIC", 512, 35, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 77, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HereticRank11, 493, 75;
+			drawstring RavenHudFont0, untranslated, "2000", 573, 75, 0;
+			drawbar "RBARHFIL", "RBARHBAK", HereticRank11, horizontal, interpolate(1), 362, 43; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring RavenHudFont0, white, "damage:", 952, 10;
+			drawnumber 1, RavenHudFont0, untranslated, MyDamageFactorUnit, interpolate(1), 976, 8;
+			drawstring RavenHudFont0, untranslated, ".", 986, 20;
+			drawnumber 2, RavenHudFont0, untranslated, MyDamageFactorDecimal, interpolate(1), fillzeros, 1016, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				  H E X E N		 		    -------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsHexen, 1
+	{
+		
+		drawselectedinventory alternateonempty, center, drawshadow, RavenHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "HEXNINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory AfritMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "HEXNINV0", "HEXNINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "HEXNINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "HEXNINV2", 245, -88, center; } }
+		
+		else { alpha 0.125 {
+			drawimage "HEXNINV2", 245, -88, center; } }
+			
+		
+		// Health and armor
+		
+		drawimage "ravheal0", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, RavenHudFont0, untranslated, Health, whennotzero, drawshadow, -6, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, OrangeRaven, Armor, whennotzero, drawshadow, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, RavenHudFont0, YellowRaven, Armor, whennotzero, drawshadow, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, RavenHudFont0, LightBlueRaven, Armor, whennotzero, drawshadow, interpolate(5), -80, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, RavenHudFont0, LightGreenRaven, Armor, whennotzero, drawshadow, interpolate(4), -80, -148;
+			}
+		}
+		
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlueRaven, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, RavenHudFont0, LightBlue, ammo MonsterManaBlue, drawshadow, interpolate(5), 92, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, LightGreenRaven, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, RavenHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 92, -255; }
+		
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "HEXNKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, TerminatorScoreTracker, -8, -348;
+			}
+			
+			else
+			{
+				drawstring RavenHudFont0, untranslated, "FRAGS", -12, -376, 0;
+				drawnumber 5, RavenHudFont0, untranslated, frags, -8, -348;
+			}
+		}
+		
+		else
+		{
+			drawstring RavenHudFont0, untranslated, "SCORE", -12, -376, 0;
+			drawnumber 5, RavenHudFont0, untranslated, HexenDamagePoint0, interpolate(2), -8, -348;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "SPINVU0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "SPINVU0", 212, -118, center; }
+					
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "SPINVU0", 212, -118, center; }
+			
+					else {
+						drawimage "SPINVU0", 245, -88, center; }
+				}
+			}
+			
+			// Heresiarch Invulnerability timer
+			
+			ininventory IsSorcerer, 1
+			{
+				drawimage "centbrd0", 0, -212;
+				ininventory IsSorcererPowered, 1 {
+					drawbar "fillsorc", "centbck0", PowerupTime SorcShieldPowered, horizontal, 0, -212; }
+				else {
+					drawbar "fillsorc", "centbck0", PowerupTime SorcShield, horizontal, 0, -212; }
+			}
+		}
+		
+		
+		// Heresiarch Bishop counter
+		
+		ininventory bishlimit, 1
+		{
+			drawimage "BISHA1", 26, -384, centerbottom;
+			drawnumber 2, RavenHudFont0, LightGreenRaven, bishlimit, drawshadow, 64, -416;
+		}
+		
+		
+		// Centaur Shield timer
+		
+		ininventory CentaurDoingShield, 1
+		{
+			drawimage "centbrd0", 0, -212;
+			drawbar "fillcnt0", "centbck0", CentaurShieldTimer, horizontal, interpolate(2), 0, -212;
+		}
+		
+		
+		// Rank progress bars
+		
+		ininventory HexenRank0, 1 {
+			alpha 0.4 { drawimage "ARTIETTN", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank0, 493, 74;
+			drawstring RavenHudFont0, untranslated, "50", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank0, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank1, 1 {
+			alpha 0.4 { drawimage "ARTICENT", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank1, 493, 74;
+			drawstring RavenHudFont0, untranslated, "65", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank1, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank2, 1 {
+			alpha 0.4 { drawimage "ARTICEN2", 600, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank2, 493, 74;
+			drawstring RavenHudFont0, untranslated, "85", 551, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank2, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank3, 1 {
+			alpha 0.4 { drawimage "ARTIDEM2", 640, 112, center; }
+			alpha 0.4 { drawimage "ARTIDEMN", 616, 112, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank3, 493, 74;
+			drawstring RavenHudFont0, untranslated, "120", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank3, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank4, 1 {
+			alpha 0.4 { drawimage "ARTISSPT", 608, 100, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank4, 493, 74;
+			drawstring RavenHudFont0, untranslated, "150", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank4, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank5, 1 {
+			alpha 0.4 { drawimage "ARTIBISH", 596, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank5, 493, 74;
+			drawstring RavenHudFont0, untranslated, "180", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank5, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank6, 1 {
+			alpha 0.4 { drawimage "ARTIICEY", 608, 108, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank6, 493, 74;
+			drawstring RavenHudFont0, untranslated, "240", 563, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank6, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank7, 1 {
+			alpha 0.4 { drawimage "ARTIWRTH", 604, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank7, 493, 74;
+			drawstring RavenHudFont0, untranslated, "400", 563, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank7, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank8, 1 {
+			alpha 0.4 { drawimage "ARTIMAGE", 646, 104, center; }
+			alpha 0.4 { drawimage "ARTICLER", 618, 104, center; }
+			alpha 0.4 { drawimage "ARTIFIGH", 592, 104, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank8, 493, 74;
+			drawstring RavenHudFont0, untranslated, "410", 561, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank8, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank9, 1 {
+			alpha 0.4 { drawimage "ARTIDRAG", 624, 112, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank9, 493, 74;
+			drawstring RavenHudFont0, untranslated, "1850", 573, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank9, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank10, 1 {
+			alpha 0.4 { drawimage "ARTISORC", 628, 116, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank10, 493, 74;
+			drawstring RavenHudFont0, untranslated, "1950", 573, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank10, horizontal, interpolate(1), 393, 28; }
+		
+		ininventory HexenRank11, 1 {
+			alpha 0.4 { drawimage "ARTIKORX", 644, 124, center; }
+			drawimage "RBARHEXN", 512, 36, center; 
+			drawstring RavenHudFont0, untranslated, "/", 519, 76, 0;
+			drawnumber 4, RavenHudFont0, untranslated, HexenRank11, 493, 74;
+			drawstring RavenHudFont0, untranslated, "2000", 575, 74, 0;
+			drawbar "RBARXFIL", "RBARXBAK", HexenRank11, horizontal, interpolate(1), 393, 28; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring RavenHudFont0, white, "damage:", 952, 10;
+			drawnumber 1, RavenHudFont0, untranslated, MyDamageFactorUnit, interpolate(1), 976, 8;
+			drawstring RavenHudFont0, untranslated, ".", 986, 20;
+			drawnumber 2, RavenHudFont0, untranslated, MyDamageFactorDecimal, interpolate(1), fillzeros, 1016, 8;
+		}
+		
+	}
+	
+	
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------				  S T R I F E		 	    -------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	ininventory IsStrife, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, StrifeHudFont0, 82, -88, 136, -32, red { alpha 0.125 {
+			drawimage "STRFINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory BeggarMorph, 1 || PeasantMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "STRFINV0", "STRFINV1", 82, -88, center; } }
+			
+			else
+			{
+				ininventory ChooseSentinel, 1 || EntityMorph, 1 { alpha 0.5 {
+					drawswitchableimage RankingUp, "STRFINV0", "STRFINV1", 82, -88, center; } }
+				
+				else { alpha 0.3 {
+					drawimage "STRFINV0", 82, -88, center; } }
+			}
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "STRFINV2", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "STRFINV2", 245, -88, center; } }
+			
+		// Health
+		
+		drawimage "strfheal", -52, -92, centerbottom;
+		drawimage "fillbord", -30, -127;
+			
+		ininventory SubEntity0Tracker, 1
+		{
+			drawimage "fillbrd2", -70, -63;
+			drawbar "fillspc2", "fillbck2", SubEntity0Tracker, vertical, interpolate(5), -70, -62;
+		}
+			
+		ininventory SubEntity1Tracker, 1
+		{
+			drawimage "fillbrd2", -50, -63;
+			drawbar "fillspc2", "fillbck2", SubEntity1Tracker, vertical, interpolate(5), -50, -62;
+		}
+			
+		ininventory SubEntity2Tracker, 1
+		{
+			drawbar "fillheal", "fillback", SubEntity2Tracker, vertical, interpolate(8), -30, -125;	
+			drawnumber 3, StrifeHudFont0, Red, SubEntity2Tracker, -3, -148;
+		}
+		
+		else
+		{
+			drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+			drawnumber 5, StrifeHudFont0, red, Health, whennotzero, -3, -148;
+		}
+		
+		// Armor
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, StrifeHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, StrifeHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, StrifeHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, StrifeHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "STRFKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring StrifeHudFont0, red, "SCORE", -4, -378, 0;
+				drawnumber 5, StrifeHudFont0, red, TerminatorScoreTracker, -4, -350;
+			}
+			
+			else
+			{
+				drawstring StrifeHudFont0, red, "FRAGS", -4, -378, 0;
+				drawnumber 5, StrifeHudFont0, red, frags, -4, -350;
+			}
+		}
+		
+		else
+		{
+			drawstring StrifeHudFont0, red, "SCORE", -4, -378, 0;
+			drawnumber 5, StrifeHudFont0, red, StrifeDamagePoint0, interpolate(2), -4, -350;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 28, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, StrifeHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 28, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, StrifeHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 28, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, StrifeHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 28, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, StrifeHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "CHALINV0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "CHALINV0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "CHALINV0", 212, -118, center; }
+			
+					else {
+						drawimage "CHALINV0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Rank progress bars
+		
+		ininventory StrifeRank0, 1 {
+			alpha 0.4 { drawimage "ARTIHMN1", 688, 4; }
+			drawimage "RBARSTRF", 345, 0; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0, 493, 90;
+			drawstring StrifeHudFont0, red, "30", 558, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1, 1 {
+			alpha 0.4 { drawimage "ARTISTLK", 688, 40; }
+			alpha 0.4 { drawimage "ARTIAGRD", 710, 4; }
+			alpha 0.4 { drawimage "ARTISEWR", 732, 20; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 91, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1, 493, 90;
+			drawstring StrifeHudFont0, red, "70", 558, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_1, 1 {
+			alpha 0.4 { drawimage "ARTIROB1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_1, 493, 90;
+			drawstring StrifeHudFont0, red, "150", 576, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_1, 1 {
+			alpha 0.4 { drawimage "ARTIPRST", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_1, 493, 90;
+			drawstring StrifeHudFont0, red, "400", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_1, 1 {
+			alpha 0.4 { drawimage "ARTIROB3", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_1, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_1, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_1, 493, 90;
+			drawstring StrifeHudFont0, red, "1750", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_1, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_1, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_1, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_2, 1 {
+			alpha 0.4 { drawimage "ARTILEAD", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_2, 493, 90;
+			drawstring StrifeHudFont0, red, "200", 576, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_2, 1 {
+			alpha 0.4 { drawimage "ARTIPGRD", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_2, 493, 90;
+			drawstring StrifeHudFont0, red, "400", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_2, 1 {
+			alpha 0.4 { drawimage "ARTIPRGR", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_2, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_2, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_2, 493, 90;
+			drawstring StrifeHudFont0, red, "1800", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_2, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_2, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_2, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank0_3, 1 {
+			alpha 0.4 { drawimage "ARTIROB2", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank0_3, 493, 90;
+			drawstring StrifeHudFont0, red, "250", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank0_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank1_3, 1 {
+			alpha 0.4 { drawimage "ARTIMLDR", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank1_3, 493, 90;
+			drawstring StrifeHudFont0, red, "500", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank1_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank2_3, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank2_3, 493, 90;
+			drawstring StrifeHudFont0, red, "900", 580, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank2_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank3_3, 1 {
+			alpha 0.4 { drawimage "ARTIALN1", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank3_3, 493, 90;
+			drawstring StrifeHudFont0, red, "1800", 596, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank3_3, horizontal, interpolate(1), 362, 17; }
+		
+		ininventory StrifeRank4_3, 1 {
+			alpha 0.4 { drawimage "ARTIMNAL", 688, 4; }
+			drawimage "RBARSTRF", 512, 41, center; 
+			drawstring StrifeHudFont0, red, "/", 519, 90, 0;
+			drawnumber 4, StrifeHudFont0, red, StrifeRank4_3, 493, 90;
+			drawstring StrifeHudFont0, red, "2900", 602, 90, 0;
+			drawbar "RBARSFIL", "RBARSBAK", StrifeRank4_3, horizontal, interpolate(1), 362, 17; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring StrifeHudFont0, yellow, "damage:", 946, 8;
+			drawnumber 1, StrifeHudFont0, green, MyDamageFactorUnit, interpolate(1), 974, 8;
+			drawstring StrifeHudFont0, green, ".", 982, 16;
+			drawnumber 2, StrifeHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1020, 8;
+		}
+		
+	}
+
+	/*
+	-----------------------------------------------------------------------------------------
+	---------------------					V I R U S				-------------------------
+	-----------------------------------------------------------------------------------------
+	*/
+	
+	
+	ininventory IsVirus, 1
+	{
+		drawselectedinventory alternateonempty, center, drawshadow, VirusHudFont0, 82, -88, 136, -32, untranslated { alpha 0.125 {
+			drawimage "VIRSINV0", 82, -88, center; } }
+		
+		else
+		{
+			ininventory DroneMorph, 1 { alpha 0.5 {
+				drawswitchableimage RankingUp, "VIRSINV0", "VIRSINV1", 82, -88, center; } }
+			
+			else { alpha 0.3 {
+				drawimage "VIRSINV0", 82, -88, center; } }
+		}
+		
+		ininventory RuneTracker, 1 || PowerTracker, 1 { alpha 0.3 {
+			drawimage "VIRSINV0", 245, -88, center; } }
+			
+		else { alpha 0.125 {
+			drawimage "VIRSINV0", 245, -88, center; } }
+		
+		// Health and armor
+		
+		drawimage "virsheal", -52, -100, centerbottom;
+		drawimage "fillbord", -30, -127;
+		drawbar "fillheal", "fillback", Health, Vertical, -30, -125;
+		
+		drawnumber 5, VirusHudFont0, untranslated, Health, whennotzero, -3, -148;
+		
+		ininventory BasicArmor, 1
+		{
+			drawimage armoricon, -128, -100, centerbottom;
+			drawimage "fillbord", -105, -127;
+			
+			ininventory HasHexenArmor, 1
+			{
+				ininventory HasDragonskin0, 1 {
+					drawbar "fillarh2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, VirusHudFont0, orange, Armor, whennotzero, interpolate(5), -78, -148; }
+				else {
+					drawbar "fillarh1", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+					drawnumber 3, VirusHudFont0, yellow, Armor, whennotzero, interpolate(5), -78, -148; }
+			}
+		
+			ininventory HasBlueArmor, 1
+			{
+				drawbar "fillarm2", "fillback", BasicArmor, Vertical, interpolate(5), -105, -125;
+				drawnumber 3, VirusHudFont0, blue, Armor, whennotzero, interpolate(5), -78, -148;
+			}
+		
+			ininventory HasGreenArmor, 1
+			{
+				drawbar "fillarm1", "fillback", BasicArmor, Vertical, interpolate(4), -105, -125;
+				drawnumber 3, VirusHudFont0, green, Armor, whennotzero, interpolate(4), -78, -148;
+			}
+		}
+		
+		// Score and keys
+		
+		alpha 0.3 {
+			drawimage "VIRSKEYB", -88, -392; }
+		
+		gamemode deathmatch
+		{
+			ininventory TerminatorHealthTracker, 1
+			{
+				drawstring VirusHudFont0, untranslated, "SCORE", -3, -372, 0;
+				drawnumber 5, VirusHudFont0, untranslated, TerminatorScoreTracker, -4, -344;
+			}
+			
+			else
+			{
+				drawstring VirusHudFont0, untranslated, "FRAGS", -3, -372, 0;
+				drawnumber 5, VirusHudFont0, untranslated, frags, -4, -344;
+			}
+		}
+		
+		else
+		{
+			drawstring VirusHudFont0, untranslated, "SCORE", -3, -372, 0;
+			drawnumber 5, VirusHudFont0, untranslated, VirusDamagePoint0, interpolate(2), -4, -344;
+			
+			ininventory not HasHexenArmor, 1 {
+				drawkeybar 3, vertical, 28, -32, -280, 0, 3, auto;
+				drawkeybar 3, vertical, 28, -68, -280, 3, 3, auto; }
+		}
+		
+		// Mana
+		
+		drawimage "centbrd0", 0, -320;
+		
+		weaponammo MonsterManaBlue {
+			drawimage "man1a0", 32, -336, center;
+			drawbar "fillman3", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, VirusHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -344; }
+			
+		else {
+			alpha 0.4 { drawimage "man1a0", 32, -336, center; }
+			drawbar "fillman1", "centbck0", ammo MonsterManaBlue, horizontal, interpolate(2), 0, -320;
+			drawnumber 4, VirusHudFont0, blue, ammo MonsterManaBlue, drawshadow, interpolate(5), 104, -348; }
+			
+			
+		drawimage "centbrd0", 0, -288;
+			
+		weaponammo MonsterManaGreen {
+			drawimage "man2a0", 32, -248, center;
+			drawbar "fillman4", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, VirusHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+			
+		else {
+			alpha 0.4 { drawimage "man2a0", 32, -248, center; }
+			drawbar "fillman2", "centbck0", ammo MonsterManaGreen, horizontal, interpolate(2), 0, -288;
+			drawnumber 4, VirusHudFont0, green, ammo MonsterManaGreen, drawshadow, interpolate(5), 104, -255; }
+		
+		// Invulnerability
+	
+		ininventory PowerInvulnerable, 1
+		{
+			ininventory RuneTracker, 1 {
+				drawimage "VIRSVUL0", 212, -118, center; }
+		
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvisibility, 1 {
+					drawimage "VIRSVUL0", 212, -118, center; }
+			
+				else
+				{
+					ininventory PowerGhost, 1 || PowerShadow, 1 {
+						drawimage "VIRSVUL0", 212, -118, center; }
+			
+					else {
+						drawimage "VIRSVUL0", 245, -88, center; }
+				}
+			}
+		}
+		
+		// Air Carrier drone counter
+		
+		ininventory dronelimit, 1
+		{
+			drawimage "DRONA1", 12, -384, centerbottom;
+			drawnumber 2, VirusHudFont0, untranslated, dronelimit, 56, -400;
+		}
+		
+		// Rank progress bars
+		
+		ininventory VirusRank0, 1 {
+			alpha 0.4 { drawimage "ARTIPRSM", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank0, 493, 73;
+			drawstring VirusHudFont0, untranslated, "40", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank0, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank1, 1 {
+			alpha 0.4 { drawimage "ARTISPOR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank1, 493, 73;
+			drawstring VirusHudFont0, untranslated, "50", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank1, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank2, 1 {
+			alpha 0.4 { drawimage "ARTIGPRS", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank2, 493, 73;
+			drawstring VirusHudFont0, untranslated, "60", 559, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank2, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank3, 1 {
+			alpha 0.4 { drawimage "ARTIMILL", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank3, 493, 73;
+			drawstring VirusHudFont0, untranslated, "150", 574, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank3, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank4, 1 {
+			alpha 0.4 { drawimage "ARTIVIRU", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank4, 493, 73;
+			drawstring VirusHudFont0, untranslated, "180", 574, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank4, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank5, 1 {
+			alpha 0.4 { drawimage "ARTIACAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank5, 493, 73;
+			drawstring VirusHudFont0, untranslated, "220", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank5, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank6, 1 {
+			alpha 0.4 { drawimage "ARTITMLL", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank6, 493, 73;
+			drawstring VirusHudFont0, untranslated, "270", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank6, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank7, 1 {
+			alpha 0.4 { drawimage "ARTIMSHF", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank7, 493, 73;
+			drawstring VirusHudFont0, untranslated, "390", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank7, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank8, 1 {
+			alpha 0.4 { drawimage "ARTIMESH", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank8, 493, 73;
+			drawstring VirusHudFont0, untranslated, "640", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank8, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank9, 1 {
+			alpha 0.4 { drawimage "ARTILEAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank9, 493, 73;
+			drawstring VirusHudFont0, untranslated, "800", 577, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank9, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank10, 1 {
+			alpha 0.4 { drawimage "ARTILCAR", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank10, 493, 73;
+			drawstring VirusHudFont0, untranslated, "2000", 592, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank10, horizontal, interpolate(1), 365, 14; }
+		
+		ininventory VirusRank11, 1 {
+			alpha 0.4 { drawimage "ARTIFELX", 680, 4; }
+			drawimage "RBARVIRS", 512, 33, center; 
+			drawstring VirusHudFont0, untranslated, "/", 519, 73, 0;
+			drawnumber 4, VirusHudFont0, untranslated, VirusRank11, 493, 73;
+			drawstring VirusHudFont0, untranslated, "2200", 592, 73, 0;
+			drawbar "RBARVFIL", "RBARVBAK", VirusRank11, horizontal, interpolate(1), 365, 14; }
+			
+			
+		// Damage Factor display
+	
+		ininventory HasDamageFactor, 1
+		{
+			drawstring VirusHudFont0, yellow, "damage:", 954, 8;
+			drawnumber 1, VirusHudFont0, green, MyDamageFactorUnit, interpolate(1), 982, 8;
+			drawstring VirusHudFont0, green, ".", 988, 8;
+			drawnumber 2, VirusHudFont0, green, MyDamageFactorDecimal, interpolate(1), fillzeros, 1020, 8;
+		}
+		
+		
+		// Felix weapons
+		
+		ininventory FelixWeaponAlpha, 1 {
+			drawimage "felxwp1", 20, -192, centerbottom;
+			drawimage "felxwp2", 60, -192, centerbottom;
+			drawimage "felxwp3", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom;
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 5 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom; }
+			drawimage "felxwp50", 180, -192, centerbottom;
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 4 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom; }
+			drawimage "felxwp40", 140, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 3 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom;
+			drawimage "felxwp20", 60, -192, centerbottom; }
+			drawimage "felxwp3", 100, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 2 {
+			alpha 0.4 { drawimage "felxwp10", 20, -192, centerbottom; }
+			drawimage "felxwp2", 60, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		} else {
+		
+		ininventory FelixWeaponTracker, 1 {
+			drawimage "felxwp1", 20, -192, centerbottom;
+			alpha 0.4 { drawimage "felxwp20", 60, -192, centerbottom;
+			drawimage "felxwp30", 100, -192, centerbottom;
+			drawimage "felxwp40", 140, -192, centerbottom;
+			drawimage "felxwp50", 180, -192, centerbottom; }
+		
+		}
+			
+		} } } } }
+		
+	}
+	
+	
+	// Hexen Armor
+	
+	ininventory HasHexenArmor, 1
+	{
+		ininventory not BasicArmor, 1 { alpha 0.2 {
+			
+			drawimage "HEXNARM1", -60, -264, center;
+			drawimage "HEXNARM2", -60, -212, center;
+			drawimage "HEXNARM3", -20, -264, center;
+			drawimage "HEXNARM4", -20, -212, center; } }
+				
+		else {
+					
+			ininventory HasHexenArmor1, 1 {
+				drawimage "HEXNARM1", -60, -264, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM1", -60, -264, center; } }
+					
+			ininventory HasHexenArmor2, 1 {
+				drawimage "HEXNARM2", -60, -212, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM2", -60, -212, center; } }
+					
+			ininventory HasHexenArmor3, 1 {
+				drawimage "HEXNARM3", -20, -264, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM3", -20, -264, center; } }
+					
+			ininventory HasHexenArmor4, 1 {
+				drawimage "HEXNARM4", -20, -212, center; }
+			else { alpha 0.2 {
+				drawimage "HEXNARM4", -20, -212, center; } }
+					
+		}
+				
+	}
+	
+	
+	// Light Amplification Visor & Torch
+	
+	ininventory PowerLightAmp, 1
+	{
+		alpha 0.4 { drawimage "PWLIGHT0", -63, -313; }
+		
+		drawbar "PWLIGHT0", "PWLIGHT2", PowerupTime InfraRed, horizontal, -63, -313;
+	}
+		
+	else { ininventory PowerTorch, 1 {
+		
+			alpha 0.4 { drawimage "PWTORCH0", -53, -318; }
+		
+			drawbar "PWTORCH0", "PWTORCH3", PowerupTime ArtiTorch, vertical, reverse, -53, -318; } }
+			
+			
+	// Backpack icons. The engine forbids carrying more than one type ever so
+	// no need for else blocks here
+		
+	ininventory Backpack0, 1 { drawimage "BPK0A0", 144, -280; }
+		
+	ininventory BagOfHolding0, 1 { drawimage "BAGHA0", 144, -274; }
+		
+	ininventory AmmoSatchel0, 1 { drawimage "BKPKA0", 144, -274; } // idk why
+			
+	
+	// Tome of Power
+		
+	ininventory PowerWeaponLevel20, 1
+	{
+		ininventory RuneTracker, 1 {
+			drawimage "SPTOME0", 278, -118, center; }
+			
+		else
+		{
+			ininventory PowerInvulnerable, 1 || PowerInvisibility, 1 {
+				drawimage "SPTOME0", 278, -118, center; }
+					
+			else
+			{
+				ininventory PowerGhost, 1 || PowerShadow, 1 {
+					drawimage "SPTOME0", 278, -118, center; }
+			
+				else {
+					drawimage "SPTOME0", 245, -88, center; }
+			}
+		}
+	}
+	
+	
+	// Ghost Sphere: overlaps Invisibility (when not playing Heretic) and Shadow Armor.
+	
+	ininventory PowerGhost, 1
+	{
+		ininventory not IsHeretic, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "SPHRGHS0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "SPHRGHS0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "SPHRGHS0", 245, -88, center; } }
+			}
+		}
+				
+		else
+		{
+			ininventory not PowerInvisibility, 1
+			{
+				ininventory RuneTracker, 1 { alpha 0.6 {
+					drawimage "SPHRGHS0", 212, -58, center; } }
+				
+				else
+				{
+					ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+						drawimage "SPHRGHS0", 212, -58, center; } }
+			
+					else { alpha 0.6 {
+						drawimage "SPHRGHS0", 245, -88, center; } }
+				}
+			}
+		}
+	}
+	
+	
+	// Invisibility Sphere: overlaps Ghost (when playing Heretic) and Shadow Armor.
+		
+	ininventory PowerInvisibility, 1
+	{
+		ininventory IsHeretic, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "SPHRINS0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "SPHRINS0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "SPHRINS0", 245, -88, center; } }
+			}
+		}
+				
+		else
+		{
+			ininventory not PowerGhost, 1
+			{
+				ininventory RuneTracker, 1 { alpha 0.6 {
+					drawimage "SPHRINS0", 212, -58, center; } }
+				
+				else
+				{
+					ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+						drawimage "SPHRINS0", 212, -58, center; } }
+			
+					else { alpha 0.6 {
+						drawimage "SPHRINS0", 245, -88, center; } }
+				}
+			}
+		}
+	}
+	
+	
+	// Shadow Armor
+		
+	ininventory PowerShadow, 1
+	{
+		ininventory not PowerInvisibility, 1 || PowerGhost, 1
+		{
+			ininventory RuneTracker, 1 { alpha 0.6 {
+				drawimage "ARMSHAD0", 212, -58, center; } }
+				
+			else
+			{
+				ininventory PowerWeaponLevel20, 1 || PowerInvulnerable, 1 { alpha 0.6 {
+					drawimage "ARMSHAD0", 212, -58, center; } }
+			
+				else { alpha 0.6 {
+					drawimage "ARMSHAD0", 245, -88, center; } }
+			}
+		}
+	}
+	
+	
+	// Skulltag Runes
+	
+	ininventory runedoubledamage, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC00", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC00", 245, -88, center; }
+	}
+	
+	ininventory runedoublefiringspeed, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC10", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC10", 245, -88, center; }
+	}
+	
+	ininventory runedrain, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC20", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC20", 245, -88, center; }
+	}
+	
+	ininventory runespread, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC30", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC30", 245, -88, center; }
+	}
+	
+	ininventory runehalfdamage, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC40", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC40", 245, -88, center; }
+	}
+	
+	ininventory runeregeneration, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC50", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC50", 245, -88, center; }
+	}
+	
+	ininventory runeprosperity, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC60", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC60", 245, -88, center; }
+	}
+	
+	ininventory runereflection, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC70", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC70", 245, -88, center; }
+	}
+	
+	ininventory runehighjump, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC80", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC80", 245, -88, center; }
+	}
+	
+	ininventory runespeed25, 1
+	{
+		ininventory PowerTracker, 1 {
+			drawimage "RUNEIC90", 278, -58, center; }
+		
+		else {
+			drawimage "RUNEIC90", 245, -88, center; }
+	}
+	
+	
+	// Terminator health bar (incompatible with damagefactors, can overlap)
+	
+	ininventory TerminatorHealthTracker, 1
+	{
+		drawimage "RBARHEXN", 512, 44, center;
+		drawbar "RBARXFIL", "RBARXBAK", TerminatorHealthTracker, horizontal, interpolate(1), 393, 36;
+		
+		drawstring bigfont, white, "terminator frags:", 900, 12;
+		drawstring RavenHudFont0, untranslated, "/", 978, 12;
+		drawnumber 3, RavenHudFont0, untranslated, TerminatorFragTrackerNum, 956, 10;
+		drawnumber 3, RavenHudFont0, untranslated, TerminatorFragTrackerMax, 1020, 10;
+		
+		drawstring bigfont, red, "terminator health", 606, 5;
+		drawstring RavenHudFont0, untranslated, "/", 519, 85, 0;
+		drawnumber 4, RavenHudFont0, untranslated, TerminatorHealthTrackerNum, 493, 83;
+		drawnumber 4, RavenHudFont0, untranslated, TerminatorHealthTrackerMax, 575, 83;
+	}
+		
+	
+	
+}

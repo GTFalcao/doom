@@ -1,0 +1,82 @@
+
+// Strength
+
+texture RUNEIC00
+pic RUNEIC00 tics 6
+pic RUNEIC01 tics 6
+pic RUNEIC02 tics 6
+pic RUNEIC03 tics 6
+pic RUNEIC04 tics 6
+
+// Rage
+
+texture RUNEIC10
+pic RUNEIC10 tics 6
+pic RUNEIC11 tics 6
+pic RUNEIC12 tics 6
+pic RUNEIC13 tics 6
+pic RUNEIC14 tics 6
+pic RUNEIC15 tics 6
+pic RUNEIC16 tics 6
+pic RUNEIC17 tics 6
+
+// Drain
+
+texture RUNEIC20
+pic RUNEIC20 tics 6
+pic RUNEIC21 tics 6
+pic RUNEIC22 tics 6
+pic RUNEIC21 tics 6
+
+// Spread
+
+texture RUNEIC30
+pic RUNEIC30 tics 6
+pic RUNEIC31 tics 6
+pic RUNEIC32 tics 6
+pic RUNEIC33 tics 6
+pic RUNEIC32 tics 6
+pic RUNEIC31 tics 6
+
+// Resistance
+
+texture RUNEIC40
+pic RUNEIC40 tics 6
+pic RUNEIC41 tics 6
+pic RUNEIC42 tics 6
+pic RUNEIC43 tics 6
+pic RUNEIC44 tics 6
+pic RUNEIC45 tics 6
+pic RUNEIC46 tics 6
+pic RUNEIC47 tics 6
+
+// Regeneration
+
+texture RUNEIC50
+pic RUNEIC50 tics 10
+pic RUNEIC51 tics 10
+
+// Prosperity
+
+texture RUNEIC60
+pic RUNEIC60 tics 6
+pic RUNEIC61 tics 6
+pic RUNEIC62 tics 6
+pic RUNEIC63 tics 6
+pic RUNEIC64 tics 6
+
+// High Jump
+
+texture RUNEIC80
+pic RUNEIC80 tics 6
+pic RUNEIC81 tics 6
+pic RUNEIC82 tics 6
+pic RUNEIC83 tics 6
+
+// Haste
+
+texture RUNEIC90
+pic RUNEIC90 tics 6
+pic RUNEIC91 tics 6
+pic RUNEIC92 tics 6
+pic RUNEIC93 tics 6

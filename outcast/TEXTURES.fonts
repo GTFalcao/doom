@@ -1,0 +1,1644 @@
+
+///////////////////////////////////
+///////////////////////////////////
+// Doom Font
+///////////////////////////////////
+///////////////////////////////////
+
+graphic FDOOM033, 4, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M033, 0, 0
+}
+
+graphic FDOOM034, 7, 4
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M034, 0, 0
+}
+
+graphic FDOOM035, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M035, 0, 0
+}
+
+graphic FDOOM036, 7, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M036, 0, 0
+}
+
+graphic FDOOM037, 9, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M037, 0, 0
+}
+
+graphic FDOOM038, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M038, 0, 0
+}
+
+graphic FDOOM039, 4, 4
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M039, 0, 0
+}
+
+graphic FDOOM040, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M040, 0, 0
+}
+
+graphic FDOOM041, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M041, 0, 0
+}
+
+graphic FDOOM042, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M042, 0, 0
+}
+graphic FDOOM043, 5, 5
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M043, 0, 0
+}
+
+graphic FDOOM044, 4, 4
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M044, 0, 0
+}
+
+graphic FDOOM045, 6, 3
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M045, 0, 0
+}
+
+graphic FDOOM046, 4, 3
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M046, 0, 0
+}
+
+graphic FDOOM047, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M047, 0, 0
+}
+
+graphic FDOOM048, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M048, 0, 0
+}
+
+graphic FDOOM049, 5, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M049, 0, 0
+}
+
+graphic FDOOM050, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M050, 0, 0
+}
+
+graphic FDOOM051, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M051, 0, 0
+}
+
+graphic FDOOM052, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M052, 0, 0
+}
+
+graphic FDOOM053, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M053, 0, 0
+}
+
+graphic FDOOM054, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M054, 0, 0
+}
+
+graphic FDOOM055, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M055, 0, 0
+}
+
+graphic FDOOM056, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M056, 0, 0
+}
+
+graphic FDOOM057, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M057, 0, 0
+}
+
+graphic FDOOM058, 4, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M058, 0, 0
+}
+
+graphic FDOOM059, 4, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M059, 0, 0
+}
+
+graphic FDOOM060, 5, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M060, 0, 0
+}
+
+graphic FDOOM061, 5, 5
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M061, 0, 0
+}
+
+graphic FDOOM062, 5, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M062, 0, 0
+}
+
+graphic FDOOM063, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M063, 0, 0
+}
+
+graphic FDOOM064, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M064, 0, 0
+}
+
+graphic FDOOM065, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M065, 0, 0
+}
+
+graphic FDOOM066, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M066, 0, 0
+}
+
+graphic FDOOM067, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M067, 0, 0
+}
+
+graphic FDOOM068, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M068, 0, 0
+}
+
+graphic FDOOM069, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M069, 0, 0
+}
+
+graphic FDOOM070, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M070, 0, 0
+}
+
+graphic FDOOM071, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M071, 0, 0
+}
+
+graphic FDOOM072, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M072, 0, 0
+}
+
+graphic FDOOM073, 4, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M073, 0, 0
+}
+
+graphic FDOOM074, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M074, 0, 0
+}
+
+graphic FDOOM075, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M075, 0, 0
+}
+
+graphic FDOOM076, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M076, 0, 0
+}
+
+graphic FDOOM077, 9, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M077, 0, 0
+}
+
+graphic FDOOM078, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M078, 0, 0
+}
+
+graphic FDOOM079, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M079, 0, 0
+}
+
+graphic FDOOM080, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M080, 0, 0
+}
+
+graphic FDOOM081, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M081, 0, 0
+}
+
+graphic FDOOM082, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M082, 0, 0
+}
+graphic FDOOM083, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M083, 0, 0
+}
+
+graphic FDOOM084, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M084, 0, 0
+}
+
+graphic FDOOM085, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M085, 0, 0
+}
+
+graphic FDOOM086, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M086, 0, 0
+}
+
+graphic FDOOM087, 9, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M087, 0, 0
+}
+
+graphic FDOOM088, 9, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M088, 0, 0
+}
+
+graphic FDOOM089, 8, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M089, 0, 0
+}
+
+graphic FDOOM090, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FD00M090, 0, 0
+}
+
+///////////////////////////////////
+///////////////////////////////////
+// Raven Font
+///////////////////////////////////
+///////////////////////////////////
+
+graphic FRAV033, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0033, 0, 0
+}
+
+graphic FRAV034, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0034, 0, 0
+}
+
+graphic FRAV035, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0035, 0, 0
+}
+
+graphic FRAV036, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0036, 0, 0
+}
+
+graphic FRAV037, 14, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0037, 0, 0
+}
+
+graphic FRAV038, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0038, 0, 0
+}
+
+graphic FRAV039, 6, 6
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0039, 0, 0
+}
+
+graphic FRAV040, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0040, 0, 0
+}
+
+graphic FRAV041, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0041, 0, 0
+}
+
+graphic FRAV042, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0042, 0, 0
+}
+graphic FRAV043, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0043, 0, 0
+}
+
+graphic FRAV044, 6, 6
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0044, 0, 0
+}
+
+graphic FRAV045, 11, 5
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0045, 0, 0
+}
+
+graphic FRAV046, 6, 5
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0046, 0, 0
+}
+
+graphic FRAV047, 14, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0047, 0, 0
+}
+
+graphic FRAV048, 11, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0048, 0, 0
+}
+
+graphic FRAV049, 5, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0049, 0, 0
+}
+
+graphic FRAV050, 11, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0050, 0, 0
+}
+
+graphic FRAV051, 12, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0051, 0, 0
+}
+
+graphic FRAV052, 11, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0052, 0, 0
+}
+
+graphic FRAV053, 10, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0053, 0, 0
+}
+
+graphic FRAV054, 11, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0054, 0, 0
+}
+
+graphic FRAV055, 11, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0055, 0, 0
+}
+
+graphic FRAV056, 12, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0056, 0, 0
+}
+graphic FRAV057, 12, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0057, 0, 0
+}
+
+graphic FRAV058, 5, 11
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0058, 0, 0
+}
+
+graphic FRAV059, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0059, 0, 0
+}
+
+graphic FRAV060, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0060, 0, 0
+}
+
+graphic FRAV061, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0061, 0, 0
+}
+
+graphic FRAV062, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0062, 0, 0
+}
+
+graphic FRAV063, 11, 19
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0063, 0, 0
+}
+
+graphic FRAV064, 2, 1
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0064, 0, 0
+}
+
+graphic FRAV065, 11, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0065, 0, 0
+}
+
+graphic FRAV066, 12, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0066, 0, 0
+}
+
+graphic FRAV067, 11, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0067, 0, 0
+}
+
+graphic FRAV068, 12, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0068, 0, 0
+}
+
+graphic FRAV069, 11, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0069, 0, 0
+}
+
+graphic FRAV070, 8, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0070, 0, 0
+}
+
+graphic FRAV071, 13, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0071, 0, 0
+}
+
+graphic FRAV072, 12, 19
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0072, 0, 0
+}
+
+graphic FRAV073, 6, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0073, 0, 0
+}
+
+graphic FRAV074, 8, 20
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0074, 0, 0
+}
+
+graphic FRAV075, 13, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0075, 0, 0
+}
+
+graphic FRAV076, 6, 17
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0076, 0, 0
+}
+
+graphic FRAV077, 18, 14
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0077, 0, 0
+}
+
+graphic FRAV078, 13, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0078, 0, 0
+}
+
+graphic FRAV079, 13, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0079, 0, 0
+}
+
+graphic FRAV080, 14, 18
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0080, 0, 0
+}
+
+graphic FRAV081, 12, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0081, 0, 0
+}
+
+graphic FRAV082, 10, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0082, 0, 0
+}
+
+graphic FRAV083, 10, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0083, 0, 0
+}
+
+graphic FRAV084, 8, 15
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0084, 0, 0
+}
+
+graphic FRAV085, 12, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0085, 0, 0
+}
+
+graphic FRAV086, 13, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0086, 0, 0
+}
+
+graphic FRAV087, 17, 13
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0087, 0, 0
+}
+
+graphic FRAV088, 12, 12
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0088, 0, 0
+}
+
+graphic FRAV089, 11, 16
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0089, 0, 0
+}
+
+graphic FRAV090, 11, 12
+{
+	xscale 0.9
+	yscale 0.9
+	patch FRV0090, 0, 0
+}
+
+///////////////////////////////////
+///////////////////////////////////
+// Strife Font
+///////////////////////////////////
+///////////////////////////////////
+
+graphic FSTRF033, 4, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0033, 0, 0
+}
+
+graphic FSTRF034, 7, 4
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0034, 0, 0
+}
+
+graphic FSTRF035, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0035, 0, 0
+}
+
+graphic FSTRF036, 7, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0036, 0, 0
+}
+
+graphic FSTRF037, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0037, 0, 0
+}
+
+graphic FSTRF038, 6, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0038, 0, 0
+}
+
+graphic FSTRF039, 4, 4
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0039, 0, 0
+}
+
+graphic FSTRF040, 6, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0040, 0, 0
+}
+
+graphic FSTRF041, 6, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0041, 0, 0
+}
+
+graphic FSTRF042, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0042, 0, 0
+}
+
+graphic FSTRF043, 5, 5
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0043, 0, 0
+}
+
+graphic FSTRF044, 4, 4
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0044, 0, 0
+}
+
+graphic FSTRF045, 6, 3
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0045, 0, 0
+}
+
+graphic FSTRF046, 4, 3
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0046, 0, 0
+}
+
+graphic FSTRF047, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0047, 0, 0
+}
+
+graphic FSTRF048, 10, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0048, 0, 0
+}
+
+graphic FSTRF049, 5, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0049, 0, 0
+}
+
+graphic FSTRF050, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0050, 0, 0
+}
+
+graphic FSTRF051, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0051, 0, 0
+}
+
+graphic FSTRF052, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0052, 0, 0
+}
+
+graphic FSTRF053, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0053, 0, 0
+}
+
+graphic FSTRF054, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0054, 0, 0
+}
+
+graphic FSTRF055, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0055, 0, 0
+}
+
+graphic FSTRF056, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0056, 0, 0
+}
+
+graphic FSTRF057, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0057, 0, 0
+}
+
+graphic FSTRF058, 4, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0058, 0, 0
+}
+
+graphic FSTRF059, 4, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0059, 0, 0
+}
+
+graphic FSTRF060, 5, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0060, 0, 0
+}
+
+graphic FSTRF061, 5, 5
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0061, 0, 0
+}
+
+graphic FSTRF062, 5, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0062, 0, 0
+}
+
+graphic FSTRF063, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0063, 0, 0
+}
+
+graphic FSTRF064, 9, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0064, 0, 0
+}
+
+graphic FSTRF065, 10, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0065, 0, 0
+}
+
+graphic FSTRF066, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0066, 0, 0
+}
+
+graphic FSTRF067, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0067, 0, 0
+}
+
+graphic FSTRF068, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0068, 0, 0
+}
+
+graphic FSTRF069, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0069, 0, 0
+}
+
+graphic FSTRF070, 8, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0070, 0, 0
+}
+
+graphic FSTRF071, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0071, 0, 0
+}
+
+graphic FSTRF072, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0072, 0, 0
+}
+
+graphic FSTRF073, 4, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0073, 0, 0
+}
+
+graphic FSTRF074, 7, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0074, 0, 0
+}
+
+graphic FSTRF075, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0075, 0, 0
+}
+
+graphic FSTRF076, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0076, 0, 0
+}
+
+graphic FSTRF077, 12, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0077, 0, 0
+}
+
+graphic FSTRF078, 10, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0078, 0, 0
+}
+
+graphic FSTRF079, 10, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0079, 0, 0
+}
+
+graphic FSTRF080, 9, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0080, 0, 0
+}
+
+graphic FSTRF081, 10, 8
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0081, 0, 0
+}
+
+graphic FSTRF082, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0082, 0, 0
+}
+
+graphic FSTRF083, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0083, 0, 0
+}
+
+graphic FSTRF084, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0084, 0, 0
+}
+
+graphic FSTRF085, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0085, 0, 0
+}
+
+graphic FSTRF086, 9, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0086, 0, 0
+}
+
+graphic FSTRF087, 12, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0087, 0, 0
+}
+
+graphic FSTRF088, 8, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0088, 0, 0
+}
+
+graphic FSTRF089, 10, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0089, 0, 0
+}
+
+graphic FSTRF090, 7, 7
+{
+	xscale 0.55
+	yscale 0.5
+	patch FSTR0090, 0, 0
+}
+
+///////////////////////////////////
+///////////////////////////////////
+// Virus Font
+///////////////////////////////////
+///////////////////////////////////
+
+graphic FVIRU033, 3, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0033, 0, 0
+}
+
+graphic FVIRU034, 6, 3
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0034, 0, 0
+}
+
+graphic FVIRU035, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0035, 0, 0
+}
+
+graphic FVIRU036, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0036, 0, 0
+}
+
+graphic FVIRU037, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0037, 0, 0
+}
+
+graphic FVIRU038, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0038, 0, 0
+}
+
+graphic FVIRU039, 4, 3
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0039, 0, 0
+}
+
+graphic FVIRU040, 5, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0040, 0, 0
+}
+
+graphic FVIRU041, 5, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0041, 0, 0
+}
+
+graphic FVIRU042, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0042, 0, 0
+}
+
+graphic FVIRU043, 7, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0043, 0, 0
+}
+
+graphic FVIRU044, 4, 9
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0044, 0, 0
+}
+
+graphic FVIRU045, 8, 5
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0045, 0, 0
+}
+
+graphic FVIRU046, 3, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0046, 0, 0
+}
+
+graphic FVIRU047, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0047, 0, 0
+}
+
+graphic FVIRU048, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0048, 0, 0
+}
+
+graphic FVIRU049, 4, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0049, 0, 0
+}
+
+graphic FVIRU050, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0050, 0, 0
+}
+
+graphic FVIRU051, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0051, 0, 0
+}
+
+graphic FVIRU052, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0052, 0, 0
+}
+
+graphic FVIRU053, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0053, 0, 0
+}
+
+graphic FVIRU054, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0054, 0, 0
+}
+
+graphic FVIRU055, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0055, 0, 0
+}
+
+graphic FVIRU056, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0056, 0, 0
+}
+
+graphic FVIRU057, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0057, 0, 0
+}
+
+graphic FVIRU058, 3, 7
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0058, 0, 0
+}
+
+graphic FVIRU059, 3, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0059, 0, 0
+}
+
+graphic FVIRU060, 7, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0060, 0, 0
+}
+
+graphic FVIRU061, 7, 6
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0061, 0, 0
+}
+
+graphic FVIRU062, 6, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0062, 0, 0
+}
+
+graphic FVIRU063, 7, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0063, 0, 0
+}
+
+graphic FVIRU064, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0064, 0, 0
+}
+
+graphic FVIRU065, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0065, 0, 0
+}
+
+graphic FVIRU066, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0066, 0, 0
+}
+
+graphic FVIRU067, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0067, 0, 0
+}
+
+graphic FVIRU068, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0068, 0, 0
+}
+
+graphic FVIRU069, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0069, 0, 0
+}
+
+graphic FVIRU070, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0070, 0, 0
+}
+
+graphic FVIRU071, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0071, 0, 0
+}
+
+graphic FVIRU072, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0072, 0, 0
+}
+
+graphic FVIRU073, 3, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0073, 0, 0
+}
+
+graphic FVIRU074, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0074, 0, 0
+}
+
+graphic FVIRU075, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0075, 0, 0
+}
+
+graphic FVIRU076, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0076, 0, 0
+}
+
+graphic FVIRU077, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0077, 0, 0
+}
+
+graphic FVIRU078, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0078, 0, 0
+}
+
+graphic FVIRU079, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0079, 0, 0
+}
+
+graphic FVIRU080, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0080, 0, 0
+}
+
+graphic FVIRU081, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0081, 0, 0
+}
+
+graphic FVIRU082, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0082, 0, 0
+}
+
+graphic FVIRU083, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0083, 0, 0
+}
+
+graphic FVIRU084, 7, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0084, 0, 0
+}
+
+graphic FVIRU085, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0085, 0, 0
+}
+
+graphic FVIRU086, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0086, 0, 0
+}
+
+graphic FVIRU087, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0087, 0, 0
+}
+
+graphic FVIRU088, 9, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0088, 0, 0
+}
+
+graphic FVIRU089, 7, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0089, 0, 0
+}
+
+graphic FVIRU090, 8, 8
+{
+	xscale 0.5
+	yscale 0.5
+	patch FVIR0090, 0, 0
+}
