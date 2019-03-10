@@ -1,0 +1,30 @@
+
+actor VirusRank0 : Inventory
+{
+	inventory.maxamount 40
+	+INVENTORY.PERSISTENTPOWER
+}
+
+actor VirusRank1 : VirusRank0 { inventory.maxamount 50 }
+
+actor VirusRank2 : VirusRank0 { inventory.maxamount 60 }
+
+actor VirusRank3 : VirusRank0 { inventory.maxamount 150 }
+
+actor VirusRank4 : VirusRank0 { inventory.maxamount 180 }
+
+actor VirusRank5 : VirusRank0 { inventory.maxamount 220 }
+
+actor VirusRank6 : VirusRank0 { inventory.maxamount 270 }
+
+actor VirusRank7 : VirusRank0 { inventory.maxamount 390 }
+
+actor VirusRank8 : VirusRank0 { inventory.maxamount 640 }
+
+actor VirusRank9 : VirusRank0 { inventory.maxamount 800 }
+
+actor VirusRank10 : VirusRank0 { inventory.maxamount 2000 }
+
+actor VirusRank11 : VirusRank0 { inventory.maxamount 2200 }
+
+actor VirusRank12 : VirusRank0 { inventory.maxamount 1 }

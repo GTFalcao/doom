@@ -1,0 +1,40 @@
+
+actor StrifeRank0 : Inventory
+{
+	inventory.maxamount 30
+	+INVENTORY.PERSISTENTPOWER
+}
+
+actor StrifeRank1 : StrifeRank0 { inventory.maxamount 70 }
+
+actor StrifeRank0_1 : StrifeRank0 { inventory.maxamount 150 }
+
+actor StrifeRank1_1 : StrifeRank0 { inventory.maxamount 400 }
+
+actor StrifeRank2_1 : StrifeRank0 { inventory.maxamount 900 }
+
+actor StrifeRank3_1 : StrifeRank0 { inventory.maxamount 1750 }
+
+actor StrifeRank4_1 : StrifeRank0 { inventory.maxamount 2900 }
+
+actor StrifeRank0_2 : StrifeRank0 { inventory.maxamount 200 }
+
+actor StrifeRank1_2 : StrifeRank0 { inventory.maxamount 400 }
+
+actor StrifeRank2_2 : StrifeRank0 { inventory.maxamount 900 }
+
+actor StrifeRank3_2 : StrifeRank0 { inventory.maxamount 1800 }
+
+actor StrifeRank4_2 : StrifeRank0 { inventory.maxamount 2900 }
+
+actor StrifeRank0_3 : StrifeRank0 { inventory.maxamount 250 }
+
+actor StrifeRank1_3 : StrifeRank0 { inventory.maxamount 500 }
+
+actor StrifeRank2_3 : StrifeRank0 { inventory.maxamount 900 }
+
+actor StrifeRank3_3 : StrifeRank0 { inventory.maxamount 1800 }
+
+actor StrifeRank4_3 : StrifeRank0 { inventory.maxamount 2900 }
+
+actor StrifeRank5 : StrifeRank0 { inventory.maxamount 1 }

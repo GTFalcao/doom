@@ -1,0 +1,318 @@
+
+actor DiscipleClass : MonsterPawnHeretic
+{
+	player.morphweapon "DiscipleWeapon"
+	health 180
+	player.maxhealth 180
+	speed 0.8
+	mass 250
+	renderstyle translucent
+	player.soundclass "wzrd"
+	states
+	{
+		Spawn:
+			WZRD AB 10
+			loop
+		See:
+			WZRD AB 14
+			loop
+		Pain:
+			WZRD E 6 A_PlaySound("wizard/pain",2)
+			goto Spawn
+		Melee:
+			WZRD C 8
+			goto Missile
+		Missile:
+			WZRD D 14
+			goto Spawn
+		Death:
+			WZRD F 6
+    		WZRD G 6 A_PlayerScream
+			WZRD HI 6
+			WZRD J 6 A_NoBlocking
+    		WZRD KL 6
+    		WZRD M -1
+    		Stop
+	}
+}
+
+actor DiscipleClassHitbox : DiscipleClass
+{
+	height 68
+	radius 20
+	player.viewheight 60
+}
+
+actor DiscipleWeapon : BaseMonsterWeaponFlight
+{
+	obituary "%o was cursed by %k."
+	tag "Disciple spell"
+	weapon.sisterweapon "DiscipleWeaponPowered"
+	weapon.ammotype1 "MonsterManaBlue"
+	+WEAPON.NOALERT
+	+WEAPON.DONTBOB
+	states
+	{
+		Fire:
+			WPH0 O 0 A_JumpIfInventory("PowerGhost",1,"NoGhost")
+			WPH0 O 0 A_GunFlash
+			WPH0 O 1 bright offset(0,128) A_GiveInventory("WizGhost",1)
+			WPH0 O 1 bright offset(0,112)
+			WPH0 O 1 bright offset(0,96)
+			WPH0 O 1 bright offset(0,80)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 1 bright offset(0,64) A_GiveInventory("WizGhost",1)
+			WPH0 O 1 bright offset(0,48)
+			WPH0 O 2 bright offset(0,32)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_TakeInventory("PowerTempGhost",1)
+		DoAttack:
+			WPH0 O 0 A_AlertMonsters
+			WPH0 O 0 A_TakeInventory("MonsterManaBlue",3)
+			WPH0 O 0 A_PlaySound("wizard/attack",CHAN_WEAPON)
+			WPH0 O 0 A_FireCustomMissile("WizardFX01",-6,0,0,9)
+			WPH0 O 0 A_FireCustomMissile("WizardFX01",6,0,0,9)
+			WPH0 P 12 bright A_FireCustomMissile("WizardFX01",0,0,0,9)
+			WPH0 P 0 A_JumpIfInventory("MonsterManaBlue",3,1)
+			goto FireDone
+			WPH0 P 1 bright A_ReFire
+		FireDone:
+			WPH0 P 1 bright offset(0,40)
+			WPH0 P 1 bright offset(0,48)
+			WPH0 P 1 bright offset(0,56)
+			WPH0 P 1 bright offset(0,64)
+			WPH0 P 1 bright offset(0,72)
+			WPH0 P 1 bright offset(0,80)
+			WPH0 P 1 bright offset(0,88)
+			WPH0 P 1 bright offset(0,96)
+			WPH0 P 1 bright offset(0,104)
+			TNT1 A 78 offset(0,32) A_JumpIfInventory("MonsterManaBlue",3,1)
+			TNT1 A 1 offset(0,32)
+			goto Ready+3
+		NoGhost:
+			WPH0 O 1 bright offset(0,128) A_GunFlash
+			WPH0 O 1 bright offset(0,112)
+			WPH0 O 1 bright offset(0,96)
+			WPH0 O 1 bright offset(0,80)
+			WPH0 O 1 bright offset(0,64) A_GunFlash
+			WPH0 O 1 bright offset(0,48)
+			WPH0 O 2 bright offset(0,32)
+			WPH0 OOOOO 4 bright A_GunFlash
+			WPH0 O 4 bright
+			goto DoAttack
+		Hold:
+			WPH0 O 0 A_JumpIfInventory("PowerGhost",1,"HoldNoGhost")
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_TakeInventory("PowerTempGhost",1)
+			goto DoAttack
+		HoldNoGhost:
+			WPH0 OOOOOOO 4 bright A_GunFlash
+			WPH0 O 4 bright
+			goto DoAttack
+	}
+}
+
+actor DiscipleWeaponPowered : DiscipleWeapon
+{
+	+WEAPON.POWERED_UP
+	weapon.sisterweapon "DiscipleWeapon"
+	states
+	{
+		Fire:
+			WPH0 O 0 A_JumpIfInventory("PowerGhost",1,"NoGhost")
+			WPH0 O 0 A_GunFlash
+			WPH0 O 1 bright offset(0,128) A_GiveInventory("WizGhost",1)
+			WPH0 O 1 bright offset(0,112)
+			WPH0 O 1 bright offset(0,96)
+			WPH0 O 1 bright offset(0,80)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 1 bright offset(0,64) A_GiveInventory("WizGhost",1)
+			WPH0 O 1 bright offset(0,48)
+			WPH0 O 2 bright offset(0,32)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_GunFlash
+			WPH0 O 4 bright A_TakeInventory("PowerTempGhost",1)
+			WPH0 O 4 bright A_GiveInventory("WizGhost",1)
+			WPH0 O 0 A_TakeInventory("PowerTempGhost",1)
+		DoAttack:
+			WPH0 O 0 A_AlertMonsters
+			WPH0 O 0 A_TakeInventory("MonsterManaBlue",8)
+			WPH0 O 0 A_PlaySound("wizard/attack",CHAN_WEAPON)
+			WPH0 P 12 bright A_FireCustomMissile("WizardFX03",0,0,0,9)
+			WPH0 P 1 bright offset(0,40)
+			WPH0 P 1 bright offset(0,48)
+			WPH0 P 1 bright offset(0,56)
+			WPH0 P 1 bright offset(0,64)
+			WPH0 P 1 bright offset(0,72)
+			WPH0 P 1 bright offset(0,80)
+			WPH0 P 1 bright offset(0,88)
+			WPH0 P 1 bright offset(0,96)
+			WPH0 P 1 bright offset(0,104)
+			TNT1 A 128 offset(0,32) A_JumpIfInventory("MonsterManaBlue",8,1)
+			TNT1 A 11 offset(0,32)
+			goto Ready+3
+		NoGhost:
+			WPH0 O 1 bright offset(0,128) A_GunFlash
+			WPH0 O 1 bright offset(0,112)
+			WPH0 O 1 bright offset(0,96)
+			WPH0 O 1 bright offset(0,80)
+			WPH0 O 1 bright offset(0,64) A_GunFlash
+			WPH0 O 1 bright offset(0,48)
+			WPH0 O 2 bright offset(0,32)
+			WPH0 OOOOO 4 bright A_GunFlash
+			WPH0 O 4 bright
+			goto DoAttack
+	}
+}
+
+actor WizardFX01 : WizardFX1
+{
+	+MTHRUSPECIES
+	+ACTIVATEIMPACT
+	+ACTIVATEPCROSS
+	obituary "%o was cursed by %k."
+	damage (5 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,225 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Heretic1
+		Heretic1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Heretic4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic2")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3])
+			goto Super::Death
+		Heretic2:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 2)
+			goto Super::Death
+		Heretic4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic8")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 4)
+			goto Super::Death
+		Heretic8:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor WizardFX03 : WizardFX01
+{
+	radius 12
+	height 14
+	scale 2
+	speed 10
+	fastspeed 10
+	damage 0
+	reactiontime 7
+	deathsound "wizard/powsplit"
+	states
+	{
+		Spawn:
+			FX11 ABABAB 6 bright
+			FX11 A 3 bright A_Stop
+			FX11 BABABAB 3 bright A_Countdown
+		Crash:
+		XDeath:
+		Death:
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-24,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-48,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-72,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-96,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-120,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-144,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,-168,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,168,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,144,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,120,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,96,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,72,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 0 A_CustomMissile("WizardFX01",0,0,48,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			TNT1 A 1 A_CustomMissile("WizardFX01",0,0,24,CMF_AIMDIRECTION|CMF_TRACKOWNER,-12)
+			stop
+	}
+}
+
+actor DiscipleMorph : MonsterMorph
+{
+	tag "Disciple of D'Sparil"
+	inventory.icon "ARTIWZRD"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("DiscipleHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,5)
+			stop
+	}
+}
+
+actor DiscipleMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,5)
+			stop
+	}
+}
+
+actor DiscipleHitboxCheck : BaseHitboxCheck
+{
+	height 68
+	radius 20
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("DiscipleMorphDirect",1)
+			stop
+	}
+}
+
+actor DiscipleMorpher : MonsterMorpher { powerup.type MorphWzrd }
+
+actor PowerMorphWzrd : PowerMorphHeretic { powermorph.playerclass "DiscipleClass" }
+
+actor DiscipleMorpherHitbox : MonsterMorpher { powerup.type MorphWzrdHitbox }
+
+actor PowerMorphWzrdHitbox : PowerMorphHeretic { powermorph.playerclass "DiscipleClassHitbox" }

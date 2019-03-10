@@ -1,0 +1,230 @@
+
+actor CacodemonClass : MonsterPawnDoom
+{
+	player.morphweapon "CacodemonWeapon"
+	health 400
+	player.maxhealth 400
+	speed 0.6
+	mass 400
+	player.soundclass "caco"
+	states
+	{
+		Spawn:
+			HEA0 A 8
+			loop
+		See:
+			HEA0 A 8
+			loop
+		Pain:
+			HEA0 E 6 A_PlaySound("0caco/pain",2)
+			HEA0 F 6
+			goto Spawn
+		Missile:
+			HEA0 BC 5
+			HEA0 D 5 bright
+			goto Spawn
+		Death:
+			HEA0 G 8
+    		HEA0 H 8 A_PlayerScream
+			HEA0 IJ 8
+    		HEA0 K 8 A_NoBlocking
+    		HEA0 L -1
+    		Stop
+	}
+}
+
+actor CacodemonClassHitbox : CacodemonClass { height 64 radius 30 }
+
+actor CacodemonWeapon : BaseMonsterWeaponFlight
+{
+	tag "Cacodemon jaws"
+	weapon.sisterweapon "CacodemonWeaponPowered"
+	weapon.ammotype1 "MonsterManaGreen"
+	+WEAPON.NOALERT
+	states
+	{
+		Fire:
+			TNT1 A 5 A_AlertMonsters
+			TNT1 A 5 A_TakeInventory("MonsterManaGreen",1)
+			TNT1 A 5 A_FireCustomMissile("CacodemonBall0")
+			TNT1 A 40 A_JumpIfInventory("MonsterManaGreen",1,1)
+			TNT1 A 5
+			goto Ready+3
+		AltFire:
+			TNT1 A 10
+			TNT1 A 0 A_FireCustomMissile("CacoMeleeProj",0,0,0,9)
+			TNT1 A 10 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Ready+3
+			TNT1 A 10 A_FireCustomMissile("CacoMeleeProj",0,0,0,9)
+			goto Ready+3
+	}
+}
+
+actor CacodemonWeaponPowered : CacodemonWeapon
+{
+	+WEAPON.POWERED_UP
+	weapon.sisterweapon "CacodemonWeapon"
+	states
+	{
+		Fire:
+			TNT1 A 5 A_AlertMonsters
+			TNT1 A 5 A_TakeInventory("MonsterManaGreen",6)
+			TNT1 A 45 A_FireCustomMissile("CacodemonBall02")
+			TNT1 A 120 A_JumpIfInventory("MonsterManaGreen",6,1)
+			TNT1 A 5
+			goto Ready+3
+		AltFire:
+			TNT1 A 10
+			TNT1 A 0 A_FireCustomMissile("CacoMeleeProj2",0,0,0,9)
+			TNT1 A 28 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Ready+3
+			TNT1 A 28 A_FireCustomMissile("CacoMeleeProj2NoSound",0,0,0,9)
+			goto Ready+3
+	}
+}
+
+actor CacodemonBall0 : CacodemonBall
+{
+	seesound "0caco/attack"
+	deathsound "0caco/shotx"
+	obituary "%o was smitten by %k."
+	fastspeed 25
+	damage (5 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			BL02 AB 4 bright
+			loop
+		Death:
+			BL02 CDE 6 bright
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,225 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Doom1
+		Doom1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Doom4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Doom2")
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3])
+			goto Death
+		Doom2:
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 2)
+			goto Death
+		Doom4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Doom8")
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 4)
+			goto Death
+		Doom8:
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 8)
+			goto Death
+	}
+}
+
+actor CacodemonBall02 : CacodemonBall0
+{
+	scale 1.25
+	speed 12
+	fastspeed 16
+	damage (14 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Spawn:
+			BL02 A 4 bright
+			BL02 B 0 A_CustomMissile("CacodemonBall03",0,0,90,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			BL02 B 6 bright A_CustomMissile("CacodemonBall03",0,0,-90,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			BL02 A 0 A_CustomMissile("CacodemonBall03",0,0,90,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			BL02 A 6 bright A_CustomMissile("CacodemonBall03",0,0,-90,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			goto Spawn+1
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,63 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor CacodemonBall03 : CacodemonBall0
+{
+	speed 15
+	fastspeed 20
+	radius 4
+	height 6
+	scale 0.5
+	damage (2 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,9 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor CacoMeleeProj : ImpMeleeProj
+{
+	obituary "%o got too close to %k."
+	damage (10 * random(1,6) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,35 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor CacoMeleeProj2 : DemonMeleeProj2 { obituary "%o got too close to %k." }
+
+actor CacoMeleeProj2NoSound : CacoMeleeProj2 { obituary "%o got too close to %k." }
+
+actor CacodemonMorph : MonsterMorph
+{
+	tag "Cacodemon"
+	inventory.icon "ARTIHEAD"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("CacodemonHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,5)
+			stop
+	}
+}
+
+actor CacodemonMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,5)
+			stop
+	}
+}
+
+actor CacodemonHitboxCheck : BaseHitboxCheck
+{
+	height 64
+	radius 30
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("CacodemonMorphDirect",1)
+			stop
+	}
+}
+
+actor CacodemonMorpher : MonsterMorpher { powerup.type MorphHead }
+
+actor CacodemonMorpherHitbox : MonsterMorpher { powerup.type MorphHeadHitbox }
+
+actor PowerMorphHead : PowerMorphDoom { powermorph.playerclass "CacodemonClass" }
+
+actor PowerMorphHeadHitbox : PowerMorphDoom { powermorph.playerclass "CacodemonClassHitbox" }

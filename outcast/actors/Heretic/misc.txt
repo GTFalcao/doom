@@ -1,0 +1,71 @@
+
+actor IsHeretic : Inventory { inventory.maxamount 1 }
+
+actor PowerMorphHeretic : PowerMorph
+{
+	powermorph.playerclass "GargoyleClass"
+	powermorph.unmorphflash "NoTelefog"
+	powermorph.morphflash "HereticTelefog"
+	powermorph.morphstyle (MRF_FULLHEALTH|MRF_FAILNOTELEFRAG|MRF_WHENINVULNERABLE)
+}
+
+actor MonsterPawnHeretic : MonsterPawn
+{
+	bloodtype "HereticBlood"
+}
+
+actor HereticSpawnClass : DoomSpawnClass
+{
+	limitedtoteam 1
+	player.scoreicon "HTICICON"
+	player.displayname "Heretic"
+	player.soundclass "htic"
+	//player.portrait "P_HTIC"
+	states
+	{
+		Spawn:
+		See:
+			GAM1 ABCDEFGHIJKLMNOP 3 bright
+			loop
+		Missile:
+			GAM1 A 4 bright
+			goto Spawn
+		Pain:
+			GAM1 A 4 bright
+			goto Spawn
+	}
+}
+
+actor HereticBlood : DoomBlood
+{
+	states
+	{
+		Spawn:
+			BLD1 CBA 8 bright
+			stop
+	}
+}
+
+actor HereticNoBlood : DoomBlood
+{
+	states
+	{
+		Spawn:
+			TNT1 AAA 8
+			stop
+	}
+}
+
+actor HereticTelefog : DoomTelefog
+{
+	states
+	{
+	 	Spawn:
+			HFOG ABCDEFGHGFEDC 6 bright
+			stop
+	}
+}
+
+actor HereticDamagePoint : DoomDamagePoint { }
+
+actor HereticDamagePoint0 : DoomDamagePoint0 { }

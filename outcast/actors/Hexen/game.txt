@@ -1,0 +1,99 @@
+
+actor PorkFX0 : PorkFX replaces PorkFX { +MTHRUSPECIES }
+
+actor ArtiSpeedBoots0 : ArtiSpeedBoots replaces ArtiSpeedBoots { inventory.pickupsound "*fistgrunt" }
+
+actor ArtiBoostMana0 : ArtiBoostMana replaces ArtiBoostMana
+{
+	inventory.icon "ARTIKRAT"
+	inventory.pickupsound "misc/invgethx"
+	inventory.usesound "misc/invusehx"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,3) <= 200,"RankMeMaybe")
+			fail
+		RankMeMaybe:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,3) >= 10,"RankMe")
+			fail
+		RankMe:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) < 0,"NoPoints")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) == 0,"Doom")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) == 1,"Heretic")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) == 2,"Hexen")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) == 3,"Strife")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443) == 3,"Virus")
+			stop
+		NoPoints:
+			TNT1 A 0 HealThing(200)
+			stop
+		Doom:
+			TNT1 A 0 A_GiveInventory("DoomDamagePoint",(ACS_ExecuteWithResult(443,3) - 1) * 100)
+			stop
+		Heretic:
+			TNT1 A 0 A_GiveInventory("HereticDamagePoint",(ACS_ExecuteWithResult(443,3) - 1) * 100)
+			stop
+		Hexen:
+			TNT1 A 0 A_GiveInventory("HexenDamagePoint",(ACS_ExecuteWithResult(443,3) - 1) * 100)
+			stop
+		Strife:
+			TNT1 A 0 A_GiveInventory("StrifeDamagePoint",(ACS_ExecuteWithResult(443,3) - 1) * 100)
+			stop
+		Virus:
+			TNT1 A 0 A_GiveInventory("VirusDamagePoint",(ACS_ExecuteWithResult(443,3) - 1) * 100)
+			stop
+	}
+}
+
+// Weapons
+
+// Fighter
+
+actor FWeapAxe0 : BFG90000 replaces FWeapAxe
+{
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SpawnItemEx("MonsterManaCombined",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+	}
+}
+
+actor FWeapHammer0 : FWeapAxe0 replaces FWeapHammer { }
+
+actor FWeaponPiece10 : PlasmaRifle0 replaces FWeaponPiece1 { }
+
+actor FWeaponPiece20 : PlasmaRifle0 replaces FWeaponPiece2 { }
+
+actor FWeaponPiece30 : PlasmaRifle0 replaces FWeaponPiece3 { }
+
+actor FWeapQuietus0 : BFG90000 replaces FWeapQuietus { }
+
+// Cleric
+
+actor CWeapStaff0 : FWeapAxe0 replaces CWeapStaff { }
+
+actor CWeapFlame0 : FWeapAxe0 replaces CWeapFlame { }
+
+actor CWeaponPiece10 : PlasmaRifle0 replaces CWeaponPiece1 { }
+
+actor CWeaponPiece20 : PlasmaRifle0 replaces CWeaponPiece2 { }
+
+actor CWeaponPiece30 : PlasmaRifle0 replaces CWeaponPiece3 { }
+
+actor CWeapWraithverge0 : BFG90000 replaces CWeapWraithverge { }
+
+// Mage
+
+actor MWeapFrost0 : FWeapAxe0 replaces MWeapFrost { }
+
+actor MWeapLightning0 : FWeapAxe0 replaces MWeapLightning { }
+
+actor MWeaponPiece10 : PlasmaRifle0 replaces MWeaponPiece1 { }
+
+actor MWeaponPiece20 : PlasmaRifle0 replaces MWeaponPiece2 { }
+
+actor MWeaponPiece30 : PlasmaRifle0 replaces MWeaponPiece3 { }
+
+actor MWeapBloodscourge0 : BFG90000 replaces MWeapBloodscourge { }

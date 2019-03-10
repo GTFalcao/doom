@@ -1,0 +1,307 @@
+
+actor CrystalVial0 : CustomInventory replaces CrystalVial
+{
+	+FLOATBOB
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "CRYSTAL VIAL"
+	states
+	{
+		Spawn:
+			PTN1 ABC 3
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("ReiverWeapon",1,"Reiver")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,1) > 0,"HealMe")
+			fail
+		HealMe:
+			TNT1 A 0 HealThing(10)
+			stop
+		Reiver:
+			TNT1 A 0 A_JumpIfHealthLower(150,"HealMe")
+			fail
+	}
+}
+
+actor ArtiHealth0 : CustomInventory replaces ArtiHealth
+{
+	+COUNTITEM
+	+FLOATBOB
+	+INVENTORY.INVBAR
+	+INVENTORY.FANCYPICKUPSOUND
+	inventory.defmaxamount
+	inventory.icon "ARTIQRTZ"
+	inventory.pickupflash "PickupFlash"
+	inventory.pickupsound "misc/invget"
+	inventory.usesound "misc/invuse"
+	inventory.pickupmessage "QUARTZ FLASK"
+	states
+	{
+		Spawn:
+			PTN2 ABC 4
+			loop
+		Use:
+			TNT1 A 0 A_JumpIfInventory("ReiverWeapon",1,"Reiver")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,1) > 0,"HealMe")
+			fail
+		HealMe:
+			TNT1 A 0 HealThing(25)
+			stop
+		Reiver:
+			TNT1 A 0 A_JumpIfHealthLower(150,"HealMe")
+			fail
+	}
+}
+
+actor ArtiSuperHealth0 : CustomInventory replaces ArtiSuperHealth
+{
+	+COUNTITEM
+	+FLOATBOB
+	+INVENTORY.INVBAR
+	+INVENTORY.FANCYPICKUPSOUND
+	inventory.defmaxamount
+	inventory.icon "ARTIMYST"
+	inventory.pickupflash "PickupFlash"
+	inventory.pickupsound "misc/invget"
+	inventory.usesound "misc/invuse"
+	inventory.pickupmessage "MYSTIC URN"
+	states
+	{
+		Spawn:
+			SPHL A -1
+			stop
+		Use:
+			TNT1 A 0 A_JumpIfInventory("ReiverWeapon",1,"Reiver")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,1) > 0,"HealMe")
+			fail
+		HealMe:
+			TNT1 A 0 HealThing(100)
+			stop
+		Reiver:
+			TNT1 A 0 A_JumpIfHealthLower(150,"HealMe")
+			fail
+	}
+}
+
+actor BagOfHolding0 : BagOfHolding replaces BagOfHolding { inventory.pickupsound "*fist" }
+
+actor SilverShield0 : CustomInventory replaces SilverShield
+{
+	+FLOATBOB
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "SILVER SHIELD"
+	states
+	{
+		Spawn:
+			SHLD A -1
+			stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("BasicArmor",100,"NoPick")
+			TNT1 A 0 A_GiveInventory("SilverShield",1)
+			TNT1 A 0 A_TakeInventory("HasBlueArmor",1)
+			TNT1 A 0 A_GiveInventory("HasGreenArmor",1)
+			stop
+		NoPick:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor EnchantedShield0 : SilverShield0 replaces EnchantedShield
+{
+	inventory.pickupmessage "ENCHANTED SHIELD"
+	states
+	{
+		Spawn:
+			SHD2 A -1
+			stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("HasGreenArmor",1,2)
+			TNT1 A 0 A_JumpIfInventory("BasicArmor",200,"NoPick")
+			TNT1 A 0 A_GiveInventory("EnchantedShield",1)
+			TNT1 A 0 A_TakeInventory("HasGreenArmor",1)
+			TNT1 A 0 A_GiveInventory("HasBlueArmor",1)
+			stop
+		NoPick:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor SuperMap0 : SuperMap replaces SuperMap { inventory.pickupsound "*fistgrunt" }
+
+actor EggFX0 : EggFX replaces EggFX { +MTHRUSPECIES }
+
+actor Gauntlets0 : NoTelefog replaces Gauntlets { }
+
+actor Mace0 : ArtiTomeOfPower0 replaces Mace { }
+
+// Weapons & Ammo
+
+// Elven Wand -> blue mana
+
+actor GoldWandAmmo0 : MonsterManaBlue replaces GoldWandAmmo
+{
+	inventory.amount 20
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_CheckFlag("DROPPED","SpawnAnother")
+			goto Super::Spawn
+		SpawnAnother:
+			TNT1 A 0 A_SpawnItemEx("GoldWandAmmo02",0,0,0,velx,vely,velz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEVELOCITY)
+			stop
+	}
+}
+
+actor GoldWandAmmo02 : MonsterManaBlue { inventory.amount 6 }
+
+actor GoldWandHefty0 : MonsterManaCombined replaces GoldWandHefty
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",50)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",50)
+			stop
+	}
+}
+
+actor GoldWand0 : MonsterManaBlue replaces GoldWand { inventory.amount 50 }
+
+// Ethereal Crossbow -> green mana
+
+actor CrossbowAmmo0 : MonsterManaGreen replaces CrossbowAmmo
+{
+	inventory.amount 30
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_CheckFlag("DROPPED","SpawnAnother")
+			goto Super::Spawn
+		SpawnAnother:
+			TNT1 A 0 A_SpawnItemEx("CrossbowAmmo0",0,0,0,velx,vely,velz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEVELOCITY)
+			stop
+	}
+}
+
+actor CrossbowHefty0 : MonsterManaCombined replaces CrossbowHefty
+{
+	states
+	{
+		
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",60)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",60)
+			stop
+	}
+}
+
+actor Crossbow0 : MonsterManaGreen replaces Crossbow { inventory.amount 60 }
+
+// Dragon Claw -> blue mana
+
+actor BlasterAmmo0 : MonsterManaBlue replaces BlasterAmmo
+{
+	inventory.amount 25
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_CheckFlag("DROPPED","SpawnAnother")
+			goto Super::Spawn
+		SpawnAnother:
+			TNT1 A 0 A_SpawnItemEx("BlasterAmmo0",0,0,0,velx,vely,velz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEVELOCITY)
+			stop
+	}
+}
+
+actor BlasterHefty0 : MonsterManaCombined replaces BlasterHefty
+{
+	states
+	{
+		
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",32)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",32)		
+			stop
+	}
+}
+
+actor Blaster0 : MonsterManaBlue replaces Blaster { inventory.amount 75 }
+
+// Hellstaff -> green mana
+
+actor SkullRodAmmo0 : MonsterManaGreen replaces SkullRodAmmo
+{
+	inventory.amount 30
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_CheckFlag("DROPPED","SpawnAnother")
+			goto Super::Spawn
+		SpawnAnother:
+			TNT1 A 0 A_SpawnItemEx("SkullRodAmmo0",0,0,0,velx,vely,velz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEVELOCITY)
+			stop
+	}
+}
+
+actor SkullRodHefty0 : MonsterManaCombined replaces SkullRodHefty
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",75)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",75)
+			stop
+	}
+}
+
+actor SkullRod0 : MonsterManaGreen replaces SkullRod { inventory.amount 75 }
+
+// Phoenix Rod -> blue mana
+
+actor PhoenixRodAmmo0 : MonsterManaBlue replaces PhoenixRodAmmo
+{
+	inventory.amount 20
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_CheckFlag("DROPPED","SpawnAnother")
+			goto Super::Spawn
+		SpawnAnother:
+			TNT1 A 0 A_SpawnItemEx("PhoenixRodAmmo02",0,0,0,velx,vely,velz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEVELOCITY)
+			stop
+	}
+}
+
+actor PhoenixRodAmmo02 : MonsterManaBlue { inventory.amount 100 }
+
+actor PhoenixRodHefty0 : MonsterManaCombined replaces PhoenixRodHefty
+{
+	states
+	{
+		
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",100)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",100)
+			stop
+	}
+}
+
+actor PhoenixRod0 : MonsterManaBlue replaces PhoenixRod { inventory.amount 40 }
+
+// Firemace -> green mana
+
+actor MaceAmmo0 : MonsterManaGreen replaces MaceAmmo { inventory.amount 30 }
+
+actor MaceHefty0 : MonsterManaCombined replaces MaceHefty
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",75)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",75)
+			stop
+	}
+}

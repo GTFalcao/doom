@@ -1,0 +1,231 @@
+
+actor SabreclawClass : MonsterPawnHeretic
+{
+	player.morphweapon "SabreclawWeapon"
+	health 150
+	player.maxhealth 150
+	speed 1.2
+	mass 300
+	player.soundclass "clink"
+	bloodtype "HereticNoBlood"
+	states
+	{
+		Spawn:
+			CLNK AB 10
+			loop
+		See:
+			CLNK ABCD 3
+			loop
+		Pain:
+			CLNK H 6 A_PlaySound("clink/pain",2)
+			goto Spawn
+		Missile:
+			CLNK E 5
+			CLNK F 4
+			CLNK G 9
+			goto Spawn
+		Death:
+			CLNK I 6
+    		CLNK J 6 A_PlayerScream
+			CLNK K 5
+			CLNK L 5 A_NoBlocking
+    		CLNK MN 5
+    		CLNK O -1
+    		Stop
+	}
+}
+
+actor SabreclawClassHitbox : SabreclawClass
+{
+	player.viewheight 56
+	height 64
+	radius 20
+}
+
+actor SabreclawWeapon : BaseMonsterWeapon
+{
+	obituary "%o was slashed by %k."
+	tag "Sabreclaw"
+	weapon.sisterweapon "SabreclawWeaponPowered"
+	+WEAPON.NOALERT
+	+WEAPON.MELEEWEAPON
+	states
+	{
+		Select:
+			WPH0 K 1 A_Raise
+			wait
+		Deselect:
+			WPH0 K 1 A_Lower
+			wait
+		Ready:
+			WPH0 K 1 A_WeaponReady
+			wait
+		Fire:
+			WPH0 L 5 A_PlaySound("clink/attack",CHAN_WEAPON)
+			WPH0 M 4
+			WPH0 N 0 A_FireCustomMissile("SabreclawMeleeProj",0,0,0,9)
+			WPH0 N 7 A_JumpIfInventory("BerserkTracker",1,2)
+			WPH0 N 0 A_ReFire
+			goto FireDone
+			WPH0 N 7 A_FireCustomMissile("SabreclawMeleeProj",0,0,0,9)
+			WPH0 N 0 A_ReFire
+			goto FireDone
+		FireDone:
+			WPH0 N 1 offset(0,40)
+			WPH0 N 1 offset(0,48)
+			WPH0 N 1 offset(0,56)
+			WPH0 N 1 offset(0,64)
+			WPH0 N 1 offset(0,72)
+			WPH0 N 1 offset(0,80)
+			WPH0 N 1 offset(0,88)
+			WPH0 N 1 offset(0,96)
+			TNT1 A 8 offset(0,32)
+			WPH0 K 1 offset(0,88)
+			WPH0 K 1 offset(0,80)
+			WPH0 K 1 offset(0,72)
+			WPH0 K 1 offset(0,64)
+			WPH0 K 1 offset(0,48)
+			WPH0 K 1 offset(0,40)
+			WPH0 K 1 offset(0,32)
+			goto Ready
+	}
+}
+
+actor SabreclawWeaponPowered : SabreclawWeapon
+{
+	weapon.sisterweapon "SabreclawWeapon"
+	tag "Magic Sabreclaw"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPH0 L 5 A_PlaySound("clink/attack",CHAN_WEAPON)
+			WPH0 M 4 A_AlertMonsters
+			WPH0 N 0 A_FireCustomMissile("SabreclawPoweredShot",-4,0,0,18)
+			WPH0 N 0 A_FireCustomMissile("SabreclawPoweredShot",0,0,0,14)
+			WPH0 N 0 A_FireCustomMissile("SabreclawPoweredShot",4,0,0,10)
+			WPH0 N 0 A_FireCustomMissile("SabreclawPoweredShot",8,0,0,6)
+			WPH0 N 7 A_FireCustomMissile("SabreclawPoweredShot",12,0,0,2)
+		FireDone:
+			WPH0 N 1 offset(0,40)
+			WPH0 N 1 offset(0,48)
+			WPH0 N 1 offset(0,56)
+			WPH0 N 1 offset(0,64)
+			WPH0 N 1 offset(0,72)
+			WPH0 N 1 offset(0,80)
+			WPH0 N 1 offset(0,88)
+			WPH0 N 1 offset(0,96)
+			TNT1 A 8 offset(0,32)
+			TNT1 A 1 A_ReFire
+			WPH0 K 1 offset(0,88)
+			WPH0 K 1 offset(0,80)
+			WPH0 K 1 offset(0,72)
+			WPH0 K 1 offset(0,64)
+			WPH0 K 1 offset(0,48)
+			WPH0 K 1 offset(0,40)
+			WPH0 K 1 offset(0,32)
+			goto Ready
+	}
+}
+
+actor SabreclawPoweredShot
+{
+	PROJECTILE
+	+MTHRUSPECIES
+	+DONTREFLECT
+	renderstyle add
+	alpha 0.4
+	radius 12
+	height 12
+	speed 24
+	fastspeed 30
+	damage (4 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Spawn:
+			SPIR K 6 bright
+			SPIR L 5 bright
+			SPIR M 4 bright A_ScaleVelocity(0.75)
+			SPIR NO 2 bright A_ScaleVelocity(0.75)
+			stop
+		Crash:
+		XDeath:
+			"----" A 0 A_SetArg(3,18 * ACS_ExecuteWithResult(455,4) / 10)
+		Heretic1:
+			"----" A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			"----" A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Heretic4")
+			"----" A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			"----" A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic2")
+			"----" A 0 A_GiveToTarget("HereticDamagePoint",args[3])
+			goto Death
+		Heretic2:
+			"----" A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 2)
+			goto Death
+		Heretic4:
+			"----" A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			"----" A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic8")
+			"----" A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 4)
+			goto Death
+		Heretic8:
+			"----" A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 8)
+			goto Death
+		Death:
+			"----" AAAAAAAAA 1 bright A_FadeOut(0.04)
+			stop
+	}
+}
+
+actor SabreclawMeleeProj : GolemMeleeProj
+{
+	obituary "%o was slashed by %k."
+	deathsound ""
+}
+
+actor SabreclawMorph : MonsterMorph
+{
+	tag "Sabreclaw"
+	inventory.icon "ARTICLNK"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("SabreclawHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,4)
+			stop
+	}
+}
+
+actor SabreclawMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,4)
+			stop
+	}
+}
+
+actor SabreclawHitboxCheck : BaseHitboxCheck
+{
+	height 64
+	radius 20
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("SabreclawMorphDirect",1)
+			stop
+	}
+}
+
+actor SabreclawMorpher : MonsterMorpher { powerup.type MorphClnk }
+
+actor SabreclawMorpherHitbox : MonsterMorpher { powerup.type MorphClnkHitbox }
+
+actor PowerMorphClnk : PowerMorphHeretic { powermorph.playerclass "SabreclawClass" }
+
+actor PowerMorphClnkHitbox : PowerMorphHeretic { powermorph.playerclass "SabreclawClassHitbox" }

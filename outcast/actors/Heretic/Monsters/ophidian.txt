@@ -1,0 +1,376 @@
+
+actor OphidianClass : MonsterPawnHeretic
+{
+	player.morphweapon "OphidianWeapon"
+	health 280
+	player.maxhealth 280
+	speed 0.7
+	mass 500
+	player.soundclass "snake"
+	states
+	{
+		Spawn:
+			SNKE AB 10
+			loop
+		See:
+			SNKE ABCD 4
+			loop
+		Pain:
+			SNKE E 6 A_PlaySound("snake/pain",2)
+			goto Spawn
+		Missile:
+			SNKE F 43
+			goto Spawn
+		Death:
+    		SNKE G 5
+    		SNKE H 5 A_PlayerScream
+    		SNKE IJKL 5
+    		SNKE M 5 A_NoBlocking
+    		SNKE NO 5
+    		SNKE P -1
+    		Stop
+	}
+}
+
+actor OphidianClassHitbox : OphidianClass
+{
+	height 66
+	radius 22
+	player.viewheight 60
+}
+
+actor OphidianWeapon : BaseMonsterWeapon
+{
+	obituary "%o was rattled by %k."
+	tag "Magical staff"
+	weapon.sisterweapon "OphidianWeaponPowered"
+	weapon.ammotype1 "MonsterManaBlue"
+	weapon.ammotype2 "MonsterManaGreen"
+	states
+	{
+		Select:
+			WPH1 P 1 A_Raise
+			wait
+		Deselect:
+			WPH1 P 1 A_Lower
+			wait
+		Ready:
+			WPH1 P 1 A_WeaponReady
+			wait
+		Fire:
+		Hold:
+			WPH1 PQ 3
+			WPH1 O 2
+			WPH1 S 2 bright
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 4 bright A_FireCustomMissile("SnakeProjA0",0,0,0,9)
+			WPH1 R 0 bright A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 4 bright A_FireCustomMissile("SnakeProjA0",0,0,0,9)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 2 bright A_FireCustomMissile("SnakeProjA0",0,0,0,9)
+			WPH1 S 2 bright
+			WPH1 O 13
+			WPH1 U 2 bright
+			WPH1 T 0 A_TakeInventory("MonsterManaGreen",3)
+			WPH1 T 4 bright A_FireCustomMissile("SnakeProjB0",0,0,0,9)
+			WPH1 U 2 bright
+			WPH1 O 2
+			WPH1 Q 3
+			WPH1 P 8 A_JumpIfInventory("MonsterManaBlue",3,1)
+			goto Delay
+			WPH1 P 8 A_JumpIfInventory("MonsterManaGreen",3,1)
+			goto Delay
+			WPH1 P 8
+			goto Ready
+		Delay:
+			WPH1 PPPPPPPPPPP 10 A_WeaponReady(WRF_NOFIRE)
+			goto Ready
+	}
+}
+
+actor OphidianWeaponPowered : OphidianWeapon
+{
+	weapon.sisterweapon "OphidianWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPH1 PQ 3
+			WPH1 O 2 A_JumpIfInventory("MonsterManaBlue",1,1)
+			goto Burst
+			WPH1 O 2 A_JumpIfInventory("MonsterManaGreen",1,1)
+			goto Burst
+			WPH1 O 2
+			WPH1 S 2 bright A_PlaySound("snake/power",0)
+		Hold:
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 0 A_Jump(85,"Alternate")
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 0 A_Jump(85,"Alternate2")
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_JumpIfInventory("MonsterManaBlue",1,1)
+			goto Burst+1
+			WPH1 R 0 A_JumpIfInventory("MonsterManaGreen",1,1)
+			goto Burst+1
+			WPH1 R 0 A_ReFire
+			WPH1 S 2 bright
+			WPH1 O 15
+			WPH1 QP 3
+			goto Ready
+		Alternate:
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			goto Hold+4
+		Alternate2:
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			goto Hold+8
+		Burst:
+			WPH1 S 2 bright A_PlaySound("snake/power",0)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 S 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 S 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 S 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 S 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 S 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 S 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 S 0 A_TakeInventory("MonsterManaBlue",1)
+			WPH1 S 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 R 0 A_PlaySound("snake/zap",CHAN_WEAPON)
+			WPH1 R 0 A_TakeInventory("MonsterManaGreen",1)
+			WPH1 R 3 bright A_FireCustomMissile("SnakeProjPowered",random(-3,3),0,random(-5,5),9)
+			WPH1 S 2 bright
+			WPH1 O 15
+			WPH1 QP 3
+			WPH1 PPPPPPPPP 10 A_WeaponReady(WRF_NOFIRE)
+			goto Ready
+	}
+}
+
+actor SnakeProjA0 : SnakeProjA
+{
+	+MTHRUSPECIES
+	+ACTIVATEIMPACT
+	+ACTIVATEPCROSS
+	obituary "%o was rattled by %k."
+	fastspeed 25
+	damage (6 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,27 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Heretic1
+		Heretic1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Heretic4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic2")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3])
+			goto Super::Death
+		Heretic2:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 2)
+			goto Super::Death
+		Heretic4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic8")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 4)
+			goto Super::Death
+		Heretic8:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor SnakeProjB0 : SnakeProjB
+{
+	+MTHRUSPECIES
+	+ACTIVATEIMPACT
+	+ACTIVATEPCROSS
+	obituary "%o was rattled by %k."
+	fastspeed 25
+	damage (18 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,81 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Heretic1
+		Heretic1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Heretic4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic2")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3])
+			goto Super::Death
+		Heretic2:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 2)
+			goto Super::Death
+		Heretic4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic8")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 4)
+			goto Super::Death
+		Heretic8:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor SnakeProjPowered : FastProjectile
+{
+	radius 6
+	height 8
+	missiletype "SnakeTrailPowered"
+	//missileheight 8
+	speed 100
+	obituary "%o was rattled by %k."
+	renderstyle add
+	//alpha 0.75
+	damage (random(12,20) * ACS_ExecuteWithResult(455,5) / 100)
+	+NODAMAGETHRUST
+	+DONTREFLECT
+	+FOILINVUL
+	+SEEKERMISSILE
+	states
+	{
+		Spawn:
+			SNFX ABCD 1 bright A_SeekerMissile(3,5,SMF_LOOK,256,6)
+			SNFX ABCD 1 bright
+			stop
+		Death:
+			TNT1 A 1
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,16 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Heretic1
+		Heretic1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Heretic4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic2")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3])
+			goto Death
+		Heretic2:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 2)
+			goto Death
+		Heretic4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Heretic8")
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 4)
+			goto Death
+		Heretic8:
+			TNT1 A 0 A_GiveToTarget("HereticDamagePoint",args[3] * 8)
+			goto Death
+	}
+}
+
+actor SnakeTrailPowered
+{
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	renderstyle translucent
+	alpha 0.75
+	states
+	{
+		Spawn:
+			SNFT A 0
+			SNFT A 1 bright A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4")
+		Spawn1:
+			SNFT ABCD 2 bright
+			goto Fade
+		Spawn2:
+			SNFT BCDA 2 bright
+			goto Fade
+		Spawn3:
+			SNFT CDAB 2 bright
+			goto Fade
+		Spawn4:
+			SNFT DABC 2 bright
+		Fade:
+			"----" AAAAAAA 1 bright A_FadeOut(0.1)
+			stop
+	}
+}
+
+actor OphidianMorph : MonsterMorph
+{
+	tag "Ophidian"
+	inventory.icon "ARTISNKE"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("OphidianHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9)
+			stop
+	}
+}
+
+actor OphidianMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9)
+			stop
+	}
+}
+
+actor OphidianHitboxCheck : BaseHitboxCheck
+{
+	height 74
+	radius 30
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("OphidianMorphDirect",1)
+			stop
+	}
+}
+
+actor OphidianMorpher : MonsterMorpher { powerup.type MorphSnke }
+
+actor PowerMorphSnke : PowerMorphHeretic { powermorph.playerclass "OphidianClass" }
+
+actor OphidianMorpherHitbox : MonsterMorpher { powerup.type MorphSnkeHitbox }
+
+actor PowerMorphSnkeHitbox : PowerMorphHeretic { powermorph.playerclass "OphidianClassHitbox" }

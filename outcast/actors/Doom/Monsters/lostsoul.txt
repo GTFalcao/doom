@@ -1,0 +1,101 @@
+
+actor LostSoulClass : MonsterPawnDoom
+{
+	player.morphweapon "LostSoulWeapon"
+	health 100
+	player.maxhealth 100
+	speed 0.6
+	player.soundclass "skull"
+	+DONTFALL
+	states
+	{
+		Spawn:
+			SKU0 AB 10 bright
+			loop
+		See:
+			SKU0 AB 6 bright
+			loop
+		Pain:
+			SKU0 E 6 bright A_PlaySound("0skull/pain",2)
+			goto Spawn
+		Missile:
+			SKU0 C 12 bright
+			goto Spawn
+		Melee:
+			SKU0 D 4 bright
+			SKU0 C 6 bright
+			goto Spawn
+		Death:
+			SKUL F 6 Bright
+			SKUL G 6 Bright A_PlayerScream
+			SKUL H 6 Bright
+			SKUL I 6 Bright A_NoBlocking
+			SKUL J 6
+			SKUL K 6
+			FDMN T 10 A_CheckPlayerDone
+			wait
+	}
+}
+
+actor LostSoulWeapon : BaseMonsterWeaponFlight
+{
+	tag "Charge"
+	+WEAPON.NOALERT
+	states
+	{
+		Fire:
+			TNT1 A 10 SetPlayerProperty(0,0,1)
+			TNT1 A 0 A_PlaySound("0skull/attack",CHAN_VOICE)
+			TNT1 A 0 A_JumpIfTargetInLOS("Hit",0,JLOSF_ALLYNOJUMP,120)
+			TNT1 A 0 A_GunFlash
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIfTargetInLOS("Hit",0,JLOSF_ALLYNOJUMP,120)
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIfTargetInLOS("Hit",0,JLOSF_ALLYNOJUMP,120)
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+		FireLoop:
+			TNT1 A 0 A_GunFlash
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIf((velx < 2) && (vely < 2),"Hit")
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIf((velx < 2) && (vely < 2),"Hit")
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIf((velx < 2) && (vely < 2),"Hit")
+			TNT1 AA 1 ThrustThing(angle*256/360,3,0,0)
+			TNT1 A 0 A_JumpIf((velx < 2) && (vely < 2),"Hit")
+			loop
+		Hit:
+			TNT1 A 4 A_FireCustomMissile("LostSoulMeleeProj")
+			TNT1 A 20 SetPlayerProperty(0,0,0)
+			goto Ready+3
+	}
+}
+
+actor LostSoulMeleeProj : ImpMeleeProj
+{
+	obituary "%o was spooked by %k."
+	damage (6 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,27 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor LostSoulMorph : MonsterMorph
+{
+	tag "Lost Soul"
+	inventory.icon "ARTISKUL"
+	states
+	{
+		Use:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,14)
+			stop
+	}
+}
+
+actor LostSoulMorpher : MonsterMorpher { powerup.type MorphSkul }
+
+actor PowerMorphSkul : PowerMorphDoom { powermorph.playerclass "LostSoulClass" }

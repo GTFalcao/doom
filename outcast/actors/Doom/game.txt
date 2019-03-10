@@ -1,0 +1,408 @@
+
+actor Stimpack0 : CustomInventory replaces Stimpack
+{
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "Picked up a stimpack."
+	states
+	{
+		Spawn:
+			STIM A -1
+			stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("ReiverWeapon",1,"Reiver")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,1) > 0,"HealMe")
+			fail
+		HealMe:
+			TNT1 A 0 HealThing(10)
+			stop
+		Reiver:
+			TNT1 A 0 A_JumpIfHealthLower(150,"HealMe")
+			fail
+	}
+}
+
+actor Medikit0 : CustomInventory replaces Medikit
+{
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "Picked up a medikit."
+	states
+	{
+		Spawn:
+			MEDI A -1
+			stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("ReiverWeapon",1,"Reiver")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,1) > 0,"HealMe")
+			fail
+		HealMe:
+			TNT1 A 0 HealThing(25)
+			stop
+		Reiver:
+			TNT1 A 0 A_JumpIfHealthLower(150,"HealMe")
+			fail
+	}
+}
+
+actor HealthBonus02 : HealthBonus
+{
+	inventory.maxamount 10990
+}
+
+actor HealthBonus0 : CustomInventory replaces HealthBonus
+{
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "Picked up a health bonus."
+	states
+	{
+		Spawn:
+			BON1 ABCDCB 6
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,2) > 0,"HealMe")
+			stop
+		HealMe:
+			TNT1 A 0 A_GiveInventory("HealthBonus02",1)
+			stop
+	}
+}
+
+actor Soulsphere0 : HealthBonus0 replaces Soulsphere
+{
+	inventory.pickupmessage "Supercharge!"
+	inventory.pickupsound "*fistgrunt"
+	inventory.pickupannouncerentry "soulsphere"
+	states
+	{
+		Spawn:
+			SOUL ABCDCB 6 bright
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,2) > 100,"HealMe")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,2) <= 0,"NoHeal")
+			TNT1 A 0 A_GiveInventory("HealthBonus02",ACS_ExecuteWithResult(443,2))
+			stop
+		HealMe:
+			TNT1 A 0 A_GiveInventory("HealthBonus02",100)
+			stop
+		NoHeal:
+			TNT1 A 0
+			stop
+	}
+}
+
+actor Megasphere0 : HealthBonus0 replaces Megasphere
+{
+	inventory.pickupmessage "Megasphere!"
+	inventory.pickupsound "*fistgrunt"
+	inventory.pickupannouncerentry "megasphere"
+	states
+	{
+		Spawn:
+			MEGA ABCD 6 bright
+			loop
+		Pickup:
+			TNT1 A 0 A_GiveInventory("BlueArmor0",1)
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,2) > 200,"HealMe")
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(443,2) <= 0,"NoHeal")
+			TNT1 A 0 A_GiveInventory("HealthBonus02",ACS_ExecuteWithResult(443,2))
+			stop
+		HealMe:
+			TNT1 A 0 A_GiveInventory("HealthBonus02",200)
+			stop
+		NoHeal:
+			TNT1 A 0
+			stop
+	}
+}
+
+actor Berserk0 : CustomInventory replaces Berserk
+{
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	inventory.pickupmessage "Berserk!"
+	inventory.pickupsound "*fistgrunt"
+	states
+	{
+		Spawn:
+			PSTR A -1
+			loop
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(451,0,9)
+			TNT1 A 0 A_GiveInventory("BerserkTracker",1)
+			TNT1 A 0 HealThing(100)
+			stop
+	}
+}
+
+actor Backpack0 : Backpack replaces Backpack { inventory.pickupsound "*fist" }
+
+// This mess won't be needed when 3.0 is around and we have +CANSUPERMORPH
+
+actor PowerWeaponLevel20 : PowerWeaponLevel2 { }
+
+actor JustGotTome : inventory { }
+
+actor ArtiTomeOfPower0 : CustomInventory
+{
+	inventory.pickupsound "misc/invget"
+	inventory.pickupmessage "TOME OF POWER"
+	inventory.respawntics 2800
+	+INVENTORY.PICKUPFLASH
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.UNDROPPABLE
+	+FLOATBOB
+	states
+	{
+		Spawn:
+			PWBK A 0
+			PWBK A 0 A_ChangeFlag("DROPPED",0) // to respawn
+			PWBK A -1
+			stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("ArtiTomeOfPowerHeld",10,"InUse")
+			TNT1 A 0 A_JumpIfInventory("JustGotTome",1,"InUse")
+			TNT1 A 0 A_GiveInventory("ArtiTomeOfPowerHeld",1)
+			TNT1 A 0 A_GiveInventory("JustGotTome",1)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,10)
+			stop
+		InUse:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor ArtiTomeOfPowerHeld : CustomInventory
+{
+	inventory.maxamount 10
+	inventory.icon "ARTIPWBK"
+	tag "TOME OF POWER"
+	inventory.pickupsound "misc/invget"
+	inventory.pickupmessage "TOME OF POWER"
+	+INVENTORY.UNDROPPABLE
+	+INVENTORY.INVBAR
+	+FLOATBOB
+	states
+	{
+		Spawn:
+			PWBK A -1
+			stop
+		Use:
+			TNT1 A 0 A_JumpIfInventory("PowerWeaponLevel2",1,"InUse")
+			TNT1 A 0 A_GiveInventory("PowerWeaponLevel2",1)
+			TNT1 A 0 A_GiveInventory("PowerWeaponLevel20",1)
+			TNT1 A 0 A_PlaySound("misc/invuse",CHAN_ITEM)
+			stop
+		InUse:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor BFG90000 replaces BFG9000
+{
+	+NOBLOCKMAP
+	+NOTELEPORT
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 AA 0 A_SpawnItemEx("ArtiTomeOfPower0",random(-8,8),random(-8,8),0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+	}
+}
+
+actor PlasmaRifle0 : BFG90000 replaces PlasmaRifle
+{
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SpawnItemEx("ArtiTomeOfPower0",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+	}
+}
+
+actor TomeReplacer : PlasmaRifle0 replaces ArtiTomeOfPower { }
+
+actor InvulnerabilitySphere0 : InvulnerabilitySphere replaces InvulnerabilitySphere { inventory.pickupsound "*fistgrunt" }
+
+actor BlurSphere0 : BlurSphere replaces BlurSphere { inventory.pickupsound "*fistgrunt" }
+
+actor Allmap0 : Allmap replaces Allmap { inventory.pickupsound "*fistgrunt" }
+
+actor Infrared0 : Infrared replaces Infrared { inventory.pickupsound "*fistgrunt" }
+
+actor GreenArmor0 : CustomInventory replaces GreenArmor
+{
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupsound "*fist"
+	inventory.pickupmessage "Picked up the armor."
+	states
+	{
+		Spawn:
+			ARM1 A 6
+			ARM1 B 7 bright
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("BasicArmor",100,"NoPick")
+			TNT1 A 0 A_GiveInventory("GreenArmor",1)
+			TNT1 A 0 A_TakeInventory("HasBlueArmor",1)
+			TNT1 A 0 A_TakeInventory("HasHexenArmor",1)
+			TNT1 A 0 A_GiveInventory("HasGreenArmor",1)
+			stop
+		NoPick:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor BlueArmor0 : GreenArmor0 replaces BlueArmor
+{
+	inventory.pickupmessage "Picked up the MegaArmor!"
+	states
+	{
+		Spawn:
+			ARM2 A 6
+			ARM2 B 6 bright
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("HasGreenArmor",1,2)
+			TNT1 A 0 A_JumpIfInventory("BasicArmor",200,"NoPick")
+			TNT1 A 0 A_GiveInventory("BlueArmor",1)
+			TNT1 A 0 A_TakeInventory("HasGreenArmor",1)
+			TNT1 A 0 A_TakeInventory("HasHexenArmor",1)
+			TNT1 A 0 A_GiveInventory("HasBlueArmor",1)
+			stop
+		NoPick:
+			TNT1 A 0
+			fail
+	}
+}
+
+actor ArmorBonus0 : GreenArmor0 replaces ArmorBonus
+{
+	+INVENTORY.ALWAYSPICKUP
+	inventory.pickupmessage "Picked up an armor bonus."
+	states
+	{
+		Spawn:
+			 BON2 ABCDCB 6
+			 loop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("BasicArmor",1,4)
+			TNT1 A 0 A_TakeInventory("HasHexenArmor",1)
+			TNT1 A 0 A_TakeInventory("HasBlueArmor",1)
+			TNT1 A 0 A_GiveInventory("HasGreenArmor",1)
+			TNT1 A 0 A_GiveInventory("ArmorBonus",1)
+			stop
+	}
+}
+
+actor RadSuit0 : NoTelefog replaces RadSuit { }
+
+actor Chainsaw0 : NoTelefog replaces Chainsaw { }
+
+// Weapons & Ammo
+
+actor MonsterManaBlue10 : MonsterManaBlue { inventory.amount 10 }
+
+actor MonsterManaGreen10 : MonsterManaGreen { inventory.amount 10 }
+
+actor MonsterManaBlue20 : MonsterManaBlue { inventory.amount 20 }
+
+actor MonsterManaGreen20 : MonsterManaGreen { inventory.amount 20 }
+
+actor MonsterManaBlue40 : MonsterManaBlue { inventory.amount 40 }
+
+actor MonsterManaGreen40 : MonsterManaGreen { inventory.amount 40 }
+
+actor Clip0 replaces Clip // : RandomSpawner
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOTELEPORT
+	+THRUACTORS
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_CheckFlag("DROPPED","Less")
+			TNT1 A 0 A_Jump(128,2)
+			TNT1 A 1 A_SpawnItemEx("MonsterManaBlue20",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+			TNT1 A 1 A_SpawnItemEx("MonsterManaGreen20",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+		Less:
+			TNT1 A 0 A_Jump(128,2)
+			TNT1 A 1 A_SpawnItemEx("MonsterManaBlue10",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+			TNT1 A 1 A_SpawnItemEx("MonsterManaGreen10",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+			
+	}
+}
+
+actor ClipBox0 : MonsterManaCombined replaces ClipBox
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",50)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",50)
+			stop
+	}
+}
+
+actor Chaingun0 : Clip0 replaces Chaingun
+{
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_CheckFlag("DROPPED","Less")
+			TNT1 A 0 A_Jump(128,2)
+			TNT1 A 1 A_SpawnItemEx("MonsterManaBlue40",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+			TNT1 A 1 A_SpawnItemEx("MonsterManaGreen40",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+			stop
+		Less:
+			goto Super::Spawn+2
+	}
+}
+
+actor Pistol0 : Chaingun0 replaces Pistol { }
+
+
+actor Shell0 : Clip0 replaces Shell { }
+
+actor ShellBox0 : ClipBox0 replaces ShellBox { }
+
+actor Shotgun0 : Chaingun0 replaces Shotgun { }
+
+actor SuperShotgun0 : Chaingun0 replaces SuperShotgun { }
+
+
+actor RocketAmmo0 : Shell0 replaces RocketAmmo { }
+
+actor RocketBox0 : ClipBox0 replaces RocketBox { }
+
+actor RocketLauncher0 : Chaingun0 replaces RocketLauncher { }
+
+
+actor Cell0 : Chaingun0 replaces Cell { }
+
+actor CellPack0 : MonsterManaCombined replaces CellPack
+{
+	states
+	{
+		
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MonsterManaBlue",100)
+			TNT1 A 0 A_GiveInventory("MonsterManaGreen",100)
+			stop
+	}
+}
