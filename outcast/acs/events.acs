@@ -1,0 +1,55 @@
+
+#library	"events"
+
+#import		"variable.acs"
+#import		"function.acs"
+
+#include	"zcommon.acs"
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 464 checks for Tome of Power upon fragging
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 464 (int type, int arg1, int arg2) event
+{
+	switch(type)
+	{
+		case 0:	// GAMEEVENT_PLAYERFRAGS
+		
+			if( (!CheckInventory("PowerWeaponLevel20")) && (!GetCVar("outcast_tomefrag")) )
+				TakeInventory("PowerWeaponLevel2",1);
+				
+			else
+			{
+				GiveInventory("PowerWeaponLevel2",1);
+				GiveInventory("PowerWeaponLevel20",1);
+			}
+			
+			
+			if(CheckInventory("IsTerminator"))
+			{
+				if((PlayerFrags() - termfragstart) == 1)
+					AnnouncerSound("firstfrag",0);
+					
+				else if((PlayerFrags() - termfragstart) == (GetCVar("outcast_fraglimit") - 3))
+					AnnouncerSound("threefragsleft",0);
+					
+				else if((PlayerFrags() - termfragstart) == (GetCVar("outcast_fraglimit") - 2))
+					AnnouncerSound("twofragsleft",0);
+					
+				else if((PlayerFrags() - termfragstart) == (GetCVar("outcast_fraglimit") - 1))
+					AnnouncerSound("onefragleft",0);
+			}
+			
+				
+		default:
+		
+			break;
+	}
+}

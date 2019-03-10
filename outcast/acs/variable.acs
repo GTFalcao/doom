@@ -1,0 +1,120 @@
+
+#library 	"variable"
+
+#include 	"zcommon.acs"
+
+
+global int 48:rank_0[];
+global int 49:rank_1[];
+global int 50:rank_2[];
+global int 51:rank_3[];
+global int 52:rank_4[];
+
+global int 53:subrank_0[];
+global int 54:subrank_1[];
+global int 55:subrank_2[];
+global int 56:subrank_3[];
+global int 57:subrank_4[];
+
+global int 58:points_0[];
+global int 59:points_1[];
+global int 60:points_2[];
+global int 61:points_3[];
+global int 62:points_4[];
+
+global int 63:termwin[];
+
+int termchosen;
+int termfragstart;
+int termfrags;
+int termnumber;
+int termhealth;
+int termmaxhealth;
+int termdead;
+int termscore[64];
+
+int mapstartrank[64][5];
+int mapstartsubrank[64][5];
+int mapstartpoints[64][5];
+int startrank;
+
+int nextrank[64][5];
+int killsleft[64][5];
+int killdif[64][5];
+
+int hpmult[64][5];
+int fastserpent[64];
+int drain[64];
+int color[64][5][2];
+int tempclass[64];
+int hexenarmor[64];
+
+int gamemode;
+str teamspecies[16] = { "MonTeam0", "MonTeam1", "MonTeam2", "MonTeam3", "MonTeam4", "MonTeam5", "MonTeam6", "MonTeam7", "MonTeam8", "MonTeam9", "MonTeam10", "MonTeam11", "MonTeam12", "MonTeam13", "MonTeam14", "MonTeam15" };
+str solospecies[64] = { "Mon0", "Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7", "Mon8", "Mon9", "Mon10", "Mon11", "Mon12", "Mon13", "Mon14", "Mon15", "Mon16", "Mon17", "Mon18", "Mon19", "Mon20", "Mon21", "Mon22", "Mon23", "Mon24", "Mon25", "Mon26", "Mon27", "Mon28", "Mon29", "Mon30", "Mon31", "Mon32", "Mon33", "Mon34", "Mon35", "Mon36", "Mon37", "Mon38", "Mon39", "Mon40", "Mon41", "Mon42", "Mon43", "Mon44", "Mon45", "Mon46", "Mon47", "Mon48", "Mon49", "Mon50", "Mon51", "Mon52", "Mon53", "Mon54", "Mon55", "Mon56", "Mon57", "Mon58", "Mon59", "Mon60", "Mon61", "Mon62", "Mon63" };
+
+int mydamagefactor[64];	// float
+str dfstartcvar[5] = { "outcast_damagefactor_doom_initial", "outcast_damagefactor_heretic_initial", "outcast_damagefactor_hexen_initial", "outcast_damagefactor_strife_initial", "outcast_damagefactor_virus_initial" };
+str dfprankcvar[5] = { "outcast_damagefactor_doom_per_rank", "outcast_damagefactor_heretic_per_rank", "outcast_damagefactor_hexen_per_rank", "outcast_damagefactor_strife_per_rank", "outcast_damagefactor_virus_per_rank" };
+str dffirstcvar[5] = { "outcast_damagefactor_doom_first_rank", "outcast_damagefactor_heretic_first_rank", "outcast_damagefactor_hexen_first_rank", "outcast_damagefactor_strife_first_rank", "outcast_damagefactor_virus_first_rank" };
+
+int r1doom[13] = { 40, 90, 150, 220, 380, 550, 750, 1020, 1350, 1900, 2700, 4500, 7000 };
+int r1htic[12] = { 30, 80, 140, 230, 370, 550, 750, 1050, 1550, 2400, 3800, 5800 };
+int r1hexn[12] = { 50, 115, 200, 320, 470, 650, 890, 1290, 1700, 3550, 5500, 7500 };
+int r1strf[3][5] = { { 250, 650, 1550, 3300, 6200 }, { 300, 700, 1600, 3400, 6300 }, { 350, 850, 1750, 3550, 6450 } };
+int r1virs[12] = { 40, 90, 150, 300, 480, 700, 970, 1360, 2000, 2800, 4800, 7000 };
+
+int r2doom[13] = { 40, 50, 60, 70, 160, 170, 200, 270, 330, 550, 800, 1800, 2500 };
+int r2htic[12] = { 30, 50, 60, 90, 140, 170, 200, 300, 500, 850, 1400, 2000 };
+int r2hexn[12] = { 50, 65, 85, 120, 150, 180, 240, 400, 410, 1850, 1950, 2000 };
+int r2strf[3][5] = { { 150, 400, 900, 1750, 2900 }, { 200, 400, 900, 1800, 2900 }, { 250, 500, 900, 1800, 2900 } };
+int r2virs[12] = { 40, 50, 60, 150, 180, 220, 270, 390, 640, 800, 2000, 2200 };
+
+str rankdoom[14] = { "DoomRank0", "DoomRank1", "DoomRank2", "DoomRank3", "DoomRank4", "DoomRank5", "DoomRank6", "DoomRank7", "DoomRank8", "DoomRank9", "DoomRank10", "DoomRank11", "DoomRank12", "DoomRank13" };
+str rankhtic[13] = { "HereticRank0", "HereticRank1", "HereticRank2", "HereticRank3", "HereticRank4", "HereticRank5", "HereticRank6", "HereticRank7", "HereticRank8", "HereticRank9", "HereticRank10", "HereticRank11", "HereticRank12" };
+str rankhexn[13] = { "HexenRank0", "HexenRank1", "HexenRank2", "HexenRank3", "HexenRank4", "HexenRank5", "HexenRank6", "HexenRank7", "HexenRank8", "HexenRank9", "HexenRank10", "HexenRank11", "HexenRank12" };
+str rankstrf[3][6] = { { "StrifeRank0_1", "StrifeRank1_1", "StrifeRank2_1", "StrifeRank3_1", "StrifeRank4_1", "StrifeRank5" }, { "StrifeRank0_2", "StrifeRank1_2", "StrifeRank2_2", "StrifeRank3_2", "StrifeRank4_2", "StrifeRank5" }, { "StrifeRank0_3", "StrifeRank1_3", "StrifeRank2_3", "StrifeRank3_3", "StrifeRank4_3", "StrifeRank5" } };
+str rankvirs[13] = { "VirusRank0", "VirusRank1", "VirusRank2", "VirusRank3", "VirusRank4", "VirusRank5", "VirusRank6", "VirusRank7", "VirusRank8", "VirusRank9", "VirusRank10", "VirusRank11", "VirusRank12" };
+
+str rupdoom[13] = { "Shotgun Guy!", "Imp!", "Demon!", "Chaingun Guy!", "Cacodemon!", "Revenant!", "Hell Knight!", "Baron of Hell!", "Mancubus!", "Arachnotron!", "Arch-Vile!", "Spider Mastermind!", "Cyberdemon!" };
+str ruphtic[12] = { "Fire Gargoyle", "Golem", "Nitro Golem", "Sabreclaw", "Disciple of D'Sparil", "Undead Knight", "Ghost Undead Knight", "Weredragon", "Ophidian", "Iron Lich", "Maulotaur", "D'Sparil" };
+str ruphexn[12] = { "Ettin", "Centaur", "Slaughtaur", "Chaos Serpent", "Stalker", "Dark Bishop", "Wendigo", "Reiver", "Zedek, Traductus and Menelkir", "Death Wyvern", "Heresiarch", "Korax" };
+str rupstrf[3][5] = { { "Reaver!", "Loremaster!", "Inquisitor!", "Oracle's Spectre!", "The Entity!" }, { "Macil!", "Templar!", "Programmer!", "Loremaster's Spectre!", "The Entity!" }, { "Crusader!", "Bishop!", "Bishop's Spectre!", "Macil's Spectre!", "The Entity!" } };
+str rupvirs[12] = { "Prism!", "Spore!", "Greater Prism!", "Mill!", "Virus!", "Air Carrier!", "Treadmill!", "Mesh Flier!", "Mesh Walker!", "Leader!", "Land Carrier!", "Felix!" };
+
+str invmorphdoom[14] = { "ZombiemanMorph", "ShotguyMorph", "ImpMorph", "DemonMorph", "ChainguyMorph", "CacodemonMorph", "RevenantMorph", "HellknightMorph", "BaronMorph", "MancubusMorph", "ArachnotronMorph", "ArchvileMorph", "MastermindMorph", "CyberdemonMorph" };
+str invmorphhtic[13] = { "GargoyleMorph", "FireGargoyleMorph", "GolemMorph", "NitroGolemMorph", "SabreclawMorph", "DiscipleMorph", "KnightMorph", "GhostKnightMorph", "WeredragonMorph", "OphidianMorph", "IronLichMorph", "MaulotaurMorph", "DSparilMorph" };
+str invmorphhexn[13] = { "AfritMorph", "EttinMorph", "CentaurMorph", "SlaughtaurMorph", "SerpentMorph", "StalkerMorph", "DarkBishopMorph", "WendigoMorph", "ReiverMorph", "ClassBossMorph", "WyvernMorph", "HeresiarchMorph", "KoraxMorph"};
+str invmorphstrf[3][6] = { { "StalkerSpiderMorph", "ReaverMorph", "LoremasterMorph", "InquisitorMorph", "Spectre3Morph", "EntityMorph" }, { "AcolyteMorph", "MacilMorph", "TemplarMorph", "ProgrammerMorph", "Spectre5Morph", "EntityMorph" }, { "SentinelMorph", "CrusaderMorph", "BishopMorph", "Spectre2Morph", "Spectre4Morph", "EntityMorph" } };
+str invmorphvirs[13] = { "DroneMorph", "PrismMorph", "SporeMorph", "GreaterPrismMorph", "MillMorph", "VirusMorph", "AirCarrierMorph", "TreadmillMorph", "MeshflierMorph", "MeshwalkerMorph", "LeaderMorph", "LandCarrierMorph", "FelixMorph" };
+
+str powermorphdoom[16] = { "ZombiemanMorpher", "ShotguyMorpher", "ImpMorpher", "DemonMorpher", "ChainguyMorpher", "CacodemonMorpher", "RevenantMorpher", "HellknightMorpher", "BaronMorpher", "MancubusMorpher", "ArachnotronMorpher", "ArchvileMorpher", "MastermindMorpher", "CyberdemonMorpher", "LostSoulMorpher", "PainElementalMorpher" };
+str powermorphhtic[13] = { "GargoyleMorpher", "FireGargoyleMorpher", "GolemMorpher", "NitroGolemMorpher", "SabreclawMorpher", "DiscipleMorpher", "KnightMorpher", "GhostKnightMorpher", "WeredragonMorpher", "OphidianMorpher", "IronLichMorpher", "MaulotaurMorpher", "DSparilMorpher" };
+str powermorphhexn[14] = { "AfritMorpher", "EttinMorpher", "CentaurMorpher", "SlaughtaurMorpher", "SerpentMorpher", "StalkerMorpher", "DarkBishopMorpher", "WendigoMorpher", "ReiverMorpher", "", "WyvernMorpher", "HeresiarchMorpher", "KoraxMorpher", "Serpent2Morpher"};
+str powermorphstrf[3][5] = { { "StalkerSpiderMorpher", "ReaverMorpher", "LoremasterMorpher", "InquisitorMorpher", "Spectre3Morpher" }, { "AcolyteMorpher", "MacilMorpher", "TemplarMorpher", "ProgrammerMorpher", "Spectre5Morpher" }, { "SentinelMorpher", "CrusaderMorpher", "BishopMorpher", "Spectre2Morpher", "Spectre4Morpher" } };
+str powermorphvirs[13] = { "DroneMorpher", "PrismMorpher", "SporeMorpher", "GreaterPrismMorpher", "MillMorpher", "VirusMorpher", "AirCarrierMorpher", "TreadmillMorpher", "MeshflierMorpher", "MeshwalkerMorpher", "LeaderMorpher", "LandCarrierMorpher", "FelixMorpher" };
+
+str powermorphdoomhitbox[16] = { "ZombiemanMorpher", "ShotguyMorpher", "ImpMorpher", "DemonMorpherHitbox", "ChainguyMorpherHitbox", "CacodemonMorpherHitbox", "RevenantMorpherHitbox", "HellknightMorpherHitbox", "BaronMorpherHitbox", "MancubusMorpherHitbox", "ArachnotronMorpherHitbox", "ArchvileMorpherHitbox", "MastermindMorpherHitbox", "CyberdemonMorpherHitbox", "LostSoulMorpher", "PainElementalMorpherHitbox" };
+str powermorphhtichitbox[13] = { "GargoyleMorpherHitbox", "FireGargoyleMorpherHitbox", "GolemMorpher", "NitroGolemMorpher", "SabreclawMorpherHitbox", "DiscipleMorpherHitbox", "KnightMorpherHitbox", "GhostKnightMorpherHitbox", "WeredragonMorpherHitbox", "OphidianMorpherHitbox", "IronLichMorpherHitbox", "MaulotaurMorpherHitbox", "DSparilMorpherHitbox" };
+str powermorphhexnhitbox[14] = { "AfritMorpherHitbox", "EttinMorpherHitbox", "CentaurMorpherHitbox", "SlaughtaurMorpherHitbox", "SerpentMorpherHitbox", "StalkerMorpherHitbox", "DarkBishopMorpherHitbox", "WendigoMorpherHitbox", "ReiverMorpher", "", "WyvernMorpherHitbox", "HeresiarchMorpherHitbox", "KoraxMorpherHitbox", "Serpent2MorpherHitbox"};
+str powermorphstrfhitbox[3][5] = { { "StalkerSpiderMorpherHitbox", "ReaverMorpher", "LoremasterMorpher", "InquisitorMorpherHitbox", "Spectre3MorpherHitbox" }, { "AcolyteMorpher", "MacilMorpher", "TemplarMorpher", "ProgrammerMorpherHitbox", "Spectre5MorpherHitbox" }, { "SentinelMorpherHitbox", "CrusaderMorpherHitbox", "BishopMorpherHitbox", "Spectre2MorpherHitbox", "Spectre4MorpherHitbox" } };
+str powermorphvirshitbox[13] = { "DroneMorpherHitbox", "PrismMorpherHitbox", "SporeMorpherHitbox", "GreaterPrismMorpherHitbox", "MillMorpherHitbox", "VirusMorpherHitbox", "AirCarrierMorpherHitbox", "TreadmillMorpherHitbox", "MeshflierMorpherHitbox", "MeshwalkerMorpherHitbox", "LeaderMorpherHitbox", "LandCarrierMorpherHitbox", "FelixMorpherHitbox" };
+
+str powermorphhex2[4] = { "", "ZedekMorpher", "TraductusMorpher", "MenelkirMorpher" };
+str powermorphhex2hitbox[4] = { "", "ZedekMorpherHitbox", "TraductusMorpherHitbox", "MenelkirMorpherHitbox" };
+
+str pointname[5] = { "DoomDamagePoint0", "HereticDamagePoint0", "HexenDamagePoint0", "StrifeDamagePoint0", "VirusDamagePoint0" };
+
+int maxrank[5] = { 13, 12, 12, 5, 12 };
+
+str runetypes[10] = { "RuneDoubleDamage", "RuneDoubleFiringSpeed", "RuneDrain", "RuneSpread", "RuneHalfDamage", "RuneRegeneration", "RuneProsperity", "RuneReflection", "RuneHighJump", "RuneSpeed25" };
+str powertypes[5] = { "PowerInvulnerable", "PowerWeaponLevel2", "PowerInvisibility", "PowerGhost", "PowerShadow" };
+
+str cvars455[8] = { "invasion", "outcast_flight", "outcast_doublepointswithstrength", "outcast_quadpointswithdoomsphere", "outcast_pointmultiplier", "outcast_damagemultiplier", "sv_fastweapons", "outcast_hitbox" };
+
+int subentity_id[64][2];
+int subentity_hp[64][3];
+int subentity_co[64][3];
+
+int hasarti[64][19];
+str namearti[19] = { "ArtiTomeOfPowerHeld", "ArtiHealth0", "ArtiSuperHealth0", "ArtiEgg", "ArtiInvisibility", "ArtiInvulnerability", "ArtiTeleport", "ArtiTorch", "ArtiTimebomb", "ArtiFly", "ArtiBoostMana0", "ArtiBlastRadius", "ArtiBoostArmor0", "ArtiDarkServant", "ArtiHealingRadius", "ArtiInvulnerability2", "ArtiPoisonBag3", "ArtiPork", "ArtiTeleportOther" };

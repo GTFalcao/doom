@@ -1,0 +1,257 @@
+
+#library	"entity"
+
+#import		"variable.acs"
+#import		"function.acs"
+
+#include	"zcommon.acs"
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 457 keeps track of the Entity's state for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+function void SwapEntity (int entnum)
+{
+    subentity_co[me()][0] = GetActorX(subentity_id[me()][entnum]);
+    subentity_co[me()][1] = GetActorY(subentity_id[me()][entnum]);
+    subentity_co[me()][2] = GetActorZ(subentity_id[me()][entnum]);
+        
+    Thing_Remove(subentity_id[me()][entnum]);
+    SetActorPosition(0,subentity_co[me()][0],subentity_co[me()][1],subentity_co[me()][2],0);
+    
+    SetActorState(0,"Spawn");
+    SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+    TakeInventory("PowerInvulnerable",1);
+}
+
+script 457 (void)
+{
+    FreezePawn();
+        
+    Delay(4);
+        
+    SetActorState(0,"PreFall");
+        
+    Delay(4);
+        
+    SetActorState(0,"Fall");
+    
+    Delay(100);
+	
+	if(!CheckWeapon("EntityWeapon"))
+		terminate;
+		
+	if(CheckInventory("HasHexenArmor"))
+		hexenarmor[me()] = CheckInventory("BasicArmor");
+	TakeInventory("BasicArmor",999);
+    
+    TakeInventory("PowerInvulnerable",1);
+	TakeInventory("PowerShadow",1);
+    TakeInventory("PowerMorphMnal",1);
+    TakeInventory("PowerMorphMnalHitbox",1);
+    
+    Delay(1);
+    
+	if(GetCVar("outcast_hitbox"))
+		GiveInventory("SubEntityMorpherHitbox",1);
+	else
+		GiveInventory("SubEntityMorpher",1);
+    
+    Delay(1);
+    
+    SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+    GiveInventory("MonRadSuit",1);
+	GiveInventory("MonShadow",1);
+	GiveInventory("IsStrife",1);
+    VerifySpecies();
+    ActivatorSound("alienspectre/sight",127);
+	
+	if(hexenarmor[me()] > 0)
+	{
+		GiveInventory("HexenArmor0Bonus",hexenarmor[me()]);
+		hexenarmor[me()] = 0;
+	}
+    
+    if(gamemode > 0)
+    {
+        SetActorProperty(0,APROP_SPAWNHEALTH,2970);
+        SetActorProperty(0,APROP_HEALTH,2970);
+        terminate;
+    }
+	
+    GiveInventory("EntitySpawnSiblings",1);
+    
+    subentity_id[me()][0] = 1400 + (me() * 2);
+    subentity_id[me()][1] = 1401 + (me() * 2);
+    
+    Delay(1);
+    
+    Thing_ChangeTID(1531, subentity_id[me()][0]);
+    Thing_ChangeTID(1532, subentity_id[me()][1]);
+	
+    subentity_hp[me()][0] = 990;
+    subentity_hp[me()][1] = 990;
+    subentity_hp[me()][2] = 990;
+    
+    while(subentity_hp[me()][2] > 0)
+    {
+        if( (!PlayerInGame(me())) || (!CheckInventory("IsSubEntity")) )
+        {
+            Thing_Remove(subentity_id[me()][0]);
+            Thing_Remove(subentity_id[me()][1]);
+            
+            terminate;
+        }
+        
+        subentity_hp[me()][0] = GetActorProperty(subentity_id[me()][0],APROP_HEALTH);
+        subentity_hp[me()][1] = GetActorProperty(subentity_id[me()][1],APROP_HEALTH);
+        subentity_hp[me()][2] = GetActorProperty(0,APROP_HEALTH) - 1980;
+    
+        TakeInventory("SubEntity0Tracker",990);
+        TakeInventory("SubEntity1Tracker",990);
+        TakeInventory("SubEntity2Tracker",990);
+        
+        GiveInventory("SubEntity0Tracker",subentity_hp[me()][0]);
+        GiveInventory("SubEntity1Tracker",subentity_hp[me()][1]);
+        GiveInventory("SubEntity2Tracker",subentity_hp[me()][2]);
+        
+        if(subentity_hp[me()][0] < 0)
+            subentity_hp[me()][0] = 0;
+            
+        if(subentity_hp[me()][1] < 0)
+            subentity_hp[me()][1] = 0;
+        
+        Delay(10);
+    }
+    
+    if(GetActorProperty(0,APROP_HEALTH) <= 0)
+    {
+		if(GetActorProperty(subentity_id[me()][0],APROP_HEALTH) > 0)
+			Thing_Destroy(subentity_id[me()][0]);
+			
+		if(GetActorProperty(subentity_id[me()][1],APROP_HEALTH) > 0)
+			Thing_Destroy(subentity_id[me()][1]);
+			
+        terminate;
+    }
+    
+    else if( (subentity_hp[me()][0] <= 0) && (subentity_hp[me()][1] <= 0) )
+    {
+        DamageThing(0);
+        terminate;
+    }
+    
+    FreezePawn();
+        
+    Delay(4);
+        
+    SetActorState(0,"Fall");
+    
+    Delay(70);
+	
+	if(!CheckWeapon("SubEntityWeapon"))
+		terminate;
+    
+    subentity_hp[me()][0] = GetActorProperty(subentity_id[me()][0],APROP_HEALTH);
+    subentity_hp[me()][1] = GetActorProperty(subentity_id[me()][1],APROP_HEALTH);
+    
+    if( (subentity_hp[me()][0] > 0) && (subentity_hp[me()][1] > 0) )
+    {
+        SetActorProperty(0,APROP_SPAWNHEALTH,1980);
+        SetActorProperty(0,APROP_HEALTH,subentity_hp[me()][0] + 990);
+        SwapEntity(0);
+        TakeInventory("SubEntity0Tracker",990);
+    
+        while(subentity_hp[me()][0] > 0)
+        {
+            if( (!PlayerInGame(me())) || (!CheckInventory("IsSubEntity")) )
+            {
+            Thing_Remove(subentity_id[me()][1]);
+            
+            terminate;
+            }
+        
+            subentity_hp[me()][1] = GetActorProperty(subentity_id[me()][1],APROP_HEALTH);
+            subentity_hp[me()][0] = GetActorProperty(0,APROP_HEALTH) - 990;
+    
+            TakeInventory("SubEntity1Tracker",990);
+            TakeInventory("SubEntity2Tracker",990);
+        
+            GiveInventory("SubEntity1Tracker",subentity_hp[me()][1]);
+            GiveInventory("SubEntity2Tracker",subentity_hp[me()][0]);
+            
+            if(subentity_hp[me()][1] < 0)
+                subentity_hp[me()][1] = 0;
+        
+            Delay(10);
+        
+        }
+    
+        TakeInventory("SubEntity0Tracker",990);
+        TakeInventory("SubEntity1Tracker",990);
+        TakeInventory("SubEntity2Tracker",990);
+    
+        if(GetActorProperty(0,APROP_HEALTH) <= 0)
+        {
+            Thing_Destroy(subentity_id[me()][1]);
+            terminate;
+        }
+    }
+    
+    TakeInventory("SubEntity0Tracker",990);
+    TakeInventory("SubEntity1Tracker",990);
+    TakeInventory("SubEntity2Tracker",990);
+    
+    if (subentity_hp[me()][0] > 0)
+    {
+        FreezePawn();
+        
+        Delay(4);
+        
+        SetActorState(0,"Fall");
+    
+        Delay(70);
+	
+		if(!CheckWeapon("SubEntityWeapon"))
+			terminate;
+        
+        SetActorProperty(0,APROP_SPAWNHEALTH,990);
+        SetActorProperty(0,APROP_HEALTH,subentity_hp[me()][0]);
+        
+		if(subentity_hp[me()][0] > 0)
+			SwapEntity(0);
+		else
+			DamageThing(0);
+    }
+    
+    else if (subentity_hp[me()][1] > 0)
+    {
+        FreezePawn();
+        
+        Delay(4);
+        
+        SetActorState(0,"Fall");
+    
+        Delay(70);
+	
+		if(!CheckWeapon("SubEntityWeapon"))
+			terminate;
+        
+        SetActorProperty(0,APROP_SPAWNHEALTH,990);
+        SetActorProperty(0,APROP_HEALTH,subentity_hp[me()][1]);
+        
+		if(subentity_hp[me()][0] > 0)
+			SwapEntity(1);
+		else
+			DamageThing(0);
+    }
+    
+    else
+		DamageThing(0);
+}

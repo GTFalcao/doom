@@ -1,0 +1,59 @@
+
+arnold
+classes
+entity
+events
+function
+outcore
+powmorph
+sorcball
+variable
+
+
+/* Script list
+
+
+440 - disconnect variable reset ................... outcore
+441 - first spawn settings ........................ outcore
+442 - respawn settings	........................... outcore
+
+443 - Decorate CallACS information ................ outcore
+
+444 - Doom ........................................ classes
+445 - Heretic ..................................... classes
+446 - Hexen ....................................... classes
+447 - Strife ...................................... classes
+448 - Virus ....................................... classes
+
+450 - monster morph ............................... powmorph
+
+451 - misc Decorate stuff ......................... outcore
+
+452 - Virus ....................................... classes
+
+453 - define subrank .............................. outcore
+
+454 - gamemode detection at map start ............. outcore
+
+455 - Decorate CallACS for CVars .................. outcore
+
+456 - (empty) ..................................... (empty)
+
+457 - Entity split ................................ entity
+
+458 - help message ................................ outcore
+
+459 - survival death check ........................ outcore
+
+460 - Heresiarch (de)spawn cubes .................. sorcball
+
+461 - Heresiarch (de)accelerate cubes ............. sorcball
+
+463 - hitbox room check ........................... outcore
+
+464 - event script ................................ events
+
+465 - terminator sphere ........................... arnold
+
+
+*/

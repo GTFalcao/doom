@@ -1,0 +1,1032 @@
+
+#library 	"function"
+
+#import 	"variable.acs"
+
+#include 	"zcommon.acs"
+
+function int me (void) { return PlayerNumber(); }
+
+function void VerifySpecies (void)
+{
+    if(gamemode == 2)
+        SetActorProperty(0,APROP_SPECIES,teamspecies[GetPlayerInfo(me(),PLAYERINFO_TEAM)]);
+    
+    else if(gamemode == 1)
+	{
+		if( (!GetCVar("terminator")) || (termnumber == me()) )
+			SetActorProperty(0,APROP_SPECIES,solospecies[me()]);
+	}
+	
+	VerifyDamageFactor();
+}
+
+function int VerifyDamageFactor (void)
+{
+	if( (!GetCVar("outcast_usedamagefactors")) || (GetCVar("terminator")) || (gamemode > 0) )
+	{
+		TakeInventory("HasDamageFactor",1);
+		return 0;
+	}
+	
+	mydamagefactor[me()] = GetCVar(dfstartcvar[PlayerClass(me())]);
+	
+	switch(PlayerClass(me()))
+	{
+		default:
+		case 0:
+		
+			if(rank_0[me()] > GetCVar(dffirstcvar[0]))
+				mydamagefactor[me()] += GetCVar(dfprankcvar[0]) * (rank_0[me()] - GetCVar(dffirstcvar[0]));
+				
+			break;
+			
+		case 1:
+			
+			if(rank_1[me()] > GetCVar(dffirstcvar[1]))
+				mydamagefactor[me()] += GetCVar(dfprankcvar[1]) * (rank_1[me()] - GetCVar(dffirstcvar[1]));
+				
+			break;
+			
+		case 2:
+			
+			if(rank_2[me()] > GetCVar(dffirstcvar[2]))
+				mydamagefactor[me()] += GetCVar(dfprankcvar[2]) * (rank_2[me()] - GetCVar(dffirstcvar[2]));
+				
+			break;
+			
+		case 3:
+			
+			if( (rank_3[me()] > GetCVar(dffirstcvar[3])) && (subrank_3[me()] > 0) )
+				mydamagefactor[me()] += GetCVar(dfprankcvar[3]) * (rank_3[me()] - GetCVar(dffirstcvar[3]));
+				
+			break;
+			
+		case 4:
+			
+			if(rank_4[me()] > GetCVar(dffirstcvar[4]))
+				mydamagefactor[me()] += GetCVar(dfprankcvar[4]) * (rank_4[me()] - GetCVar(dffirstcvar[4]));
+				
+			break;
+	}
+	
+	SetActorProperty(0, APROP_DAMAGEFACTOR, mydamagefactor[me()]);
+	
+	GiveInventory("HasDamageFactor",1);
+	
+	TakeInventory("MyDamageFactorUnit",99);
+	TakeInventory("MyDamageFactorDecimal",99);
+	
+	int mydamagefactordecimal = (mydamagefactor[me()] * 100 / 65536) % 100;
+	
+	if(mydamagefactordecimal > 95)
+		GiveInventory("MyDamageFactorUnit",(mydamagefactor[me()] >> 16) + 1);
+	
+	else
+	{
+		while(mydamagefactordecimal % 5 > 0) {
+			mydamagefactordecimal++; }
+		
+		GiveInventory("MyDamageFactorUnit",mydamagefactor[me()] >> 16);
+		GiveInventory("MyDamageFactorDecimal",mydamagefactordecimal);
+	}
+	
+	return mydamagefactor[me()];
+}
+
+function void UpdateHudTrackers (void)
+{
+	if(GetCVar("sv_infiniteammo"))
+	{
+		if( (CheckInventory("MonsterManaBlue") < 100) || (CheckInventory("MonsterManaGreen") < 100) )
+		{
+			GiveInventory("MonsterManaBlue",1000);
+			GiveInventory("MonsterManaGreen",1000);
+		}
+	}
+	
+	if(termchosen)
+	{
+		TakeInventory("TerminatorHealthTracker",30000);
+		TakeInventory("TerminatorHealthTrackerNum",30000);
+		TakeInventory("TerminatorHealthTrackerMax",30000);
+		TakeInventory("TerminatorFragTrackerNum",100);
+		TakeInventory("TerminatorFragTrackerMax",30000);
+		TakeInventory("TerminatorScoreTracker",30000);
+		
+		GiveInventory("TerminatorHealthTrackerMax",termmaxhealth);
+		GiveInventory("TerminatorFragTrackerMax",GetCVar("outcast_fraglimit"));
+		
+		if(termfrags > 0)
+			GiveInventory("TerminatorFragTrackerNum",termfrags);
+			
+		if(termwin[me()] > 0)
+			GiveInventory("TerminatorScoreTracker",termwin[me()]);
+		
+		if(!termdead)
+		{
+			GiveInventory("TerminatorHealthTracker",30000 * termhealth / termmaxhealth);
+			GiveInventory("TerminatorHealthTrackerNum",termhealth);
+		}
+		
+		else if( (!termscore[me()]) && (termnumber != me()) )
+		{
+			termscore[me()] = 1;
+			AnnouncerSound("youwin",1);
+			termwin[me()]++;
+		}
+	}
+	
+	TakeInventory("RuneTracker",1);
+	TakeInventory("PowerTracker",1);
+	
+	if(CheckInventory(pointname[0]) != CheckInventory("DoomDamagePoint") / 100)
+	{
+		TakeInventory(pointname[0],CheckInventory("DoomDamagePoint") / 100);
+		GiveInventory(pointname[0],CheckInventory("DoomDamagePoint") / 100);
+	}
+	
+	if(CheckInventory(pointname[1]) != CheckInventory("HereticDamagePoint") / 100)
+	{
+		TakeInventory(pointname[1],CheckInventory("HereticDamagePoint") / 100);
+		GiveInventory(pointname[1],CheckInventory("HereticDamagePoint") / 100);
+	}
+	
+	if(CheckInventory(pointname[2]) != CheckInventory("HexenDamagePoint") / 100)
+	{
+		TakeInventory(pointname[2],CheckInventory("HexenDamagePoint") / 100);
+		GiveInventory(pointname[2],CheckInventory("HexenDamagePoint") / 100);
+	}
+	
+	if(CheckInventory(pointname[3]) != CheckInventory("StrifeDamagePoint") / 100)
+	{
+		TakeInventory(pointname[3],CheckInventory("StrifeDamagePoint") / 100);
+		GiveInventory(pointname[3],CheckInventory("StrifeDamagePoint") / 100);
+	}
+	
+	if(CheckInventory(pointname[4]) != CheckInventory("VirusDamagePoint") / 100)
+	{
+		TakeInventory(pointname[4],CheckInventory("VirusDamagePoint") / 100);
+		GiveInventory(pointname[4],CheckInventory("VirusDamagePoint") / 100);
+	}
+	
+	for(int a = 0; a <= 4; a++)
+	{
+		if(CheckInventory(powertypes[a]))
+			GiveInventory("PowerTracker",1);
+	}
+	
+	for(int b = 0; b <= 9; b++)
+	{
+		if(CheckInventory(runetypes[b]))
+			GiveInventory("RuneTracker",1);
+	}
+}
+
+function void FreezePawn (void)
+{
+    SetActorState(0,"Spawn");
+    SetActorVelocity(0,0,0,0,0,0);
+    SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
+    GiveInventory("MonTempInvul",1);
+}
+
+function void ClearPowers (void)
+{
+    TakeInventory("PowerMorphPoss",1);
+    TakeInventory("PowerMorphSpos",1);
+    TakeInventory("PowerMorphTroo",1);
+	TakeInventory("PowerMorphSkul",1);
+    TakeInventory("PowerMorphCpos",1);
+    TakeInventory("PowerMorphSarg",1);
+    TakeInventory("PowerMorphHead",1);
+	TakeInventory("PowerMorphPain",1);
+    TakeInventory("PowerMorphSkel",1);
+    TakeInventory("PowerMorphBos2",1);
+    TakeInventory("PowerMorphBoss",1);
+    TakeInventory("PowerMorphFatt",1);
+    TakeInventory("PowerMorphBspi",1);
+    TakeInventory("PowerMorphVile",1);
+    TakeInventory("PowerMorphSpid",1);
+    TakeInventory("PowerMorphCybr",1);
+            
+    TakeInventory("PowerMorphImpx",1);
+    TakeInventory("PowerMorphImp2",1);  
+    TakeInventory("PowerMorphMumm",1);
+    TakeInventory("PowerMorphMum2",1);
+    TakeInventory("PowerMorphClnk",1);
+    TakeInventory("PowerMorphWzrd",1);
+    TakeInventory("PowerMorphKnig",1);
+    TakeInventory("PowerMorphKni2",1);
+    TakeInventory("PowerMorphBeas",1);
+    TakeInventory("PowerMorphSnke",1);
+    TakeInventory("PowerMorphLich",1);
+    TakeInventory("PowerMorphMntr",1);
+    TakeInventory("PowerMorphSrcr",1);
+    TakeInventory("PowerMorphSor2",1);
+            
+    TakeInventory("PowerMorphFdmn",1);
+    TakeInventory("PowerMorphEttn",1);
+    TakeInventory("PowerMorphCent",1);
+    TakeInventory("PowerMorphCen2",1);
+    TakeInventory("PowerMorphDemn",1);
+    TakeInventory("PowerMorphDem2",1);
+    TakeInventory("PowerMorphSspt",1);
+    TakeInventory("PowerMorphBish",1);
+    TakeInventory("PowerMorphIcey",1);
+    TakeInventory("PowerMorphWrth",1);
+    TakeInventory("PowerMorphFigh",1);
+    TakeInventory("PowerMorphCler",1);
+    TakeInventory("PowerMorphMage",1);
+    TakeInventory("PowerMorphDrag",1);
+    TakeInventory("PowerMorphSorc",1);
+    TakeInventory("PowerMorphKorx",1);
+            
+    TakeInventory("PowerMorphPeas",1);
+    TakeInventory("PowerMorphBegr",1);
+    TakeInventory("PowerMorphHmn1",1);
+    TakeInventory("PowerMorphAgrd",1);
+    TakeInventory("PowerMorphLead",1);
+    TakeInventory("PowerMorphPgrd",1);
+    TakeInventory("PowerMorphPrgr",1);
+    TakeInventory("PowerMorphStlk",1);
+    TakeInventory("PowerMorphRob1",1);
+    TakeInventory("PowerMorphPrst",1);
+    TakeInventory("PowerMorphRob3",1);
+    TakeInventory("PowerMorphSewr",1);
+    TakeInventory("PowerMorphRob2",1);
+    TakeInventory("PowerMorphMldr",1);
+    TakeInventory("PowerMorphAln2",1);
+    TakeInventory("PowerMorphAln3",1);
+    TakeInventory("PowerMorphAln4",1);
+    TakeInventory("PowerMorphAln5",1);
+    TakeInventory("PowerMorphMnal",1);
+    TakeInventory("PowerMorphMnl2",1);
+	
+    TakeInventory("PowerMorphDron",1);
+    TakeInventory("PowerMorphPrsm",1);
+    TakeInventory("PowerMorphSpor",1);
+	TakeInventory("PowerMorphGprs",1);
+    TakeInventory("PowerMorphMill",1);
+    TakeInventory("PowerMorphViru",1);
+    TakeInventory("PowerMorphAcar",1);
+	TakeInventory("PowerMorphTmll",1);
+    TakeInventory("PowerMorphMshf",1);
+    TakeInventory("PowerMorphMesh",1);
+    TakeInventory("PowerMorphLear",1);
+    TakeInventory("PowerMorphLcar",1);
+    TakeInventory("PowerMorphFelx",1);
+	
+	if(GetCVar("outcast_hitbox"))
+	{
+	
+    TakeInventory("PowerMorphCposHitbox",1);
+    TakeInventory("PowerMorphSargHitbox",1);
+    TakeInventory("PowerMorphHeadHitbox",1);
+	TakeInventory("PowerMorphPainHitbox",1);
+    TakeInventory("PowerMorphSkelHitbox",1);
+    TakeInventory("PowerMorphBos2Hitbox",1);
+    TakeInventory("PowerMorphBossHitbox",1);
+    TakeInventory("PowerMorphFattHitbox",1);
+    TakeInventory("PowerMorphBspiHitbox",1);
+    TakeInventory("PowerMorphVileHitbox",1);
+    TakeInventory("PowerMorphSpidHitbox",1);
+    TakeInventory("PowerMorphCybrHitbox",1);
+            
+    TakeInventory("PowerMorphImpxHitbox",1);
+    TakeInventory("PowerMorphImp2Hitbox",1);  
+    TakeInventory("PowerMorphClnkHitbox",1);
+    TakeInventory("PowerMorphWzrdHitbox",1);
+    TakeInventory("PowerMorphKnigHitbox",1);
+    TakeInventory("PowerMorphKni2Hitbox",1);
+    TakeInventory("PowerMorphBeasHitbox",1);
+    TakeInventory("PowerMorphSnkeHitbox",1);
+    TakeInventory("PowerMorphLichHitbox",1);
+    TakeInventory("PowerMorphMntrHitbox",1);
+    TakeInventory("PowerMorphSrcrHitbox",1);
+    TakeInventory("PowerMorphSor2Hitbox",1);
+            
+    TakeInventory("PowerMorphFdmnHitbox",1);
+    TakeInventory("PowerMorphEttnHitbox",1);
+    TakeInventory("PowerMorphCentHitbox",1);
+    TakeInventory("PowerMorphCen2Hitbox",1);
+    TakeInventory("PowerMorphDemnHitbox",1);
+    TakeInventory("PowerMorphDem2Hitbox",1);
+    TakeInventory("PowerMorphSsptHitbox",1);
+    TakeInventory("PowerMorphBishHitbox",1);
+    TakeInventory("PowerMorphIceyHitbox",1);
+    TakeInventory("PowerMorphWrthHitbox",1);
+    TakeInventory("PowerMorphFighHitbox",1);
+    TakeInventory("PowerMorphClerHitbox",1);
+    TakeInventory("PowerMorphMageHitbox",1);
+    TakeInventory("PowerMorphDragHitbox",1);
+    TakeInventory("PowerMorphSorcHitbox",1);
+    TakeInventory("PowerMorphKorxHitbox",1);
+            
+    TakeInventory("PowerMorphPrgrHitbox",1);
+    TakeInventory("PowerMorphStlkHitbox",1);
+    TakeInventory("PowerMorphRob3Hitbox",1);
+    TakeInventory("PowerMorphSewrHitbox",1);
+    TakeInventory("PowerMorphRob2Hitbox",1);
+    TakeInventory("PowerMorphMldrHitbox",1);
+    TakeInventory("PowerMorphAln2Hitbox",1);
+    TakeInventory("PowerMorphAln3Hitbox",1);
+    TakeInventory("PowerMorphAln4Hitbox",1);
+    TakeInventory("PowerMorphAln5Hitbox",1);
+    TakeInventory("PowerMorphMnalHitbox",1);
+    TakeInventory("PowerMorphMnl2Hitbox",1);
+	
+    TakeInventory("PowerMorphDronHitbox",1);
+    TakeInventory("PowerMorphPrsmHitbox",1);
+    TakeInventory("PowerMorphSporHitbox",1);
+	TakeInventory("PowerMorphGprsHitbox",1);
+    TakeInventory("PowerMorphMillHitbox",1);
+    TakeInventory("PowerMorphViruHitbox",1);
+    TakeInventory("PowerMorphAcarHitbox",1);
+	TakeInventory("PowerMorphTmllHitbox",1);
+    TakeInventory("PowerMorphMshfHitbox",1);
+    TakeInventory("PowerMorphMeshHitbox",1);
+    TakeInventory("PowerMorphLearHitbox",1);
+    TakeInventory("PowerMorphLcarHitbox",1);
+    TakeInventory("PowerMorphFelxHitbox",1);
+	
+	}
+}
+
+
+function void ClearMorphs (int soft)
+{
+    for(int a = 0; a <= maxrank[0]; a++)
+	{
+		TakeInventory(invmorphdoom[a],1);
+	}
+        
+    for(int b = 0; b <= maxrank[1]; b++)
+	{
+		TakeInventory(invmorphhtic[b],1);
+	}
+        
+    for(int c = 0; c <= maxrank[2]; c++)
+	{
+		TakeInventory(invmorphhexn[c],1);
+	}
+    
+    for(int d = 0; d <= maxrank[3]; d++)
+	{
+		TakeInventory(invmorphstrf[0][d],1);
+		TakeInventory(invmorphstrf[1][d],1);
+		TakeInventory(invmorphstrf[2][d],1);
+	}
+        
+    for(int e = 0; e <= maxrank[4]; e++)
+	{
+		TakeInventory(invmorphvirs[e],1);
+	}
+    
+    TakeInventory("PeasantMorph",1);
+    TakeInventory("BeggarMorph",1);
+    TakeInventory("RebelMorph",1);
+	
+	if(!soft)
+	{
+	
+    TakeInventory("ReviveAttempt",70);
+	TakeInventory("dronelimit",50);
+	TakeInventory("soullimit",20);
+    TakeInventory("felixweapontracker",5);
+    TakeInventory("felixweaponalpha",1);
+    TakeInventory("wizlimit",20);
+    TakeInventory("bishlimit",15);
+    TakeInventory("Serpent1Morph",1);
+    TakeInventory("Serpent2Morph",1);
+    TakeInventory("submerged",1);
+    TakeInventory("shooting",1);
+    TakeInventory("IsSorcerer",1);
+    TakeInventory("IsSubEntity",1);
+	TakeInventory("DSparilArtiTeleport",1);
+	TakeInventory("artisummonturret",1);
+	TakeInventory("artisummonchair",3);
+    TakeInventory("SubEntity0Tracker",990);
+    TakeInventory("SubEntity1Tracker",990);
+    TakeInventory("SubEntity2Tracker",990);
+	
+	if(CheckInventory("HasHexenArmor"))
+		hexenarmor[me()] = CheckInventory("BasicArmor");
+		
+	TakeInventory("BasicArmor",999);
+	
+	}
+}
+
+
+function void ClearWeapons (void)
+{
+    TakeInventory("ZombiemanWeapon",1);
+    TakeInventory("ShotguyWeapon",1);
+    TakeInventory("ChainguyWeapon",1);
+    TakeInventory("ImpWeapon",1);
+	TakeInventory("LostSoulWeapon",1);
+	TakeInventory("PainElementalWeapon",1);
+    TakeInventory("DemonWeapon",1);
+    TakeInventory("CacodemonWeapon",1);
+    TakeInventory("BaronWeapon",1);
+    TakeInventory("HellKnightWeapon",1);
+    TakeInventory("RevenantWeapon",1);
+    TakeInventory("MancubusWeapon",1);
+    TakeInventory("ArachnoWeapon",1);
+    TakeInventory("ArchvileWeapon",1);
+    TakeInventory("MastermindWeapon",1);
+    TakeInventory("CyberdemonWeapon",1);
+    
+    TakeInventory("GargoyleWeapon",1);
+    TakeInventory("FireGargoyleWeapon",1);
+    TakeInventory("GolemWeapon",1);
+    TakeInventory("NitroGolemWeapon",1);
+    TakeInventory("SabreclawWeapon",1);
+    TakeInventory("DiscipleWeapon",1);
+    TakeInventory("KnightWeapon",1);
+    TakeInventory("GhostKnightWeapon",1);
+    TakeInventory("WeredragonWeapon",1);
+    TakeInventory("OphidianWeapon",1);
+    TakeInventory("IronLichWeapon",1);
+    TakeInventory("MaulotaurWeapon",1);
+    TakeInventory("DSparilSerpentWeapon",1);
+    TakeInventory("DSparilWeapon",1);
+    
+    TakeInventory("AfritWeapon",1);
+    TakeInventory("EttinWeapon",1);
+    TakeInventory("CentaurWeapon",1);
+    TakeInventory("SlaughtaurWeapon",1);
+    TakeInventory("SerpentWeapon",1);
+    TakeInventory("Serpent2Weapon",1);
+    TakeInventory("StalkerWeapon",1);
+    TakeInventory("DarkBishopWeapon",1);
+    TakeInventory("ReiverWeapon",1);
+    TakeInventory("WendigoWeapon",1);
+    TakeInventory("ZedekWeapon",1);
+    TakeInventory("TraductusWeapon",1);
+    TakeInventory("MenelkirWeapon",1);
+    TakeInventory("WyvernWeapon",1);
+    TakeInventory("HeresiarchWeapon",1);
+    TakeInventory("KoraxWeapon",1);
+    
+    TakeInventory("PeasantWeapon",1);
+	TakeInventory("BeggarWeapon",1);
+    TakeInventory("RebelWeapon",1);
+    TakeInventory("StalkerSpiderWeapon",1);
+    TakeInventory("ReaverWeapon",1);
+    TakeInventory("LoremasterWeapon",1);
+    TakeInventory("InquisitorWeapon",1);
+    TakeInventory("Spectre3Weapon",1);
+    TakeInventory("AcolyteWeapon",1);
+    TakeInventory("MacilWeapon",1);
+    TakeInventory("TemplarWeapon",1);
+    TakeInventory("ProgrammerWeapon",1);
+    TakeInventory("Spectre2Weapon",1);
+    TakeInventory("SentinelWeapon",1);
+    TakeInventory("CrusaderWeapon",1);
+    TakeInventory("BishopWeapon",1);
+    TakeInventory("Spectre4Weapon",1);
+    TakeInventory("Spectre5Weapon",1);
+    TakeInventory("EntityWeapon",1);
+    TakeInventory("SubEntityWeapon",1);
+    
+    TakeInventory("DroneWeapon",1);
+	TakeInventory("PrismWeapon",1);
+    TakeInventory("SporeWeapon",1);
+    TakeInventory("GreaterPrismWeapon",1);
+    TakeInventory("MillWeapon",1);
+    TakeInventory("VirusWeapon",1);
+    TakeInventory("AirCarrierWeapon",1);
+    TakeInventory("TreadmillWeapon",1);
+    TakeInventory("MeshflierWeapon",1);
+    TakeInventory("MeshwalkerWeapon",1);
+    TakeInventory("LeaderWeapon",1);
+    TakeInventory("LandCarrierWeapon",1);
+    TakeInventory("FelixWeapon",1);
+}
+
+
+function void ResetVariables (int num)
+{
+    rank_0[num] = 0;
+    rank_1[num] = 0;
+    rank_2[num] = 0;
+    rank_3[num] = 0;
+    rank_4[num] = 0;
+    
+    subrank_0[num] = 0;
+    subrank_1[num] = 0;
+    subrank_2[num] = 0;
+    subrank_3[num] = 0;
+    subrank_4[num] = 0;
+    
+    nextrank[num][0] = 0;
+    nextrank[num][1] = 0;
+    nextrank[num][2] = 0;
+    nextrank[num][3] = 0;
+    nextrank[num][4] = 0;
+    
+    killsleft[num][0] = 0;
+    killsleft[num][1] = 0;
+    killsleft[num][2] = 0;
+    killsleft[num][3] = 0;
+    killsleft[num][4] = 0;
+    
+    killdif[num][0] = 0;
+    killdif[num][1] = 0;
+    killdif[num][2] = 0;
+    killdif[num][3] = 0;
+    killdif[num][4] = 0;
+
+    hpmult[num][0] = 0;
+    hpmult[num][1] = 0;
+    hpmult[num][2] = 0;
+    hpmult[num][3] = 0;
+    hpmult[num][4] = 0;
+    
+    fastserpent[num] = 0;
+    drain[num] = 0;
+}
+
+int ar;
+
+function void GiveMorphs (int class, int spawning)
+{
+	if(CheckInventory("MonsterManaBlue") < GetCVar("outcast_startmana"))
+		GiveInventory("MonsterManaBlue",GetCVar("outcast_startmana") - CheckInventory("MonsterManaBlue"));
+		
+	if(CheckInventory("MonsterManaGreen") < GetCVar("outcast_startmana"))
+		GiveInventory("MonsterManaGreen",GetCVar("outcast_startmana") - CheckInventory("MonsterManaGreen"));
+		
+	for(ar = 19; ar >= 0; ar--)		// rearrange
+	{
+		if(CheckInventory(namearti[ar]) > 0)
+		{
+			hasarti[me()][ar] = CheckInventory(namearti[ar]);
+			TakeInventory(namearti[ar],25);
+		}
+	}
+	
+	ClearMorphs(1);		// rearrange
+		
+    switch(class)
+    {
+    
+    case 0:
+        
+        for(int a = rank_0[me()]; a >= 0; a--)
+        {
+            GiveInventory(invmorphdoom[a],1);
+        }
+        
+        if(spawning)
+            GiveInventory("IsDoom",1);
+            
+        break;
+        
+    case 1:
+        
+        for(int b = rank_1[me()]; b >= 0; b--)
+        {
+            GiveInventory(invmorphhtic[b],1);
+        }
+        
+        if(spawning)
+            GiveInventory("IsHeretic",1);
+            
+        break;
+        
+    case 2:
+        
+        for(int c = rank_2[me()]; c >= 0; c--)
+        {
+			if(c == 4)
+			{
+				if(!random(0,1))
+					GiveInventory("Serpent1Morph",1);
+				else
+					GiveInventory("Serpent2Morph",1);
+			}
+			
+			else if(c == 9)
+			{
+				GiveInventory("MenelkirMorph",1);
+				GiveInventory("TraductusMorph",1);
+				GiveInventory("ZedekMorph",1);
+			}
+			
+			else
+				GiveInventory(invmorphhexn[c],1);
+        }
+        
+        if(spawning)
+            GiveInventory("IsHexen",1);
+  
+        break;
+        
+    case 3:
+            
+        for(int d = rank_3[me()]; d >= 0; d--)
+        {
+            GiveInventory(invmorphstrf[subrank_3[me()] - 1][d],1);
+        }
+        
+        if(spawning)
+            GiveInventory("IsStrife",1);
+  
+        break;
+        
+    case 4:
+        
+        for(int e = rank_4[me()]; e >= 0; e--)
+        {
+            GiveInventory(invmorphvirs[e],1);
+        }
+        
+        if(spawning)
+            GiveInventory("IsVirus",1);
+  
+        break;
+        
+    }
+		
+	for(ar = 0; ar <= 19; ar++)
+	{
+		if(hasarti[me()][ar] > 0)
+		{
+			GiveInventory(namearti[ar],hasarti[me()][ar]);
+			hasarti[me()][ar] = 0;
+		}
+	}
+}
+
+function void RankUp (str mon)
+{
+    ActivatorSound("misc/rankup",127);
+    GiveInventory(pointname[PlayerClass(me())],1);
+    
+    switch(PlayerClass(me()))
+    {
+    
+    case 0:
+    
+		SetFont("DoomHudFont0");
+		HudMessage(s:"You have ranked up to \cd",s:mon;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_YELLOW,0.5,0.3,5.0,0.3,0.3);
+    
+        rank_0[me()]++;
+    
+        GiveInventory(rankdoom[rank_0[me()]],1);
+        TakeInventory(rankdoom[rank_0[me()] - 1],99999);
+    
+        GiveMorphs(0,0);
+            
+        break;
+        
+    case 1:
+    
+		SetFont("RavenHudFont0");
+		HudMessage(s:"You have ranked up to \cl",s:mon;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.3,5.0,0.3,0.3);
+		
+        rank_1[me()]++;
+    
+        GiveInventory(rankhtic[rank_1[me()]],1);
+        TakeInventory(rankhtic[rank_1[me()] - 1],99999);
+    
+        GiveMorphs(1,0);
+            
+        break;
+        
+    case 2:
+    
+		SetFont("RavenHudFont0");
+		HudMessage(s:"You have ranked up to \cl",s:mon;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.3,5.0,0.3,0.3);
+    
+        rank_2[me()]++;
+    
+        GiveInventory(rankhexn[rank_2[me()]],1);
+        TakeInventory(rankhexn[rank_2[me()] - 1],99999);
+    
+        GiveMorphs(2,0);
+  
+        break;
+        
+    case 3:
+    
+		SetFont("StrifeHudFont0");
+		HudMessage(s:"You have ranked up to \cd",s:mon;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_YELLOW,0.5,0.3,5.0,0.3,0.3);
+    
+        rank_3[me()]++;
+        
+        if(!subrank_3[me()])
+        {
+            GiveInventory("StrifeRank1",1);
+            TakeInventory("StrifeRank0",99999);
+            GiveInventory("RebelMorph",1);
+            GiveInventory("Peasant1Morph",1);
+        }
+        
+        else
+        {
+            GiveInventory(rankstrf[subrank_3[me()] - 1][rank_3[me()]], 1);
+            
+            TakeInventory(rankstrf[subrank_3[me()] - 1][rank_3[me()] - 1], 99999);
+            GiveMorphs(3,0);
+            GiveInventory("RebelMorph",1);
+            GiveInventory("Peasant1Morph",1);
+        }
+  
+        break;
+        
+    case 4:
+    
+		SetFont("VirusHudFont0");
+		HudMessage(s:"You have ranked up to \cd",s:mon;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_YELLOW,0.5,0.3,5.0,0.3,0.3);
+    
+        rank_4[me()]++;
+    
+        GiveInventory(rankvirs[rank_4[me()]],1);
+        TakeInventory(rankvirs[rank_4[me()] - 1],99999);
+    
+        GiveMorphs(4,0);
+  
+        break;
+        
+    }
+	
+	VerifyDamageFactor();
+}
+
+
+function void SetNextRank (int n1, int n2, int class)
+{
+    nextrank[me()][class] = n1;
+    killdif[me()][class] = n2;
+}
+
+function void MorphRandomBot (int class)
+{
+	switch(class)
+	{
+		default:
+		case 0:
+			
+			GiveInventory(powermorphdoom[random(0,maxrank[0])],1);
+				
+			break;
+				
+		case 1:
+			
+			GiveInventory(powermorphhtic[random(0,maxrank[1])],1);
+				
+			break;
+				
+		case 2:
+			
+			tempclass[me()] = random(0,maxrank[2]);
+				
+			if(tempclass[me()] == 9)
+				GiveInventory(powermorphhex2[random(1,3)],1);
+			else
+				GiveInventory(powermorphhexn[tempclass[me()]],1);
+					
+			break;
+				
+		case 3:
+				
+			switch(random(0,17))
+			{
+				case 0:
+					
+					if(random(0,1))
+						GiveInventory("BeggarMorpher",1);
+					else
+						GiveInventory("PeasantMorpher",1);
+							
+					break;
+						
+				case 1:
+					
+					GiveInventory("RebelMorpher",1);
+					
+					break;
+						
+				case 2:
+						
+					GiveInventory("EntityMorpher",1);
+						
+					break;
+						
+				default:
+					
+					GiveInventory(powermorphstrf[random(0,2)][random(0,4)],1);
+						
+					break;
+					
+			}
+			
+			break;
+				
+		case 4:
+			
+			GiveInventory(powermorphvirs[random(0,maxrank[4])],1);
+				
+			break;
+			
+	}
+		
+	VerifySpecies();
+}
+
+function void MorphRandom (int class)
+{
+	TakeInventory("IsDoom",1);
+	TakeInventory("IsHeretic",1);
+	TakeInventory("IsHexen",1);
+	TakeInventory("IsStrife",1);
+	TakeInventory("IsVirus",1);
+	
+	if(CheckInventory("MonsterManaBlue") < GetCVar("outcast_startmana"))
+		GiveInventory("MonsterManaBlue",GetCVar("outcast_startmana") - CheckInventory("MonsterManaBlue"));
+		
+	if(CheckInventory("MonsterManaGreen") < GetCVar("outcast_startmana"))
+		GiveInventory("MonsterManaGreen",GetCVar("outcast_startmana") - CheckInventory("MonsterManaGreen"));
+	
+	switch(class)
+	{
+		default:
+		case 0:
+		
+			GiveInventory("IsDoom",1);
+			GiveInventory(invmorphdoom[random(0,maxrank[0])],1);
+				
+			break;
+			
+				
+		case 1:
+			
+			GiveInventory("IsHeretic",1);
+			GiveInventory(invmorphhtic[random(0,maxrank[1])],1);
+				
+			break;
+			
+				
+		case 2:
+		
+			GiveInventory("IsHexen",1);
+			
+			tempclass[me()] = random(0,maxrank[2]);
+				
+			if(tempclass[me()] == 9)
+			{
+				switch(random(0,2))
+				{
+					case 0:
+						GiveInventory("ZedekMorph",1);
+						break;
+					case 1:
+						GiveInventory("TraductusMorph",1);
+						break;
+					case 2:
+						GiveInventory("MenelkirMorph",1);
+						break;
+				}
+			}
+			
+			else
+				GiveInventory(invmorphhexn[tempclass[me()]],1);
+					
+			break;
+			
+				
+		case 3:
+		
+			GiveInventory("IsStrife",1);
+				
+			switch(random(0,17))
+			{
+				case 0:
+					
+					GiveInventory("Peasant1Morph",1);
+							
+					break;
+						
+				case 1:
+					
+					GiveInventory("RebelMorph",1);
+					
+					break;
+						
+				case 2:
+					
+					GiveInventory("EntityMorph",1);
+						
+					break;
+						
+				default:
+					
+					GiveInventory(invmorphstrf[random(0,2)][random(0,4)],1);
+						
+					break;
+					
+			}
+				
+			break;
+			
+				
+		case 4:
+			
+			GiveInventory("IsVirus",1);
+			GiveInventory(invmorphvirs[random(0,maxrank[4])],1);
+				
+			break;
+	}
+}
+
+function void SetStartRank (void)
+{
+	if(startrank > 0)
+    {
+		switch(PlayerClass(me()))
+		{
+			case 0:
+			
+				if(rank_0[me()] < startrank)
+				{
+					if(startrank > maxrank[0])
+						rank_0[me()] = maxrank[0];
+					else
+						rank_0[me()] = startrank;
+				}
+			
+				if( (!CheckInventory("DoomDamagePoint")) && (!killsleft[me()][0]) && (!GetCVar("terminator")) )
+					GiveInventory("DoomDamagePoint",100 * (1 + r1doom[rank_0[me()] - 1]));
+				
+				break;
+				
+				
+			case 1:
+				
+				if(rank_1[me()] < startrank)
+				{
+					if(startrank > maxrank[1])
+						rank_1[me()] = maxrank[1];
+					else
+						rank_1[me()] = startrank;
+				}
+			
+				if( (!CheckInventory("HereticDamagePoint")) && (!killsleft[me()][1]) && (!GetCVar("terminator")) )
+					GiveInventory("HereticDamagePoint",100 * (1 + r1htic[rank_1[me()] - 1]));
+				
+				break;
+				
+				
+			case 2:
+			
+				if(rank_2[me()] < startrank)
+				{
+					if(startrank > maxrank[2])
+						rank_2[me()] = maxrank[2];
+					else
+						rank_2[me()] = startrank;
+				}
+			
+				if( (!CheckInventory("HexenDamagePoint")) && (!killsleft[me()][2]) && (!GetCVar("terminator")) )
+					GiveInventory("HexenDamagePoint",100 * (1 + r1hexn[rank_2[me()] - 1]));
+				
+				break;
+				
+				
+			case 3:
+				
+				if( (!CheckInventory("StrifeDamagePoint")) && (!killsleft[me()][3]) && (!GetCVar("terminator")) )
+				{
+					if( (rank_3[me()] > 0) && (subrank_3[me()] > 0) )
+						GiveInventory("StrifeDamagePoint",100 * (1 + r1strf[subrank_3[me()] - 1][rank_3[me()] - 1]));
+					else if( (subrank_3[me()] > 0) || (rank_3[me()] > 1) )
+						GiveInventory("StrifeDamagePoint",100 * 101);
+					else if (rank_3[me()])
+						GiveInventory("StrifeDamagePoint",100 * 31);
+				}
+				
+				break;
+				
+				
+			case 4:
+					
+				if(rank_4[me()] < startrank)
+				{
+					if(startrank > maxrank[4])
+						rank_4[me()] = maxrank[4];
+					else
+						rank_4[me()] = startrank;
+				}
+			
+				if( (!CheckInventory("VirusDamagePoint")) && (!killsleft[me()][4]) && (!GetCVar("terminator")) )
+					GiveInventory("VirusDamagePoint",100 * (1 + r1virs[rank_4[me()] - 1]));
+				
+				break;
+				
+		}
+    }
+}

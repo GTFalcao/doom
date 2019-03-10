@@ -1,0 +1,397 @@
+
+#library "arnold"
+
+#import "variable.acs"
+#import "function.acs"
+
+#include "zcommon.acs"
+
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 465 is executed upon picking up the Terminator sphere
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 465 (void)
+{
+	AmbientSound("pickup2/hexen",127);
+	AnnouncerSound("terminator",1);
+	
+	SetFont("BIGFONT");
+	HudMessageBold(n:0,s:" is the \cgterminator!";HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.3,5.0,0.3,0.3);
+	
+	ClearMorphs(1);
+	termnumber = me();
+	
+	switch(PlayerClass(me()))
+	{
+		default:
+		case 0:
+			
+			if(random(0,1))
+			{
+				termmaxhealth = 3000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("MastermindMorpher",1);
+					break;
+				}
+				
+				while( (!CheckWeapon("MastermindWeapon")) && (!CheckWeapon("MastermindWeaponPowered")) )
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("MastermindMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			else
+			{
+				termmaxhealth = 4000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("CyberdemonMorpher",1);
+					break;
+				}
+				
+				while( (!CheckWeapon("CyberdemonWeapon")) && (!CheckWeapon("CyberdemonWeaponPowered")) )
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("CyberdemonMorph",1);
+					
+					Delay(10);
+				}
+				
+				break;
+			}
+			
+			break;
+			
+			
+		case 1:
+			
+			if(random(0,1))
+			{
+				termmaxhealth = 3000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("MaulotaurMorpher",1);
+					break;
+				}
+				
+				while( (!CheckWeapon("MaulotaurWeapon")) && (!CheckWeapon("MaulotaurWeaponPowered")) )
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("MaulotaurMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			else
+			{
+				termmaxhealth = 5500;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("DSparilMorpher",1);
+					break;
+				}
+				
+				while( (!CheckWeapon("DSparilSerpentWeapon")) && (!CheckWeapon("DSparilSerpentWeaponPowered")) )
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("DSparilMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			break;
+			
+		case 2:
+			
+			if(random(0,1))
+			{
+				termmaxhealth = 5000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("HeresiarchMorpher",1);
+					break;
+				}
+				
+				while(!CheckWeapon("HeresiarchWeapon"))
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("HeresiarchMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			else
+			{
+				termmaxhealth = 5000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("KoraxMorpher",1);
+					break;
+				}
+				
+				while( (!CheckWeapon("KoraxWeapon")) && (!CheckWeapon("KoraxWeaponPowered")) )
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("KoraxMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			break;
+				
+		case 3:
+				
+			termmaxhealth = 5470;
+				
+			if(PlayerIsBot(me()))
+			{
+				ClearPowers();
+				GiveInventory("EntityMorpher",1);
+				break;
+			}
+			
+			while( (!CheckWeapon("EntityWeapon")) && (!CheckWeapon("EntityWeaponPowered")) )
+			{
+				if(!PlayerInGame(me()))
+					break;
+					
+				if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+					GiveInventory("EntityMorph",1);
+				
+				Delay(10);
+			}
+			
+			break;
+			
+		case 4:
+			
+			if(random(0,1))
+			{
+				termmaxhealth = 6000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("LandCarrierMorpher",1);
+					break;
+				}
+				
+				while(!CheckWeapon("LandCarrierWeapon"))
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("LandCarrierMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			else
+			{
+				termmaxhealth = 5000;
+				
+				if(PlayerIsBot(me()))
+				{
+					ClearPowers();
+					GiveInventory("FelixMorpher",1);
+					break;
+				}
+				
+				while(!CheckWeapon("FelixWeapon"))
+				{
+					if(!PlayerInGame(me()))
+						break;
+					
+					if(GetActorProperty(0,APROP_SPAWNHEALTH) != termmaxhealth)
+						GiveInventory("FelixMorph",1);
+					
+					Delay(10);
+				}
+					
+				break;
+			}
+			
+			break;
+	}
+	
+	GiveInventory("IsTerminator",1);
+	
+	termchosen = 1;
+	termfragstart = PlayerFrags();
+	
+	while( (PlayerInGame(me())) && (GetActorProperty(0,APROP_HEALTH) > 0) && (CheckInventory("IsTerminator")) && (termfrags < GetCVar("outcast_fraglimit")) )
+	{
+		termhealth = GetActorProperty(0,APROP_HEALTH);
+		termfrags = PlayerFrags() - termfragstart;
+		
+		Delay(10);
+		
+		ClearMorphs(1);
+	}
+	
+	if(termfrags >= GetCVar("outcast_fraglimit"))
+	{
+		SetFont("BIGFONT");
+		HudMessageBold(s:"The \cgterminator \cdwins with \ck",i:GetCVar("outcast_fraglimit"),s:" \cdfrags!";HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.2,5.0,0.3,1.5);
+		
+		termwin[me()]++;
+		AnnouncerSound("youwin",1);
+	}
+	
+	else
+	{
+		str termmsg;
+		
+		if(!PlayerInGame(me()))
+			termmsg = "The \cgterminator \cdhas left the game!";
+			
+		else
+			termmsg = "The \cgterminator \cdhas been defeated!";
+			
+		termdead = 1;
+		SetFont("BIGFONT");
+		HudMessageBold(s:termmsg;HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.2,5.0,0.3,1.5);
+	}
+	
+	SetPlayerProperty(1,1,PROP_TOTALLYFROZEN);
+	SetPlayerProperty(1,1,PROP_INVULNERABILITY);
+	
+	int co;
+	int pointlimit = GetCVar("pointlimit");
+	
+	if(pointlimit <= 0)
+		pointlimit = 3;
+	
+	for(int p = 0; p < 64; p++)
+	{
+		if( (termwin[p] >= pointlimit) && (PlayerInGame(p)) )
+		{
+			SetFont("BIGFONT");
+			
+			if(!co)
+				HudMessageBold(s:"round winner(s) - \cd",i:pointlimit,s:" \ckpoints";HUDMSG_FADEINOUT,804,CR_YELLOW,0.5,0.25,8.0,0.5,0.5);
+			
+			HudMessageBold(n:p+1;HUDMSG_FADEINOUT,805+co,CR_RED,0.5,0.275 + (co * 0.025),8.0,0.5,0.5);
+			
+			co++;
+			
+			Delay(1);
+		}
+	}
+	
+	Delay(150);
+	
+	if(co > 0)
+	{
+		Delay(100);
+	
+		SetPlayerProperty(1,0,PROP_TOTALLYFROZEN);
+		SetPlayerProperty(1,0,PROP_INVULNERABILITY);
+		
+		for(int sc = 0; sc < 64; sc++)
+		{
+			termwin[sc] = 0;
+		}
+
+		SetActivator(0,AAPTR_NULL);
+		Exit_Normal(0);
+		
+		terminate;
+	}
+	
+	SetPlayerProperty(1,0,PROP_TOTALLYFROZEN);
+	SetPlayerProperty(1,0,PROP_INVULNERABILITY);
+	
+	AnnouncerSound("nextroundin",0);
+	
+	for(int t = 10; t > 0; t--)
+	{
+		SetFont("BIGFONT");
+		HudMessageBold(s:"next round in... ",i:t;HUDMSG_PLAIN,801,CR_RED,0.5,0.3,1.5);
+		
+		if(t == 3)
+			AnnouncerSound("three",0);
+			
+		else if(t == 2)
+			AnnouncerSound("two",0);
+			
+		else if(t == 1)
+			AnnouncerSound("one",0);
+		
+		Delay(35);
+	}
+	
+	SetFont("BIGFONT");
+	HudMessageBold(s:"";HUDMSG_PLAIN,801,CR_RED,0.5,0.3,0.1);
+	
+	termfragstart = 0;
+	termfrags = 0;
+	termdead = 0;
+	termchosen = 0;
+	
+	for(int k = 0; k < 64; k++)
+	{
+		termscore[k] = 0;
+	}
+	
+	ResetMap();
+}

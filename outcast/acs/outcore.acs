@@ -1,0 +1,846 @@
+
+#library 	"outcore"
+
+#import 	"variable.acs"
+#import 	"function.acs"
+
+#include 	"zcommon.acs"
+
+/*
+
+-------------------------------------------------------------------------------------
+*************************************************************************************
+
+                            Outcast by SwordGrunt (Gui)
+                  
+                    Please do not reuse without giving credit!
+
+*************************************************************************************
+-------------------------------------------------------------------------------------
+
+*/
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 443 is executed by DECORATE stuff
+
+-------------------------------------------------------------------------------------
+
+*/
+
+int tysontele;
+
+script 443 (int playvar)
+{
+	switch(playvar)
+	{
+		default:
+		case 0:
+		
+			if(!GetCVar("outcast_pointpickups"))
+				SetResultValue(-1);
+        
+			else
+				SetResultValue(PlayerClass(me()));
+				
+			break;
+			
+		case 1:
+		
+			SetResultValue(GetActorProperty(0,APROP_SPAWNHEALTH) - GetActorProperty(0,APROP_HEALTH));
+			
+			break;
+	
+		case 2:
+		
+			SetResultValue((2 * GetActorProperty(0,APROP_SPAWNHEALTH)) - GetActorProperty(0,APROP_HEALTH));
+			
+			break;
+			
+		case 3:
+		
+			SetResultValue(killsleft[me()][PlayerClass(me())]);
+			
+			break;
+			
+		case 4:
+		
+			SetResultValue(tysontele);
+			
+			break;
+			
+		case 5:
+			
+			if(GetCVar("outcast_hitbox"))
+				SetResultValue(ThingCountName("DSparilTeleportDestinationHitbox",4067));
+			else
+				SetResultValue(ThingCountName("DSparilTeleportDestination",4066));
+			
+			break;
+			
+	}
+}
+
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 442 manages your inventory reset upon respawning
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 442 RESPAWN
+{
+	Delay(1);
+	
+    ClearMorphs(0);
+    ClearWeapons();
+	
+	if(PlayerIsBot(me()))
+	{
+		GiveInventory("Backpack0",1);
+		GiveInventory("MonsterManaBlue",1000);
+		GiveInventory("MonsterManaGreen",1000);
+		
+		MorphRandomBot(PlayerClass(me()));
+		
+		terminate;
+	}
+    
+	SetPlayerProperty(0,0,4);
+    SetPlayerProperty(0,1,0);
+    SetPlayerProperty(0,1,1);
+		
+	if(gamemode > 0)
+		GiveInventory("SpawnProtectionShort",1);
+	else
+		GiveInventory("SpawnProtection",1);
+	
+	if(GetCVar("outcast_morphrandom"))
+	{
+		MorphRandom(PlayerClass(me()));
+		terminate;
+	}
+    
+    TakeInventory("IsDoom",1);
+    TakeInventory("IsHeretic",1);
+    TakeInventory("IsHexen",1);
+	TakeInventory("IsStrife",1);
+	TakeInventory("IsVirus",1);
+	
+	VerifyDamageFactor();
+    
+    switch(PlayerClass(me()))
+    {
+    
+    case 0:
+    
+		SetStartRank();
+        GiveMorphs(0,1);
+            
+        break;
+        
+    case 1:
+	
+		SetStartRank();
+        GiveMorphs(1,1);
+            
+        break;
+        
+    case 2:
+        
+		SetStartRank();
+        GiveMorphs(2,1);
+  
+        break;
+        
+    case 3:
+    
+        if(!subrank_3[me()])
+        {
+			if(CheckInventory("MonsterManaBlue") < GetCVar("outcast_startmana"))
+				GiveInventory("MonsterManaBlue",GetCVar("outcast_startmana") - CheckInventory("MonsterManaBlue"));
+		
+			if(CheckInventory("MonsterManaGreen") < GetCVar("outcast_startmana"))
+				GiveInventory("MonsterManaGreen",GetCVar("outcast_startmana") - CheckInventory("MonsterManaGreen"));
+			
+            if(rank_3[me()] > 1)
+            {
+                GiveInventory("ChooseStalker",1);
+                GiveInventory("ChooseAcolyte",1);
+                GiveInventory("ChooseSentinel",1);
+            }
+			
+			if(startrank < 2)
+			{
+            
+            if(rank_3[me()] > 0)
+                GiveInventory("RebelMorph",1);
+				
+			GiveInventory("Peasant1Morph",1);
+			
+			}
+				
+            GiveInventory("IsStrife",1);
+        }
+    
+        else
+        {
+            GiveMorphs(3,1);
+            GiveInventory("RebelMorph",1);
+            GiveInventory("Peasant1Morph",1);
+        }
+  
+        break;
+        
+    case 4:
+        
+		SetStartRank();
+        GiveMorphs(4,1);
+  
+        break;
+        
+    }
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 441 is responsible for basic spawn settings that are taken care of
+by script 442 on subsequent respawns, and some checks for survival
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 441 ENTER
+{
+	Delay(1);
+	
+	if(GameType() == GAME_TITLE_MAP)
+		terminate;
+		
+    SetThingSpecial(0,0,0,0,0,0,0);
+    
+    ClearMorphs(0);
+    ClearWeapons();
+    ClearPowers();
+    
+    TakeInventory("ZedekMorph",1);
+    TakeInventory("TraductusMorph",1);
+    TakeInventory("MenelkirMorph",1);
+	
+	TakeInventory("ChooseStalker",1);
+	TakeInventory("ChooseAcolyte",1);
+	TakeInventory("ChooseSentinel",1);
+	
+	if(PlayerIsBot(me()))
+	{
+		GiveInventory("Backpack0",1);
+		GiveInventory("MonsterManaBlue",1000);
+		GiveInventory("MonsterManaGreen",1000);
+		
+		MorphRandomBot(PlayerClass(me()));
+		
+		terminate;
+	}
+	
+	if(GetCVar("outcast_morphrandom"))
+	{
+		SetPlayerProperty(0,0,4);
+		SetPlayerProperty(0,1,0);
+		SetPlayerProperty(0,1,1);
+		
+		if(gamemode > 0)
+			GiveInventory("SpawnProtectionShort",1);
+		else
+			GiveInventory("SpawnProtection",1);
+		
+		MorphRandom(PlayerClass(me()));
+	
+		while(PlayerInGame(me()))
+		{
+			UpdateHudTrackers();
+			
+			Delay(10);
+		}
+		
+		terminate;
+	}
+	
+	if( (GetCVar("survival")) && (GetGameModeState() != 1) )
+	{
+    
+    if( (!CheckInventory(pointname[0])) && (!CheckInventory(pointname[1])) && (!CheckInventory(pointname[2])) && (!CheckInventory(pointname[3])) )
+    {
+        if( (GetCVar("outcast_globalrank")) && (GetCVar("outcast_survivalkeeprank")) )
+        {
+        
+        if(points_0[me()] > 0)
+            GiveInventory("DoomDamagePoint",points_0[me()]);
+        
+        if(points_1[me()] > 0)
+            GiveInventory("HereticDamagePoint",points_1[me()]);
+        
+        if(points_2[me()] > 0)
+            GiveInventory("HexenDamagePoint",points_2[me()]);
+		
+		if(points_3[me()] > 0)
+			GiveInventory("StrifeDamagePoint",points_3[me()]);
+		
+		if(points_4[me()] > 0)
+			GiveInventory("VirusDamagePoint",points_4[me()]);
+            
+        }
+        
+        else
+            ResetVariables(me());
+    }
+	
+	}
+    
+    if( (!GetCVar("outcast_hubrank")) || (!CheckInventory("HubTracker")) )
+    {
+        if( (!GetCVAR("outcast_globalrank")) || (GetCVar("invasion")) )
+        {
+			ResetVariables(me());
+			ClearInventory();
+			TakeInventory("BasicArmor",999);
+        }
+    }
+    
+	if(PlayerClass(me() != 3))
+		SetStartRank();
+    
+	SetPlayerProperty(0,0,4);
+    SetPlayerProperty(0,1,0);
+    SetPlayerProperty(0,1,1);
+		
+	if(gamemode > 0)
+		GiveInventory("SpawnProtectionShort",1);
+	else
+		GiveInventory("SpawnProtection",1);
+	
+    GiveInventory("HubTracker",1);
+    
+    TakeInventory("IsDoom",1);
+    TakeInventory("IsHeretic",1);
+    TakeInventory("IsHexen",1);
+    TakeInventory("IsStrife",1);
+    TakeInventory("IsVirus",1);
+    
+    Delay(5);
+	
+	if( (GetCVar("survival")) && (GetGameModeState() == 2) )
+	{
+	
+		mapstartrank[me()][0] = rank_0[me()];
+		mapstartrank[me()][1] = rank_1[me()];
+		mapstartrank[me()][2] = rank_2[me()];
+		mapstartrank[me()][3] = rank_3[me()];
+		mapstartrank[me()][4] = rank_4[me()];
+		
+		mapstartsubrank[me()][0] = subrank_0[me()];
+		mapstartsubrank[me()][1] = subrank_1[me()];
+		mapstartsubrank[me()][2] = subrank_2[me()];
+		mapstartsubrank[me()][3] = subrank_3[me()];
+		mapstartsubrank[me()][4] = subrank_4[me()];
+		
+		mapstartpoints[me()][0] = CheckInventory("DoomDamagePoint");
+		mapstartpoints[me()][1] = CheckInventory("HereticDamagePoint");
+		mapstartpoints[me()][2] = CheckInventory("HexenDamagePoint");
+		mapstartpoints[me()][3] = CheckInventory("StrifeDamagePoint");
+		mapstartpoints[me()][4] = CheckInventory("VirusDamagePoint");
+	
+	}
+	
+	VerifyDamageFactor();
+    
+    switch(PlayerClass(me()))
+    {
+    
+    case 0:
+    
+        GiveMorphs(0,1);
+            
+        break;
+        
+    case 1:
+    
+        GiveMorphs(1,1);
+            
+        break;
+        
+    case 2:
+        
+        GiveMorphs(2,1);
+  
+        break;
+        
+    case 3:
+        
+        if(!subrank_3[me()])
+        {
+			if(CheckInventory("MonsterManaBlue") < GetCVar("outcast_startmana"))
+				GiveInventory("MonsterManaBlue",GetCVar("outcast_startmana") - CheckInventory("MonsterManaBlue"));
+		
+			if(CheckInventory("MonsterManaGreen") < GetCVar("outcast_startmana"))
+				GIveInventory("MonsterManaGreen",GetCVar("outcast_startmana") - CheckInventory("MonsterManaGreen"));
+				
+            if(rank_3[me()] > 1)
+            {
+                GiveInventory("ChooseStalker",1);
+                GiveInventory("ChooseAcolyte",1);
+                GiveInventory("ChooseSentinel",1);
+				
+				break;
+            }
+            
+            if(rank_3[me()] > 0)
+                GiveInventory("RebelMorph",1);
+				
+			if(startrank < 2)
+				GiveInventory("Peasant1Morph",1);
+				
+            GiveInventory("IsStrife",1);
+        }
+    
+        else
+        {
+            GiveMorphs(3,1);
+            GiveInventory("RebelMorph",1);
+            GiveInventory("Peasant1Morph",1);
+        }
+  
+        break;
+        
+    case 4:
+        
+        GiveMorphs(4,1);
+  
+        break;
+        
+    }
+    
+    Delay(10);
+	
+    while(PlayerInGame(me()))
+    {
+		UpdateHudTrackers();
+        
+        Delay(10);
+    }
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 440 resets any playernumber specific values
+when that player disconnects to avoid problems
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 440 (int numdc) disconnect
+{
+    ResetVariables(numdc);
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    random stuff
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 451 (int what, int amount)
+{
+    switch(what)
+    {
+        default:
+        case 0:
+        
+            SetFont("SMALLFONT");
+            HudMessage(s:"You have revived too many monsters!";HUDMSG_FADEINOUT,801,CR_RED,0.4,0.4,2.5,0.3,0.3);
+            
+            break;
+            
+        case 1:
+        
+            SetFont("SMALLFONT");
+            HudMessage(s:"You have spawned too many disciples!";HUDMSG_FADEINOUT,801,CR_RED,0.4,0.4,2.5,0.3,0.3);
+            
+            break;
+            
+        case 2:
+            
+            if(fastserpent[me()] == 1)
+                break;
+            
+            GiveInventory("imonefastserpent",1);
+            fastserpent[me()] = 1;
+            SetActorProperty(0,APROP_SPEED,0.7);
+            
+            Delay(180);
+            
+            TakeInventory("imonefastserpent",1);
+            fastserpent[me()] = 0;
+            SetActorProperty(0,APROP_SPEED,0.35);
+            
+            break;
+            
+        case 3:
+            
+            SetActorState(0,"Dive");
+            
+            break;
+            
+        case 4:
+        
+            drain[me()] = random(amount-3,amount+3);
+            
+            if(GetActorProperty(0,APROP_HEALTH) < 750)
+            {
+            
+                if(GetActorProperty(0,APROP_SPAWNHEALTH) < 750)
+                {
+                    if(GetActorProperty(0,APROP_SPAWNHEALTH) + drain[me()] > 750)
+                        SetActorProperty(0,APROP_SPAWNHEALTH,750);
+                    else
+                        SetActorProperty(0,APROP_SPAWNHEALTH,GetActorProperty(0,APROP_SPAWNHEALTH) + drain[me()]);
+                }
+            
+                if(GetActorProperty(0,APROP_HEALTH) + drain[me()] > 750)
+                    SetActorProperty(0,APROP_HEALTH,750);
+                else
+                    SetActorProperty(0,APROP_HEALTH,GetActorProperty(0,APROP_HEALTH) + drain[me()]);
+                
+            }
+            
+            break;
+            
+        case 5:
+        
+            FadeTo(170 + (amount * 70),170 + (amount * 40),170 - (amount * 170),0.6,0.09);
+            
+            Delay(6);
+            
+            FadeTo(170 + (amount * 70),170 + (amount * 40),170 - (amount * 170),0.0,0.2);
+            
+            break;
+            
+        case 6:
+        
+            SetActorProperty(0,APROP_SPEED,amount * 0.01);
+            
+            break;
+            
+        case 7:
+        
+            if(SetActorPosition(subentity_id[me()][0],GetActorX(0) + (cos(GetActorAngle(0) + 0.375) * 80),GetActorY(0) + (sin(GetActorAngle(0) + 0.375) * 80),GetActorZ(0),0))
+            {
+                Spawn("StrifeTelefog",GetActorX(subentity_id[me()][0]),GetActorY(subentity_id[me()][0]),GetActorZ(subentity_id[me()][0]),0,0);
+                ThingSound(subentity_id[me()][0],"unmorph/strife",127);
+            }
+        
+            if(SetActorPosition(subentity_id[me()][1],GetActorX(0) + (cos(GetActorAngle(0) + 0.125) * 80),GetActorY(0) + (sin(GetActorAngle(0) + 0.125) * 80),GetActorZ(0),0))
+            {
+                Spawn("StrifeTelefog",GetActorX(subentity_id[me()][1]),GetActorY(subentity_id[me()][1]),GetActorZ(subentity_id[me()][1]),0,0);
+                ThingSound(subentity_id[me()][1],"unmorph/strife",127);
+            }
+            
+            break;
+			
+		case 8:
+			/*
+			if(gamemode == 2)
+				SetActorProperty(1533,APROP_SPECIES,teamspecies[GetPlayerInfo(me(),PLAYERINFO_TEAM)]);
+    
+			else if(gamemode == 1)
+				SetActorProperty(1533,APROP_SPECIES,solospecies[me()]);
+				
+			Thing_ChangeTID(1533,0);
+            */
+			
+			tysontele = 1;
+			
+			Delay(4);
+			
+			tysontele = 0;
+			
+			break;
+			
+		case 9:
+		
+            FadeTo(255,0,0,0.25,0.01);
+			
+			Delay(255);
+			
+			FadeTo(255,0,0,0.125,0.01);
+			
+			Delay(510);
+			
+			FadeTo(255,0,0,0.0,0.01);
+			
+			break;
+			
+		case 10:
+		
+			Delay(350);
+			TakeInventory("JustGotTome",1);
+			
+			break;
+			
+		case 11:
+		
+			SetActorState(0,"Spawn");
+			SetActorVelocity(0,0,0,0,0,0);
+			SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
+			GiveInventory("submerged",1);
+			GiveInventory("shooting",1);
+			
+			Delay(1);
+			
+			SetActorState(0,"Chair");
+			
+			Delay(20);
+			
+			GiveInventory("actualsummonchair",1);
+			
+			Delay(20);
+			
+			if(CheckWeapon("LandCarrierWeapon"))
+			{
+				SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+				SetPlayerProperty(0,0,PROP_FROZEN);
+			}
+			
+			TakeInventory("submerged",1);
+			
+			Delay(50);
+			
+			TakeInventory("shooting",1);
+			
+			break;
+    }
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 453 is activated when the player chooses his monster path
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 453 (int class, int path)
+{
+    switch(class)
+    {
+        default:
+        case 0:
+        
+            subrank_0[me()] = path;
+            break;
+            
+        case 1:
+        
+            subrank_1[me()] = path;
+            break;
+            
+        case 2:
+        
+            subrank_2[me()] = path;
+            break;
+            
+        case 3:
+        
+            subrank_3[me()] = path;
+    
+            TakeInventory("ChooseStalker",1);
+            TakeInventory("ChooseAcolyte",1);
+            TakeInventory("ChooseSentinel",1);
+            
+            break;
+            
+        case 4:
+        
+            subrank_4[me()] = path;
+            break;
+    }
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 454 detects the gamemode for species management
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 454 open
+{
+	termnumber = -1;
+	
+	startrank = GetCVar("outcast_startrank");
+	
+    if( (GetCVar("teamlms")) || (GetCVar("teamgame")) || (GetCVar("teampossession")) || (GetCVar("ctf")) || (GetCVar("oneflagctf")) || (GetCVar("skulltag")) || (GetCVar("domination")) )
+        gamemode = 2;
+    
+    else if( (GetCVar("deathmatch")) || (GetCVar("lastmanstanding")) || (GetCVar("possession")) || (GetCVar("duel")) || (GetCVar("terminator")) )
+        gamemode = 1;
+        
+    else
+        gamemode = 0;
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 455 is executed by decorate to check CVar-related stuff
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 455 (int cvar)
+{
+    if( (!cvar) && (GetCVar("invasion")) )
+        HudMessage(s:"Monster reviving is disabled in invasion!";HUDMSG_FADEINOUT,801,CR_RED,0.4,0.45,4.0,0.3,0.3);
+    
+	if(cvar == 20)
+		SetResultValue(gamemode);
+	
+	else
+		SetResultValue(GetCVar(cvars455[cvar]));
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 458 displays the help message, has to be clientside
+	to check the client's help cvar properly
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 458 enter clientside
+{
+	if( (!GetCVar("outcast_showhelp")) || (GameType() == GAME_TITLE_MAP) )
+		terminate;
+	
+	Delay(40);
+    
+    SetFont("BIGFONT");
+    HudMessage(s:"First time playing? Press \cd",k:"menu_help",s:" \ckfor help.";HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_YELLOW,0.03,0.08,5.0,0.5,0.5);
+    
+    Delay(80);
+    
+    SetFont("BIGFONT");
+    HudMessage(s:"Your inventory keys are:\n\ntransform into selected monster: \cd",k:"invuse",s:"\n\ckselect next monster: \cd",k:"invnext",s:"\n\ckselect previous monster: \cd",k:"invprev";HUDMSG_FADEINOUT|HUDMSG_LOG,801,CR_YELLOW,0.03,0.15,8.0,0.5,0.5);
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 459 checks the state of the player and game in survival
+	
+	also removes the Berserk item when you die, as per the original effect
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 459 death
+{
+	TakeInventory("BerserkTracker",1);
+	TakeInventory("IsTerminator",1);
+	
+	if( (!GetCVar("survival")) || (GetPlayerLivesLeft(me()) > 0) )
+		terminate;
+		
+	Delay(5);
+	
+	if(GetGameModeState() != 3)	// player died, but the game is still going.
+	{							// keep his points for the next level.
+		points_0[me()] = CheckInventory("DoomDamagePoint");
+		points_1[me()] = CheckInventory("HereticDamagePoint");
+		points_2[me()] = CheckInventory("HexenDamagePoint");
+		points_3[me()] = CheckInventory("StrifeDamagePoint");
+		points_4[me()] = CheckInventory("VirusDamagePoint");
+	}
+	
+	else						// mission failed. reset all player stats
+	{							// to how they were at map start.
+		for(int n = 0; n < 64; n++)
+		{
+			points_0[n] = mapstartpoints[n][0];
+			points_1[n] = mapstartpoints[n][1];
+			points_2[n] = mapstartpoints[n][2];
+			points_3[n] = mapstartpoints[n][3];
+			points_4[n] = mapstartpoints[n][4];
+		
+			rank_0[n] = mapstartrank[n][0];
+			rank_1[n] = mapstartrank[n][1];
+			rank_2[n] = mapstartrank[n][2];
+			rank_3[n] = mapstartrank[n][3];
+			rank_4[n] = mapstartrank[n][4];
+		
+			subrank_0[n] = mapstartsubrank[n][0];
+			subrank_1[n] = mapstartsubrank[n][1];
+			subrank_2[n] = mapstartsubrank[n][2];
+			subrank_3[n] = mapstartsubrank[n][3];
+			subrank_4[n] = mapstartsubrank[n][4];
+		}
+	}
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+    script 463 warns you there is not enough room when hitboxes are enabled
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 463 (void)
+{
+	if(!GetCVar("outcast_morphrandom"))
+	{
+		ActivatorSound("unmorph/fail",127);
+		SetFont("SMALLFONT");
+		HudMessage(s:"not enough room to transform!";HUDMSG_FADEINOUT,0,CR_RED,0.5,0.2,2.0,0.25,0.4);
+	}
+	
+	else	// not enough room. re-roll the dice
+	{
+		ClearMorphs(0);
+		
+		TakeInventory("ZedekMorph",1);
+		TakeInventory("TraductusMorph",1);
+		TakeInventory("MenelkirMorph",1);
+		
+		MorphRandom(PlayerClass(me()));
+	}
+}

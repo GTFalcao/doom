@@ -1,0 +1,583 @@
+
+#library 	"classes"
+
+#import		"variable.acs"
+#import 	"function.acs"
+
+#include 	"zcommon.acs"
+
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 444 keeps track of the doom class (0) for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 444 ENTER
+{
+	if( (PlayerIsBot(me())) || (GameType() == GAME_TITLE_MAP) || (GetCVar("outcast_morphrandom")) || (GetCVar("terminator")) )
+		terminate;
+    
+    Delay(20);
+    
+    if(rank_0[me()] >= maxrank[0])
+        terminate;
+    
+    while(PlayerClass(me()) != 0)
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+	
+	SetNextRank(r1doom[rank_0[me()]], r2doom[rank_0[me()]],0);
+		
+    GiveInventory(rankdoom[rank_0[me()]],1);
+    GiveInventory(pointname[0],1);
+    
+    while( (rank_0[me()] < maxrank[0]) && (PlayerInGame(me())) )
+    {
+    
+        while(CheckInventory(pointname[0]) < nextrank[me()][0])
+        {
+            if(!PlayerInGame(me()))
+                terminate;
+        
+            if(CheckInventory(pointname[0]) == 0)   // restores your inventory if it is lost for whatever reason
+            {                                       // most importantly, upon class change
+                GiveInventory("DoomDamagePoint",100 * (nextrank[me()][0] - killsleft[me()][0]));
+                //GiveInventory(rankdoom[rank[me()][0]],1);
+            }
+            
+            killsleft[me()][0] = nextrank[me()][0] - CheckInventory(pointname[0]);
+            
+            TakeInventory(rankdoom[rank_0[me()]], killdif[me()][0]);
+		
+			if(CheckInventory("IsTerminator"))
+				terminate;	// no pun intended
+			
+            GiveInventory(rankdoom[rank_0[me()]], killdif[me()][0] - killsleft[me()][0]);
+        
+            Delay(10);
+        }
+    
+        RankUp(rupdoom[rank_0[me()]]);
+    
+        if(rank_0[me()] < maxrank[0])
+			SetNextRank(r1doom[rank_0[me()]], r2doom[rank_0[me()]],0);
+        
+        GiveInventory("RankingUp",1);
+        Delay(15);
+        TakeInventory("RankingUp",1);
+    
+        if(rank_0[me()] == 3)
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"Use alt-fire to toggle Spectre mode!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+    
+        if(rank_0[me()] == 11)
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"To revive monsters, use alt-fire as you approach a corpse.\nMake sure there is enough room for the monster to rise!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,6.0,0.3,0.3);
+        }
+    
+    }
+        
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 445 keeps track of the heretic class (1) for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 445 ENTER
+{
+	if( (PlayerIsBot(me())) || (GameType() == GAME_TITLE_MAP) || (GetCVar("outcast_morphrandom")) || (GetCVar("terminator")) )
+		terminate;
+    
+    Delay(20);
+    
+    if(rank_1[me()] >= maxrank[1])
+        terminate;
+    
+    while(PlayerClass(me()) != 1)
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+    
+	SetNextRank(r1htic[rank_1[me()]], r2htic[rank_1[me()]],1);
+		
+    GiveInventory(rankhtic[rank_1[me()]],1);
+    GiveInventory(pointname[1],1);
+    
+    while( (rank_1[me()] < maxrank[1]) && (PlayerInGame(me())) )
+    {
+    
+        while(CheckInventory(pointname[1]) < nextrank[me()][1])
+        {
+            if(!PlayerInGame(me()))
+                terminate;
+        
+            if(CheckInventory(pointname[1]) == 0)   // restores your inventory if it is lost for whatever reason
+            {                                       // most importantly, upon class change
+                GiveInventory("HereticDamagePoint",100 * (nextrank[me()][1] - killsleft[me()][1]));
+                //GiveInventory(rankhtic[rank[me()][1]],1);
+            }
+            
+            killsleft[me()][1] = nextrank[me()][1] - CheckInventory(pointname[1]);
+            
+            TakeInventory(rankhtic[rank_1[me()]], killdif[me()][1]);
+		
+			if(CheckInventory("IsTerminator"))
+				terminate;
+			
+            GiveInventory(rankhtic[rank_1[me()]], killdif[me()][1] - killsleft[me()][1]);
+        
+            Delay(10);
+        }
+    
+        RankUp(ruphtic[rank_1[me()]]);
+        
+        if(rank_1[me()] < maxrank[1])
+			SetNextRank(r1htic[rank_1[me()]], r2htic[rank_1[me()]],1);
+        
+        GiveInventory("RankingUp",1);
+        Delay(15);
+        TakeInventory("RankingUp",1);
+    
+        if( (rank_1[me()] == 2) || (rank_1[me()] == 3) )
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"Use alt-fire to toggle Ghost mode!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+    
+    }
+        
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 446 keeps track of the hexen class (2) for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 446 ENTER
+{
+	if( (PlayerIsBot(me())) || (GameType() == GAME_TITLE_MAP) || (GetCVar("outcast_morphrandom")) || (GetCVar("terminator")) )
+		terminate;
+    
+    Delay(20);
+    
+    if(rank_2[me()] >= maxrank[2])
+        terminate;
+    
+    while(PlayerClass(me()) != 2)
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+	
+	SetNextRank(r1hexn[rank_2[me()]], r2hexn[rank_2[me()]],2);
+		
+    GiveInventory(rankhexn[rank_2[me()]],1);
+    GiveInventory(pointname[2],1);
+    
+    while( (rank_2[me()] < maxrank[2]) && (PlayerInGame(me())) )
+    {
+    
+        while(CheckInventory(pointname[2]) < nextrank[me()][2])
+        {
+            if(!PlayerInGame(me()))
+                terminate;
+        
+            if(CheckInventory(pointname[2]) == 0)   // restores your inventory if it is lost for whatever reason
+            {                                       // most importantly, upon class change
+                GiveInventory("HexenDamagePoint",100 * (nextrank[me()][2] - killsleft[me()][2]));
+                //GiveInventory(rankhexn[rank[me()][2]],1);
+            }
+            
+            killsleft[me()][2] = nextrank[me()][2] - CheckInventory(pointname[2]);
+            
+            TakeInventory(rankhexn[rank_2[me()]], killdif[me()][2]);
+		
+			if(CheckInventory("IsTerminator"))
+				terminate;
+			
+            GiveInventory(rankhexn[rank_2[me()]], killdif[me()][2] - killsleft[me()][2]);
+        
+            Delay(10);
+        }
+    
+        RankUp(ruphexn[rank_2[me()]]);
+        
+        if(rank_2[me()] < maxrank[2])
+			SetNextRank(r1hexn[rank_2[me()]], r2hexn[rank_2[me()]],2);
+        
+        GiveInventory("RankingUp",1);
+        Delay(15);
+        TakeInventory("RankingUp",1);
+    
+        if( (rank_2[me()] == 2) || (rank_2[me()] == 3) )
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"To raise your shield, use alt-fire.\n\nDamage reflected does \cgnot \ciaward points.";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,6.0,0.3,0.3);
+        }
+        
+        else if(rank_2[me()] == 6)
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"To strafe as a \cdBishop, \ciuse alt-fire.";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+        
+        else if(rank_2[me()] == 9)
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"To strafe, use alt-fire.";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+        
+        else if(rank_2[me()] == 10)
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"Use alt-fire to toggle double speed!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+        
+    }
+        
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 447 keeps track of the strife class (3) for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 447 ENTER
+{
+	if( (PlayerIsBot(me())) || (GameType() == GAME_TITLE_MAP) || (GetCVar("outcast_morphrandom")) )
+		terminate;
+    
+    Delay(20);
+    
+    if(rank_3[me()] >= maxrank[3])
+        terminate;
+    
+    while(PlayerClass(me()) != 3)
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+    
+    if( (!subrank_3[me()]) && (startrank < 2) )
+    {
+	
+	if(GetCVar("terminator"))
+		terminate;
+    
+	if(!startrank)
+	{
+	
+    SetNextRank(30,30,3);
+    GiveInventory("StrifeRank0",1);
+    GiveInventory(pointname[3],1);
+	
+	SetFont("SMALLFONT");
+	HudMessage(s:"As a peasant or beggar, you are not targeted by monsters.";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+    
+    while(CheckInventory(pointname[3]) < nextrank[me()][3])
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+        
+        if(CheckInventory(pointname[3]) == 0)   // restores your inventory if it is lost for whatever reason
+        {                                       // most importantly, upon class change
+            GiveInventory("StrifeDamagePoint",100 * (nextrank[me()][3] - killsleft[me()][3]));
+            //GiveInventory("StrifeRank0",1);
+        }
+        
+        killsleft[me()][3] = nextrank[me()][3] - CheckInventory(pointname[3]);
+            
+        TakeInventory("StrifeRank0", killdif[me()][3]);
+		
+		if(CheckInventory("IsTerminator"))
+			terminate;
+			
+        GiveInventory("StrifeRank0", killdif[me()][3] - killsleft[me()][3]);
+        
+        Delay(10);
+    }
+	
+	}
+	
+    RankUp("Rebel!");
+	SetNextRank(100,70,3);
+	
+	if(CheckInventory("StrifeDamagePoint") < 3100)
+		GiveInventory("StrifeDamagePoint",3100 - CheckInventory("StrifeDamagePoint"));
+    
+    GiveInventory("RankingUp",1);
+    Delay(15);
+    TakeInventory("RankingUp",1);
+    
+    while(CheckInventory(pointname[3]) < nextrank[me()][3])
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+        
+        if(CheckInventory(pointname[3]) == 0)   // restores your inventory if it is lost for whatever reason
+        {                                       // most importantly, upon class change
+            GiveInventory("StrifeDamagePoint",100 * (nextrank[me()][3] - killsleft[me()][3]));
+            //GiveInventory("StrifeRank1",1);
+        }
+        
+        killsleft[me()][3] = nextrank[me()][3] - CheckInventory(pointname[3]);
+            
+        TakeInventory("StrifeRank1", killdif[me()][3]);
+		
+		if(CheckInventory("IsTerminator"))
+			terminate;
+			
+        GiveInventory("StrifeRank1", killdif[me()][3] - killsleft[me()][3]);
+        
+        Delay(10);
+    }
+    
+    TakeInventory("StrifeRank1",99999);
+    GiveInventory("ChooseStalker",1);
+    GiveInventory("ChooseAcolyte",1);
+    GiveInventory("ChooseSentinel",1);
+    
+    SetFont("StrifeHudFont0");
+    HudMessage(s:"You have ranked up!";HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_YELLOW,0.5,0.3,6.0,0.3,0.3);
+    
+    ActivatorSound("misc/rankup",127);
+    GiveInventory("RankingUp",1);
+    Delay(15);
+    TakeInventory("RankingUp",1);
+    
+    Delay(25);
+    
+    SetFont("StrifeHudFont0");
+    HudMessage(s:"Select your next monster: \cdStalker, Acolyte or Sentinel.";HUDMSG_FADEINOUT|HUDMSG_LOG,801,CR_YELLOW,0.3,0.35,6.0,0.3,0.3);
+    
+    Delay(70);
+    
+    SetFont("StrifeHudFont0");
+    
+    if(GetCVar("outcast_globalrank"))
+        HudMessage(s:"Choose wisely. There is no going back this game!";HUDMSG_FADEINOUT|HUDMSG_LOG,802,CR_YELLOW,0.3,0.45,6.0,0.3,0.3);
+    else if(GetCVar("outcast_hubrank"))
+        HudMessage(s:"Choose wisely. There is no going back in this hub!";HUDMSG_FADEINOUT|HUDMSG_LOG,802,CR_YELLOW,0.3,0.45,6.0,0.3,0.3);
+    else
+        HudMessage(s:"Choose wisely. There is no going back until the next map!";HUDMSG_FADEINOUT|HUDMSG_LOG,802,CR_YELLOW,0.3,0.45,6.0,0.3,0.3);
+    
+    while(!subrank_3[me()])
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+    
+    rank_3[me()] = 0;
+	
+	VerifyDamageFactor();
+    
+    }
+	
+	if(startrank >= 2)
+	{
+		GiveInventory("ChooseStalker",1);
+		GiveInventory("ChooseAcolyte",1);
+		GiveInventory("ChooseSentinel",1);
+		
+		while(!subrank_3[me()])
+		{
+			if(!PlayerInGame(me()))
+				terminate;
+            
+			Delay(20);
+		}
+		
+		rank_3[me()] = (startrank / 2) - 1;
+		
+		if(rank_3[me()] > maxrank[3])
+			rank_3[me()] = maxrank[3];
+	
+		VerifyDamageFactor();
+		
+		if( (!rank_3[me()]) && (!GetCVar("terminator")) )
+			GiveInventory("StrifeDamagePoint",101 * 100);
+		else
+		{
+			if(!GetCVar("terminator"))
+				GiveInventory("StrifeDamagePoint",100 * (1 + r1strf[subrank_3[me()] - 1][rank_3[me()] - 1]));
+			
+			if(rank_3[me()] > 0)
+				GiveMorphs(3,0);
+		}
+		
+		if( (rank_3[me()] == maxrank[3]) || (GetCVar("terminator")) )
+			terminate;
+	}
+    
+	SetNextRank(r1strf[subrank_3[me()] - 1][rank_3[me()]], r2strf[subrank_3[me()] - 1][rank_3[me()]],3);
+    GiveInventory(rankstrf[subrank_3[me()] - 1][rank_3[me()]],1);
+    GiveInventory(pointname[3],1);
+    
+    if( (subrank_3[me()] == 2) && (!rank_3[me()]) )
+    {
+        Delay(40);
+        SetFont("SMALLFONT");
+        HudMessage(s:"Use alt-fire to toggle Shadow mode!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+    }
+    
+    while( (rank_3[me()] < maxrank[3]) && (PlayerInGame(me())) )
+    {
+    
+        while(CheckInventory(pointname[3]) < nextrank[me()][3])
+        {
+            if(!PlayerInGame(me()))
+                terminate;
+        
+            if(CheckInventory(pointname[3]) == 0)   // restores your inventory if it is lost for whatever reason
+            {                                       // most importantly, upon class change
+                GiveInventory("StrifeDamagePoint",100 * (nextrank[me()][3] - killsleft[me()][3]));
+                //GiveInventory(rankstrf[subrank[me()][3] - 1][rank[me()][3]],1);
+            }
+            
+            killsleft[me()][3] = nextrank[me()][3] - CheckInventory(pointname[3]);
+            
+            TakeInventory(rankstrf[subrank_3[me()] - 1][rank_3[me()]], killdif[me()][3]);
+		
+			if(CheckInventory("IsTerminator"))
+				terminate;
+			
+            GiveInventory(rankstrf[subrank_3[me()] - 1][rank_3[me()]], killdif[me()][3] - killsleft[me()][3]);
+        
+            Delay(10);
+        }
+    
+        RankUp(rupstrf[subrank_3[me()] - 1][rank_3[me()]]);
+        
+        if(rank_3[me()] < maxrank[3])
+            SetNextRank(r1strf[subrank_3[me()] - 1][rank_3[me()]], r2strf[subrank_3[me()] - 1][rank_3[me()]],3);
+        
+        GiveInventory("RankingUp",1);
+        Delay(15);
+        TakeInventory("RankingUp",1);
+        
+        if( (rank_3[me()] == 3) && (subrank_3[me()] == 1) )
+        {
+            Delay(50);
+            SetFont("SMALLFONT");
+            HudMessage(s:"Hold alt-fire to activate jet boosters!";HUDMSG_FADEINOUT|HUDMSG_LOG,808,CR_ORANGE,0.3,0.4,4.0,0.3,0.3);
+        }
+        
+    }
+        
+}
+
+/*
+
+-------------------------------------------------------------------------------------
+
+script 448 keeps track of the virus class (4) for each player
+
+-------------------------------------------------------------------------------------
+
+*/
+
+script 448 ENTER
+{
+	if( (PlayerIsBot(me())) || (GameType() == GAME_TITLE_MAP) || (GetCVar("outcast_morphrandom")) || (GetCVar("terminator")) )
+		terminate;
+    
+    Delay(20);
+    
+    if(rank_4[me()] >= maxrank[4])
+        terminate;
+    
+    while(PlayerClass(me()) != 4)
+    {
+        if(!PlayerInGame(me()))
+            terminate;
+            
+        Delay(20);
+    }
+    
+	SetNextRank(r1virs[rank_4[me()]], r2virs[rank_4[me()]],4);
+		
+    GiveInventory(rankvirs[rank_4[me()]],1);
+    GiveInventory(pointname[4],1);
+    
+    while( (rank_4[me()] < maxrank[4]) && (PlayerInGame(me())) )
+    {
+    
+        while(CheckInventory(pointname[4]) < nextrank[me()][4])
+        {
+            if(!PlayerInGame(me()))
+                terminate;
+        
+            if(CheckInventory(pointname[4]) == 0)   // restores your inventory if it is lost for whatever reason
+            {                                       // most importantly, upon class change
+                GiveInventory("VirusDamagePoint",100 * (nextrank[me()][4] - killsleft[me()][4]));
+                //GiveInventory(rankvirs[rank[me()][4]],1);
+            }
+            
+            killsleft[me()][4] = nextrank[me()][4] - CheckInventory(pointname[4]);
+            
+            TakeInventory(rankvirs[rank_4[me()]], killdif[me()][4]);
+		
+			if(CheckInventory("IsTerminator"))
+				terminate;
+			
+            GiveInventory(rankvirs[rank_4[me()]], killdif[me()][4] - killsleft[me()][4]);
+        
+            Delay(10);
+        }
+    
+        RankUp(rupvirs[rank_4[me()]]);
+        
+        if(rank_4[me()] < maxrank[4])
+			SetNextRank(r1virs[rank_4[me()]], r2virs[rank_4[me()]],4);
+        
+        GiveInventory("RankingUp",1);
+        Delay(15);
+        TakeInventory("RankingUp",1);
+		
+    }
+        
+}

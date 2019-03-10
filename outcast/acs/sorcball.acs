@@ -1,0 +1,153 @@
+
+#library	"sorcball"
+
+#include 	"zcommon.acs"
+
+/*
+-------------------------------------------------------------------------------------
+
+    This script is made to attempt to replicate the behavior of the Heresiarch's
+    three orbiting cubes. This is purely a visual effect, these cubes no longer
+    control his behavior. I am simply going to move them around his current
+    position with math functions.
+    
+    I originally made the script for a decoded version of the monster, and this
+    is a slight adaptation for the Outcast class.
+	
+-------------------------------------------------------------------------------------
+*/
+
+
+#define     radius      30              // integer, as it multiplies fixed point values
+#define     height      110.0           // fixed point, as it is added to fixed point values
+#define     baseid      4100            // lowest TID for the Heresiarch's cubes
+
+
+int sballx[64][3], sbally[64][3], angle[64][3], ballid[64][3];
+
+int speed[64], newspeed[64], hasballs[64];
+
+function void UpAngles (int a1, int who)
+{
+    if(angle[who][0] >= 1.0)
+        angle[who][0] -= 1.0;
+        
+    if(angle[who][1] >= 1.0)
+        angle[who][1] -= 1.0;
+        
+    if(angle[who][2] >= 1.0)
+        angle[who][2] -= 1.0;
+        
+    angle[who][0] += (a1 * speed[who]);
+    angle[who][1] += (a1 * speed[who]);
+    angle[who][2] += (a1 * speed[who]);
+}
+
+function void SetBallX (int who)
+{
+    sballx[who][0] = radius * cos(angle[who][0]);
+    sballx[who][1] = radius * cos(angle[who][1]);
+    sballx[who][2] = radius * cos(angle[who][2]);
+}
+
+function void SetBallY (int who)
+{
+    sbally[who][0] = radius * sin(angle[who][0]);
+    sbally[who][1] = radius * sin(angle[who][1]);
+    sbally[who][2] = radius * sin(angle[who][2]);
+}
+
+script 460 (void) clientside    //  initialization. There should only ever be one instance of this script running for each Heresiarch
+{
+    ballid[PlayerNumber()][0] = 1 + baseid + (4 * PlayerNumber());
+    ballid[PlayerNumber()][1] = 2 + baseid + (4 * PlayerNumber());
+    ballid[PlayerNumber()][2] = 3 + baseid + (4 * PlayerNumber());
+	
+	if( (ThingCount(T_NONE,ballid[PlayerNumber()][0])) && (ThingCount(T_NONE,ballid[PlayerNumber()][1])) && (ThingCount(T_NONE,ballid[PlayerNumber()][2])) )
+		terminate;
+		
+	if(hasballs[PlayerNumber()])
+		terminate;
+		
+	Thing_Remove(ballid[PlayerNumber()][0]);
+	Thing_Remove(ballid[PlayerNumber()][1]);
+	Thing_Remove(ballid[PlayerNumber()][2]);
+		
+    Spawn("SorcBall01", GetActorX(0), GetActorY(0), GetActorZ(0) + height, ballid[PlayerNumber()][0], 0);
+    Spawn("SorcBall02", GetActorX(0), GetActorY(0), GetActorZ(0) + height, ballid[PlayerNumber()][1], 0);
+    Spawn("SorcBall03", GetActorX(0), GetActorY(0), GetActorZ(0) + height, ballid[PlayerNumber()][2], 0);
+	
+	if( (!ThingCount(T_NONE,ballid[PlayerNumber()][0])) || (!ThingCount(T_NONE,ballid[PlayerNumber()][1])) || (!ThingCount(T_NONE,ballid[PlayerNumber()][2])) )
+		terminate;
+		
+	hasballs[PlayerNumber()] = 1;
+	
+    speed[PlayerNumber()] = 7;
+    
+    angle[PlayerNumber()][0] = 0.0;
+    angle[PlayerNumber()][1] = (1.0 / 3);
+    angle[PlayerNumber()][2] = (2.0 / 3);
+
+    while( (GetActorProperty(0, APROP_HEALTH) > 0) && (CheckInventory("IsSorcerer") > 0) && (PlayerInGame(PlayerNumber())) )
+    {
+        UpAngles(0.00138, PlayerNumber());
+    
+        SetBallX(PlayerNumber());
+        SetBallY(PlayerNumber());
+        
+        SetActorPosition(ballid[PlayerNumber()][0], GetActorX(0) + sballx[PlayerNumber()][0], GetActorY(0) + sbally[PlayerNumber()][0], GetActorZ(0) + height, 0);
+        SetActorPosition(ballid[PlayerNumber()][1], GetActorX(0) + sballx[PlayerNumber()][1], GetActorY(0) + sbally[PlayerNumber()][1], GetActorZ(0) + height, 0);
+        SetActorPosition(ballid[PlayerNumber()][2], GetActorX(0) + sballx[PlayerNumber()][2], GetActorY(0) + sbally[PlayerNumber()][2], GetActorZ(0) + height, 0);
+        
+        Delay(1);
+    }
+	
+	hasballs[PlayerNumber()] = 0;
+    
+    Thing_Remove(ballid[PlayerNumber()][0]);
+    Thing_Remove(ballid[PlayerNumber()][1]);
+    Thing_Remove(ballid[PlayerNumber()][2]);
+}
+
+script 461 (int tspeed, int accel) clientside   // control ball movement speed
+{
+    newspeed[PlayerNumber()] = tspeed;
+    
+    switch(accel)
+    {
+        default:
+        case 0:     // resume normal spinning after the attack is executed (A_SorcBossAttack). default: speed 0 -> 7
+        
+            while(speed[PlayerNumber()] < newspeed[PlayerNumber()])
+            {
+                speed[PlayerNumber()]++;
+                Delay(1);
+            }
+            
+            break;
+        
+        case 1:     // accelerate when preparing an attack (A_SpeedBalls). default: speed 7 -> 25
+        
+            while(speed[PlayerNumber()] < newspeed[PlayerNumber()])
+            {
+                speed[PlayerNumber()]++;
+                Delay(1);
+            }
+            
+            break;
+        
+        case 2:     // stop when executing an attack. default: speed 25 -> 0
+            
+            if(speed[PlayerNumber()] > newspeed[PlayerNumber()])
+            {
+                speed[PlayerNumber()] /= 2;
+                
+                Delay(1);
+                
+                speed[PlayerNumber()] = newspeed[PlayerNumber()];
+            }
+            
+            break;
+	
+    }
+}
