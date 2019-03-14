@@ -5,7 +5,8 @@
 
 *****************************
 
-was created and is developed by SwordGrunt, also known as Gui or simply Sword.
+is a Doom/Zandronum mod created by Guilherme Falcão, also known as SwordGrunt
+in the Doom community.
 
 Anything that is not credited here has been made by me, including the entirety
 of the ACS and Decorate in this mod.
