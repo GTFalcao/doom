@@ -98,7 +98,7 @@ script 442 RESPAWN
 {
 	Delay(1);
 	
-    ClearMorphs(0);
+    ClearMorphs(0, false);
     ClearWeapons();
 	
 	if(PlayerIsBot(me()))
@@ -228,7 +228,7 @@ script 441 ENTER
 		
     SetThingSpecial(0,0,0,0,0,0,0);
     
-    ClearMorphs(0);
+    ClearMorphs(0, false);
     ClearWeapons();
     ClearPowers();
     
@@ -835,7 +835,7 @@ script 463 (void)
 	
 	else	// not enough room. re-roll the dice
 	{
-		ClearMorphs(0);
+		ClearMorphs(0, false);
 		
 		TakeInventory("ZedekMorph",1);
 		TakeInventory("TraductusMorph",1);

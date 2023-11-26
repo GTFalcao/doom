@@ -25,7 +25,7 @@ script 465 (void)
 	SetFont("BIGFONT");
 	HudMessageBold(n:0,s:" is the \cgterminator!";HUDMSG_FADEINOUT|HUDMSG_LOG,800,CR_GREEN,0.5,0.3,5.0,0.3,0.3);
 	
-	ClearMorphs(1);
+	ClearMorphs(1, false);
 	termnumber = me();
 	
 	switch(PlayerClass(me()))
@@ -285,7 +285,7 @@ script 465 (void)
 		
 		Delay(10);
 		
-		ClearMorphs(1);
+		ClearMorphs(1, false);
 	}
 	
 	if(termfrags >= GetCVar("outcast_fraglimit"))

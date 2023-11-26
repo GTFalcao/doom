@@ -81,7 +81,7 @@ script 450 (int power, int subpower, int immacho)
         terminate;
     }
     
-    ClearMorphs(0);
+    ClearMorphs(0, true);
     TakeInventory("PowerInvulnerable",1);
     TakeInventory("PowerInvisibility",1);
     TakeInventory("PowerGhost",1);

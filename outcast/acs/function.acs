@@ -354,38 +354,40 @@ function void ClearPowers (void)
 }
 
 
-function void ClearMorphs (int soft)
+function void ClearMorphs (int soft, bool keep)
 {
+	if (!keep && !GetCVar("outcast_morphrandom")) {
     for(int a = 0; a <= maxrank[0]; a++)
-	{
-		TakeInventory(invmorphdoom[a],1);
-	}
+		{
+			TakeInventory(invmorphdoom[a],1);
+		}
         
     for(int b = 0; b <= maxrank[1]; b++)
-	{
-		TakeInventory(invmorphhtic[b],1);
-	}
+		{
+			TakeInventory(invmorphhtic[b],1);
+		}
         
     for(int c = 0; c <= maxrank[2]; c++)
-	{
-		TakeInventory(invmorphhexn[c],1);
-	}
+		{
+			TakeInventory(invmorphhexn[c],1);
+		}
     
     for(int d = 0; d <= maxrank[3]; d++)
-	{
-		TakeInventory(invmorphstrf[0][d],1);
-		TakeInventory(invmorphstrf[1][d],1);
-		TakeInventory(invmorphstrf[2][d],1);
-	}
+		{
+			TakeInventory(invmorphstrf[0][d],1);
+			TakeInventory(invmorphstrf[1][d],1);
+			TakeInventory(invmorphstrf[2][d],1);
+		}
         
     for(int e = 0; e <= maxrank[4]; e++)
-	{
-		TakeInventory(invmorphvirs[e],1);
-	}
+		{
+			TakeInventory(invmorphvirs[e],1);
+		}
     
     TakeInventory("PeasantMorph",1);
     TakeInventory("BeggarMorph",1);
     TakeInventory("RebelMorph",1);
+	}
 	
 	if(!soft)
 	{
@@ -568,7 +570,7 @@ function void GiveMorphs (int class, int spawning)
 		}
 	}
 	
-	ClearMorphs(1);		// rearrange
+	ClearMorphs(1, false);		// rearrange
 		
     switch(class)
     {
