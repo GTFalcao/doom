@@ -1,0 +1,339 @@
+
+actor DarkBishopClass : MonsterPawnHexen
+{
+	player.morphweapon "DarkBishopWeapon"
+	health 130
+	mass 150
+	player.maxhealth 130
+	speed 0.7
+	player.sidemove 0.75, 0.75
+	bloodtype "HereticNoBlood"
+	player.soundclass "bish"
+	states
+	{
+		Spawn:
+			BISH A 10
+			loop
+		See:
+			BISH AB 6
+			loop
+		Pain:
+			BISH C 8 A_PlaySound("BishopPain",2)
+			BISH C 0 A_JumpIfInventory("DoingBlur",1,"Spawn")
+			BISH C 2 A_Jump(85,"Melee")
+			goto Spawn
+		Missile:
+			BISH DD 1 bright A_JumpIfInventory("submerged",1,"Attack")
+			BISH DEE 2 bright
+			BISH F 34 bright
+			BISH FF 5 bright A_JumpIfInventory("shooting",1,"Spawn")
+			goto Spawn
+		Attack:
+			BISH F 7 bright
+			goto Spawn
+		Melee:
+			BISH A 1 A_Stop
+			BISH A 0 A_GiveInventory("DoingBlur",1)
+			BISH A 0 A_PlaySound("BishopBlur",4)
+			BISH A 0 A_Jump(128,"Melee2")
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+64, 3, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+64, 2, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+64, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+64, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AA 1 ThrustThing((angle*256/360)+64, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH A 1 A_TakeInventory("DoingBlur",1)
+			BISH A 1 A_Stop
+			goto Spawn
+		Melee2:
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+192, 3, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+192, 2, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+192, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AAA 1 ThrustThing((angle*256/360)+192, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH AA 1 ThrustThing((angle*256/360)+192, 1, 0, 0)
+			BISH A 0 A_SpawnItemEx("BishopBlur",0,0,0,0,0,0,0,32)
+			BISH A 1 A_TakeInventory("DoingBlur",1)
+			BISH A 1 A_Stop
+			goto Spawn
+  		Death:
+    		BISH G 6
+    		BISH H 6 bright A_PlayerScream
+    		BISH I 5 bright A_NoBlocking
+    		BISH J 5 bright A_Explode(random[BishopBoom](25, 40))
+    		BISH K 5 bright
+    		BISH LM 4 bright
+    		BISH N 4 A_SpawnItemEx("BishopPuff", 0, 0, 40, 0, 0, 0.5)
+    		BISH O 4
+    		BISH P -1
+    		stop
+	}
+}
+
+actor DarkBishopClassHitbox : DarkBishopClass
+{
+	height 64
+	radius 22
+	player.viewheight 52
+	player.attackzoffset 0
+}
+
+actor DoingBlur : inventory { inventory.maxamount 1 }
+
+actor DarkBishopWeapon : BaseMonsterWeapon
+{
+	obituary "%o succumbed to %k's dark power."
+	tag "Dark Spell"
+	weapon.sisterweapon "DarkBishopWeaponPowered"
+	weapon.ammotype1 "MonsterManaGreen"
+	+WEAPON.NOALERT
+	states
+	{
+		Ready:
+			TNT1 A 10
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,1) == 0,2)
+			TNT1 A 0 A_GiveInventory("MonFlight",1)
+			TNT1 A 0 A_JumpIfInventory("DoingBlur",1,"WaitBlur")
+			TNT1 AA 1 A_WeaponReady
+			goto Ready+3
+		Fire:
+			WPX1 C 1 bright offset(0,118)
+			WPX1 C 1 bright offset(0,109) 
+			WPX1 C 1 bright offset(0,100) A_TakeInventory("shooting",1)
+			WPX1 C 1 bright offset(0,93)
+			WPX1 C 1 bright offset(0,86)
+			WPX1 C 1 bright offset(0,77)
+			WPX1 C 1 bright offset(0,68)
+			WPX1 C 1 bright offset(0,59)
+			WPX1 C 1 bright offset(0,50)
+			WPX1 C 1 bright offset(0,41)
+			WPX1 C 1 bright offset(0,32) A_AlertMonsters
+			WPX1 C 3 bright A_PlaySound("BishopAttack",CHAN_WEAPON)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_Jump(85,"Finish")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_Jump(128,"Finish")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+		Finish:
+			WPX1 C 1 bright A_GiveInventory("shooting",1)
+			WPX1 C 1 bright offset(0,44)
+			WPX1 C 1 bright offset(0,56)
+			WPX1 C 1 bright offset(0,68)
+			WPX1 C 1 bright offset(0,80)
+			WPX1 C 1 bright offset(0,92)
+			WPX1 C 1 bright offset(0,104)
+			WPX1 C 1 bright offset(0,112)
+			WPX1 C 1 bright offset(0,124)
+			TNT1 A 1 offset(0,32) A_JumpIfInventory("MonsterManaGreen",5,"FinishWait")
+			TNT1 AAAAAAAAAAAAAAAA 5 A_JumpIfInventory("DoingBlur",1,"WaitBlur")
+		FinishWait:
+			TNT1 AAAAAA 1 A_WeaponReady(WRF_NOPRIMARY)
+			TNT1 A 0 A_JumpIfInventory("DoingBlur",1,"WaitBlur")
+			TNT1 AAAAAA 1 A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready+3
+		WaitBlur:
+			TNT1 A 0 A_PlaySound("none",CHAN_WEAPON)
+			TNT1 A 18 SetPlayerProperty(0,1,0)
+			TNT1 A 1 A_TakeInventory("DoingBlur",1)
+			TNT1 A 4 SetPlayerProperty(0,0,0)
+			goto Ready+3
+		LowerBlur:
+			TNT1 A 0 SetPlayerProperty(0,1,0)
+			WPX1 C 1 bright offset(0,50) A_PlaySound("none",CHAN_WEAPON)
+			WPX1 C 1 bright offset(0,68)
+			WPX1 C 1 bright offset(0,86)
+			WPX1 C 1 bright offset(0,102)
+			WPX1 C 1 bright offset(0,120)
+			TNT1 A 12 offset(0,32)
+			TNT1 A 1 A_TakeInventory("DoingBlur",1)
+			TNT1 A 4 SetPlayerProperty(0,0,0)
+			goto Ready+3
+		AltFire:
+			TNT1 A 0 A_GiveInventory("DoingBlur",1)
+			TNT1 A 0 A_GunFlash
+			TNT1 A 18 SetPlayerProperty(0,1,0)
+			TNT1 A 0 A_TakeInventory("DoingBlur",1)
+			TNT1 A 4 SetPlayerProperty(0,0,0)
+			TNT1 AAAAAAA 5 A_WeaponReady(WRF_NOSECONDARY)
+			goto Ready+3
+	}
+}
+
+actor DarkBishopWeaponPowered : DarkBishopWeapon
+{
+	weapon.sisterweapon "DarkBishopWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPX1 C 1 bright offset(0,118)
+			WPX1 C 1 bright offset(0,109) 
+			WPX1 C 1 bright offset(0,100) A_TakeInventory("shooting",1)
+			WPX1 C 1 bright offset(0,93)
+			WPX1 C 1 bright offset(0,86)
+			WPX1 C 1 bright offset(0,77)
+			WPX1 C 1 bright offset(0,68)
+			WPX1 C 1 bright offset(0,59)
+			WPX1 C 1 bright offset(0,50)
+			WPX1 C 1 bright offset(0,41)
+			WPX1 C 1 bright offset(0,32) A_AlertMonsters
+			WPX1 C 3 bright A_PlaySound("BishopAttack",CHAN_WEAPON)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+		Hold:
+			WPX1 C 0 A_JumpIfInventory("MonsterManaGreen",1,1)
+			goto Burst
+			WPX1 C 0 A_GiveInventory("submerged",1)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_TakeInventory("MonsterManaGreen",1)
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_PlaySound("BishopAttackHold",0,0.6)
+			WPX1 C 1 bright A_ReFire
+			goto Finish
+		Burst:
+			WPX1 C 0 A_TakeInventory("submerged",1)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_Jump(85,"Finish")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+			WPX1 C 0 A_JumpIfInventory("DoingBlur",1,"LowerBlur")
+			WPX1 C 0 A_Jump(128,"Finish")
+			WPX1 C 5 bright A_FireCustomMissile("BishopFX0",0,0,0,9)
+		Finish:
+			WPX1 C 1 bright A_GiveInventory("shooting",1)
+			WPX1 C 1 bright offset(0,44) A_TakeInventory("submerged",1)
+			WPX1 C 1 bright offset(0,56) A_PlaySound("none",CHAN_WEAPON)
+			WPX1 C 1 bright offset(0,68)
+			WPX1 C 1 bright offset(0,80)
+			WPX1 C 1 bright offset(0,92)
+			WPX1 C 1 bright offset(0,104)
+			WPX1 C 1 bright offset(0,112)
+			WPX1 C 1 bright offset(0,124)
+			TNT1 A 1 offset(0,32) A_JumpIfInventory("MonsterManaGreen",1,"FinishWait")
+			TNT1 AAAAAAAAAAAAAAAA 5 A_JumpIfInventory("DoingBlur",1,"WaitBlur")
+		FinishWait:
+			TNT1 AAAAAA 1 A_WeaponReady(WRF_NOPRIMARY)
+			TNT1 A 0 A_JumpIfInventory("DoingBlur",1,"WaitBlur")
+			TNT1 AAAAAA 1 A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready+3
+	}
+}
+
+actor BishopFX0 : BishopFX
+{
+	obituary "%o succumbed to %k's dark power."
+	fastspeed 22
+	damage (8 * random(1,4) * ACS_ExecuteWithResult(455,5) / 100)
+	-STRIFEDAMAGE
+	+MTHRUSPECIES
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,2 * ACS_ExecuteWithResult(455,4))
+			goto Hexen1
+		Hexen1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Hexen4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen2")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3])
+			goto Super::Death
+		Hexen2:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 2)
+			goto Super::Death
+		Hexen4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen8")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 4)
+			goto Super::Death
+		Hexen8:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor DarkBishopMorph : MonsterMorph
+{
+	tag "Dark Bishop"
+	inventory.icon "ARTIBISH"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("DarkBishopHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,6)
+			stop
+	}
+}
+
+actor DarkBishopMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,6)
+			stop
+	}
+}
+
+actor DarkBishopHitboxCheck : BaseHitboxCheck
+{
+	height 64
+	radius 22
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("DarkBishopMorphDirect",1)
+			stop
+	}
+}
+
+actor DarkBishopMorpher : MonsterMorpher { powerup.type MorphBish }
+
+actor PowerMorphBish : PowerMorphHexen { powermorph.playerclass "DarkBishopClass" }
+
+actor DarkBishopMorpherHitbox : MonsterMorpher { powerup.type MorphBishHitbox }
+
+actor PowerMorphBishHitbox : PowerMorphHexen { powermorph.playerclass "DarkBishopClassHitbox" }

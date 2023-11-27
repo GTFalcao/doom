@@ -1,0 +1,214 @@
+
+actor EttinClass : MonsterPawnHexen
+{
+	player.morphweapon "EttinWeapon"
+	health 175
+	player.maxhealth 175
+	gibhealth 83
+	speed 0.9
+	painchance 192
+	mass 250
+	player.soundclass "ettin"
+	states
+	{
+		Spawn:
+			ETTN A 10
+			loop
+		See:
+			ETTN ABCD 5
+			loop
+		Pain:
+			ETTN H 7 A_PlaySound("EttinPain",2)
+			goto Spawn
+		Melee:
+			ETTN EFG 3
+			goto Missile
+		Missile:
+			ETTN EF 6
+			ETTN G 8
+			goto Spawn
+		Death:
+			ETTN IJ 4
+    		ETTN K 4 A_PlayerScream
+    		ETTN L 4 A_NoBlocking
+    		ETTN M 4
+			ETTN NOP 4
+    		ETTN Q -1
+			Stop
+  		XDeath:
+    		ETTB A 4
+    		ETTB B 4 A_PlayerScream
+    		ETTB C 4 A_SpawnItemEx("EttinMace", 0, 0, 8.5, random[DropMace](-128, 127)*0.03125,random[DropMace](-128, 127)*0.03125,10+random[DropMace](0, 255)*0.015625,0,8)
+    		ETTB D 4
+			ETTB E 4 A_NoBlocking
+    		ETTB FGHIJK 4
+    		ETTB L -1
+    		Stop
+	}
+}
+
+actor EttinClassHitbox : EttinClass
+{
+	radius 28
+	height 68
+	player.viewheight 58
+}
+
+actor EttinWeapon : BaseMonsterWeapon
+{
+	obituary "%o was mashed by %k."
+	weapon.sisterweapon "EttinWeaponPowered"
+	tag "Heavy Mace"
+	+WEAPON.NOALERT
+	+WEAPON.MELEEWEAPON
+	states
+	{
+		Select:
+			WPX0 J 1 A_Raise
+			wait
+		Deselect:
+			WPX0 J 1 A_Lower
+			wait
+		Ready:
+			WPX0 J 1 A_WeaponReady
+			wait
+		Fire:
+			WPX0 G 4
+			WPX0 G 2 A_PlaySound("EttinAttack",CHAN_WEAPON)
+			WPX0 H 6
+			WPX0 I 0 A_FireCustomMissile("EttinMeleeProj",0,0,0,9)
+			WPX0 I 6 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Ready
+			WPX0 I 6 A_FireCustomMissile("EttinMeleeProj",0,0,0,9)
+			goto Ready
+	}
+}
+
+actor EttinWeaponPowered : EttinWeapon
+{
+	weapon.sisterweapon "EttinWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPX0 G 0 A_GunFlash
+			WPX0 G 3 A_PlaySound("EttinAttack",CHAN_WEAPON)
+			WPX0 H 3
+			WPX0 I 0 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+			WPX0 I 2 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Double
+			WPX0 I 2 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+		Double:
+			WPX0 G 0 A_GunFlash
+			WPX0 T 3 A_PlaySound("EttinAttack",CHAN_WEAPON)
+			WPX0 U 3
+			WPX0 V 0 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+			WPX0 V 3 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Triple
+			WPX0 V 3 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+		Triple:
+			WPX0 G 2
+			WPX0 G 5 A_PlaySound("FighterHammerContinuous",CHAN_WEAPON)
+			WPX0 H 6
+			WPX0 II 0 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+			WPX0 I 4 A_JumpIfInventory("BerserkTracker",1,1)
+			goto Finish
+			WPX0 I 0 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+			WPX0 I 4 A_FireCustomMissile("EttinMeleeProj2",0,0,0,9)
+		Finish:
+			WPX0 I 1 offset(0,42)
+			WPX0 I 1 offset(0,52)
+			WPX0 I 1 offset(0,62)
+			WPX0 I 1 offset(0,72)
+			WPX0 I 1 offset(0,82)
+			TNT1 A 8 offset(0,32)
+			TNT1 A 1 A_ReFire
+			WPX0 J 1 offset(0,109)
+			WPX0 J 1 offset(0,102)
+			WPX0 J 1 offset(0,95)
+			WPX0 J 1 offset(0,88)
+			WPX0 J 1 offset(0,81)
+			WPX0 J 1 offset(0,74)
+			WPX0 J 1 offset(0,67)
+			WPX0 J 1 offset(0,60)
+			WPX0 J 1 offset(0,53)
+			WPX0 J 1 offset(0,46)
+			WPX0 J 1 offset(0,39)
+			goto Ready
+	}
+}
+
+actor EttinMeleeProj : ImpMeleeProj
+{
+	obituary "%o was mashed by %k."
+	deathsound "EttinHit"
+	damage (4 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,18 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Hexen1
+	}
+}
+
+actor EttinMeleeProj2 : EttinMeleeProj
+{
+	damage (10 * random(1,4) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,25 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Hexen1
+	}
+}
+
+actor EttinMorph : MonsterMorph
+{
+	tag "Ettin"
+	inventory.icon "ARTIETTN"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("EttinHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,1)
+			stop
+	}
+}
+
+actor EttinMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,1)
+			stop
+	}
+}
+
+actor EttinHitboxCheck : BaseHitboxCheck
+{
+	radius 28
+	height 68
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("EttinMorphDirect",1)
+			stop
+	}
+}
+
+actor EttinMorpher : MonsterMorpher { powerup.type MorphEttn }
+
+actor PowerMorphEttn : PowerMorphHexen { powermorph.playerclass "EttinClass" }
+
+actor EttinMorpherHitbox : MonsterMorpher { powerup.type MorphEttnHitbox }
+
+actor PowerMorphEttnHitbox : PowerMorphHexen { powermorph.playerclass "EttinClassHitbox" }

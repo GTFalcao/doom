@@ -1,0 +1,140 @@
+
+actor ZombiemanClass : MonsterPawnDoom
+{
+	player.morphweapon "ZombiemanWeapon"
+	health 20
+	player.maxhealth 20
+	gibhealth 20
+	speed 1.2
+	player.soundclass "zombie"
+	states
+	{
+		Spawn:
+			P0SS AB 10
+			loop
+		See:
+			P0SS ABCD 8
+			loop
+		Pain:
+			P0SS G 6 A_PlaySound("0grunt/pain",2)
+			goto Spawn
+		Missile:
+			P0SS FE 8
+			goto Spawn
+		Death:
+			P0SS H 5
+    		P0SS I 5 A_PlayerScream
+    		P0SS J 5 A_NoBlocking
+    		P0SS K 5
+    		P0SS L -1
+    		Stop
+  		XDeath:
+    		P0SS M 5
+    		P0SS N 5 A_PlaySound("0misc/gibbed",CHAN_VOICE)
+    		P0SS O 5 A_NoBlocking
+    		P0SS PQRST 5
+    		P0SS U -1
+			stop
+	}
+}
+
+actor ZombiemanWeapon : BaseMonsterWeapon
+{
+	weapon.sisterweapon "ZombiemanWeaponPowered"
+	obituary "%o was killed by %k's rifle."
+	weapon.ammotype1 "MonsterManaBlue"
+	tag "Rifle"
+	states
+	{
+		Ready:
+    WPD0 H 1 A_WeaponReady
+    Loop
+  Deselect:
+    WPD0 H 1 A_Lower
+    Loop
+  Select:
+    WPD0 H 1 A_Raise
+    Loop
+  Fire:
+    WPD0 H 2 A_TakeInventory("MonsterManaBlue",1)
+	WPD0 H 0 A_PlaySound("0grunt/attack", CHAN_WEAPON)
+ 	WPD0 H 0 A_GunFlash
+    WPD0 H 6 A_FireCustomMissile("StandardBullet",0,0,0,9)
+    WPD0 H 1 offset(0, 35)
+	WPD0 H 1 offset(0, 38)
+	WPD0 H 2 offset(0, 41)
+	WPD0 H 1 offset(0, 38)
+	WPD0 H 1 offset(0, 35)
+	WPD0 H 0 offset(0, 32)
+    WPD0 H 30 A_JumpIfInventory("MonsterManaBlue",1,"Ready")
+    Goto Ready
+  Flash:
+    WPD0 IJ 3 bright A_Light1
+    Goto LightDone
+	}
+}
+
+actor ZombiemanWeaponPowered : ZombiemanWeapon
+{
+	weapon.sisterweapon "ZombiemanWeapon"
+	obituary "%o was gibbed by %k's powered rifle."
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPD0 H 3 A_TakeInventory("MonsterManaBlue",3)
+			WPD0 H 0 A_PlaySound("0grunt/attack2", CHAN_WEAPON)
+			WPD0 H 0 A_GunFlash
+			WPD0 H 6 A_FireCustomMissile("ZombiemanBulletPowered",0,0,0,9)
+			WPD0 H 1 offset(0, 36)
+			WPD0 H 1 offset(0, 40)
+			WPD0 H 1 offset(0, 44)
+			WPD0 H 1 offset(0, 48)
+			WPD0 H 1 offset(0, 52)
+			WPD0 H 1 offset(0, 56)
+			WPD0 H 1 offset(0, 60)
+			WPD0 H 5 offset(0, 64)
+			WPD0 H 1 offset(0, 62)
+			WPD0 H 1 offset(0, 60)
+			WPD0 H 1 offset(0, 58)
+			WPD0 H 1 offset(0, 56)
+			WPD0 H 1 offset(0, 54)
+			WPD0 H 1 offset(0, 52)
+			WPD0 H 1 offset(0, 50)
+			WPD0 H 1 offset(0, 48)
+			WPD0 H 1 offset(0, 46)
+			WPD0 H 1 offset(0, 44)
+			WPD0 H 1 offset(0, 42)
+			WPD0 H 1 offset(0, 40)
+			WPD0 H 1 offset(0, 38)
+			WPD0 H 1 offset(0, 36)
+			WPD0 H 1 offset(0, 34)
+			WPD0 H 1 offset(0, 32)
+			WPD0 H 3
+			WPD0 H 80 A_JumpIfInventory("MonsterManaBlue",1,"Ready")
+			Goto Ready
+	}
+}
+
+actor ZombiemanBulletPowered : StandardBullet
+{
+	+EXTREMEDEATH
+	+FOILINVUL
+	damage (18 * random(1,5) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Spawn:
+			TNT1 A 4
+			loop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,54 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor ZombiemanMorph : MonsterMorph { tag "Zombieman" }
+
+actor ZombiemanMorpher : MonsterMorpher { }
+
+actor PowerMorphPoss : PowerMorphDoom { }

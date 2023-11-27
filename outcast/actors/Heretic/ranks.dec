@@ -1,0 +1,30 @@
+
+actor HereticRank0 : Inventory
+{
+	inventory.maxamount 30
+	+INVENTORY.PERSISTENTPOWER
+}
+
+actor HereticRank1 : HereticRank0 { inventory.maxamount 50 }
+
+actor HereticRank2 : HereticRank0 { inventory.maxamount 60 }
+
+actor HereticRank3 : HereticRank0 { inventory.maxamount 90 }
+
+actor HereticRank4 : HereticRank0 { inventory.maxamount 140 }
+
+actor HereticRank5 : HereticRank0 { inventory.maxamount 170 }
+
+actor HereticRank6 : HereticRank0 { inventory.maxamount 200 }
+
+actor HereticRank7 : HereticRank0 { inventory.maxamount 300 }
+
+actor HereticRank8 : HereticRank0 { inventory.maxamount 500 }
+
+actor HereticRank9 : HereticRank0 { inventory.maxamount 850 }
+
+actor HereticRank10 : HereticRank0 { inventory.maxamount 1400 }
+
+actor HereticRank11 : HereticRank0 { inventory.maxamount 2000 }
+
+actor HereticRank12 : HereticRank0 { inventory.maxamount 1 }

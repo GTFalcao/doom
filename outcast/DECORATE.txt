@@ -1,8 +1,8 @@
 
-#include "actors/base.txt"
-#include "actors/core.txt"
-#include "actors/dummies.txt"
-#include "actors/titlemap.txt"
+#include "actors/base.dec"
+#include "actors/core.dec"
+#include "actors/dummies.dec"
+#include "actors/titlemap.dec"
 
 /*
 ---------------------------------------------------------
@@ -10,27 +10,27 @@
 ---------------------------------------------------------
 */
 
-#include "actors/Doom/ranks.txt"
-#include "actors/Doom/misc.txt"
-#include "actors/Doom/game.txt"
-#include "actors/Doom/skulltag.txt"
+#include "actors/Doom/ranks.dec"
+#include "actors/Doom/misc.dec"
+#include "actors/Doom/game.dec"
+#include "actors/Doom/skulltag.dec"
 
-#include "actors/Doom/Monsters/zombieman.txt"
-#include "actors/Doom/Monsters/shotguy.txt"
-#include "actors/Doom/Monsters/chainguy.txt"
-#include "actors/Doom/Monsters/imp.txt"
-#include "actors/Doom/Monsters/demon.txt"
-#include "actors/Doom/Monsters/cacodemon.txt"
-#include "actors/Doom/Monsters/baron.txt"
-#include "actors/Doom/Monsters/hellknight.txt"
-#include "actors/Doom/Monsters/revenant.txt"
-#include "actors/Doom/Monsters/mancubus.txt"
-#include "actors/Doom/Monsters/arachnotron.txt"
-#include "actors/Doom/Monsters/archvile.txt"
-#include "actors/Doom/Monsters/mastermind.txt"
-#include "actors/Doom/Monsters/cyberdemon.txt"
-#include "actors/Doom/Monsters/lostsoul.txt"	// unused
-#include "actors/Doom/Monsters/pain.txt"		// unused
+#include "actors/Doom/Monsters/zombieman.dec"
+#include "actors/Doom/Monsters/shotguy.dec"
+#include "actors/Doom/Monsters/chainguy.dec"
+#include "actors/Doom/Monsters/imp.dec"
+#include "actors/Doom/Monsters/demon.dec"
+#include "actors/Doom/Monsters/cacodemon.dec"
+#include "actors/Doom/Monsters/baron.dec"
+#include "actors/Doom/Monsters/hellknight.dec"
+#include "actors/Doom/Monsters/revenant.dec"
+#include "actors/Doom/Monsters/mancubus.dec"
+#include "actors/Doom/Monsters/arachnotron.dec"
+#include "actors/Doom/Monsters/archvile.dec"
+#include "actors/Doom/Monsters/mastermind.dec"
+#include "actors/Doom/Monsters/cyberdemon.dec"
+#include "actors/Doom/Monsters/lostsoul.dec"	// unused
+#include "actors/Doom/Monsters/pain.dec"		// unused
 
 /*
 ---------------------------------------------------------
@@ -38,23 +38,23 @@
 ---------------------------------------------------------
 */
 
-#include "actors/Heretic/ranks.txt"
-#include "actors/Heretic/misc.txt"
-#include "actors/Heretic/game.txt"
+#include "actors/Heretic/ranks.dec"
+#include "actors/Heretic/misc.dec"
+#include "actors/Heretic/game.dec"
 
-#include "actors/Heretic/Monsters/gargoyle.txt"
-#include "actors/Heretic/Monsters/firegargoyle.txt"
-#include "actors/Heretic/Monsters/golem.txt"
-#include "actors/Heretic/Monsters/nitrogolem.txt"
-#include "actors/Heretic/Monsters/sabreclaw.txt"
-#include "actors/Heretic/Monsters/disciple.txt"
-#include "actors/Heretic/Monsters/knight.txt"
-#include "actors/Heretic/Monsters/ghostknight.txt"
-#include "actors/Heretic/Monsters/weredragon.txt"
-#include "actors/Heretic/Monsters/ophidian.txt"
-#include "actors/Heretic/Monsters/ironlich.txt"
-#include "actors/Heretic/Monsters/maulotaur.txt"
-#include "actors/Heretic/Monsters/dsparil.txt"
+#include "actors/Heretic/Monsters/gargoyle.dec"
+#include "actors/Heretic/Monsters/firegargoyle.dec"
+#include "actors/Heretic/Monsters/golem.dec"
+#include "actors/Heretic/Monsters/nitrogolem.dec"
+#include "actors/Heretic/Monsters/sabreclaw.dec"
+#include "actors/Heretic/Monsters/disciple.dec"
+#include "actors/Heretic/Monsters/knight.dec"
+#include "actors/Heretic/Monsters/ghostknight.dec"
+#include "actors/Heretic/Monsters/weredragon.dec"
+#include "actors/Heretic/Monsters/ophidian.dec"
+#include "actors/Heretic/Monsters/ironlich.dec"
+#include "actors/Heretic/Monsters/maulotaur.dec"
+#include "actors/Heretic/Monsters/dsparil.dec"
 
 /*
 ---------------------------------------------------------
@@ -62,26 +62,26 @@
 ---------------------------------------------------------
 */
 
-#include "actors/Hexen/ranks.txt"
-#include "actors/Hexen/misc.txt"
-#include "actors/Hexen/game.txt"
-#include "actors/Hexen/armor.txt"
+#include "actors/Hexen/ranks.dec"
+#include "actors/Hexen/misc.dec"
+#include "actors/Hexen/game.dec"
+#include "actors/Hexen/armor.dec"
 
-#include "actors/Hexen/Monsters/afrit.txt"
-#include "actors/Hexen/Monsters/ettin.txt"
-#include "actors/Hexen/Monsters/centaur.txt"
-#include "actors/Hexen/Monsters/slaughtaur.txt"
-#include "actors/Hexen/Monsters/chaosserpent.txt"
-#include "actors/Hexen/Monsters/stalker.txt"
-#include "actors/Hexen/Monsters/bishop.txt"
-#include "actors/Hexen/Monsters/wendigo.txt"
-#include "actors/Hexen/Monsters/reiver.txt"
-#include "actors/Hexen/Monsters/zedek.txt"
-#include "actors/Hexen/Monsters/traductus.txt"
-#include "actors/Hexen/Monsters/menelkir.txt"
-#include "actors/Hexen/Monsters/wyvern.txt"
-#include "actors/Hexen/Monsters/heresiarch.txt"
-#include "actors/Hexen/Monsters/korax.txt"
+#include "actors/Hexen/Monsters/afrit.dec"
+#include "actors/Hexen/Monsters/ettin.dec"
+#include "actors/Hexen/Monsters/centaur.dec"
+#include "actors/Hexen/Monsters/slaughtaur.dec"
+#include "actors/Hexen/Monsters/chaosserpent.dec"
+#include "actors/Hexen/Monsters/stalker.dec"
+#include "actors/Hexen/Monsters/bishop.dec"
+#include "actors/Hexen/Monsters/wendigo.dec"
+#include "actors/Hexen/Monsters/reiver.dec"
+#include "actors/Hexen/Monsters/zedek.dec"
+#include "actors/Hexen/Monsters/traductus.dec"
+#include "actors/Hexen/Monsters/menelkir.dec"
+#include "actors/Hexen/Monsters/wyvern.dec"
+#include "actors/Hexen/Monsters/heresiarch.dec"
+#include "actors/Hexen/Monsters/korax.dec"
 
 /*
 ---------------------------------------------------------
@@ -89,28 +89,28 @@
 ---------------------------------------------------------
 */
 
-#include "actors/Strife/ranks.txt"
-#include "actors/Strife/misc.txt"
-//#include "actors/Strife/game.txt"		// Strife support not available
+#include "actors/Strife/ranks.dec"
+#include "actors/Strife/misc.dec"
+//#include "actors/Strife/game.dec"		// Strife support not available
 
-#include "actors/Strife/Monsters/peasant.txt"
-#include "actors/Strife/Monsters/rebel.txt"
-#include "actors/Strife/Monsters/acolyte.txt"
-#include "actors/Strife/Monsters/macil.txt"
-#include "actors/Strife/Monsters/templar.txt"
-#include "actors/Strife/Monsters/sentinel.txt"
-#include "actors/Strife/Monsters/stalker.txt"
-#include "actors/Strife/Monsters/reaver.txt"
-#include "actors/Strife/Monsters/crusader.txt"
-#include "actors/Strife/Monsters/bishop.txt"
-#include "actors/Strife/Monsters/loremaster.txt"
-#include "actors/Strife/Monsters/inquisitor.txt"
-#include "actors/Strife/Monsters/programmer.txt"
-#include "actors/Strife/Monsters/spectre2.txt"
-#include "actors/Strife/Monsters/spectre3.txt"
-#include "actors/Strife/Monsters/spectre4.txt"
-#include "actors/Strife/Monsters/spectre5.txt"
-#include "actors/Strife/Monsters/entity.txt"
+#include "actors/Strife/Monsters/peasant.dec"
+#include "actors/Strife/Monsters/rebel.dec"
+#include "actors/Strife/Monsters/acolyte.dec"
+#include "actors/Strife/Monsters/macil.dec"
+#include "actors/Strife/Monsters/templar.dec"
+#include "actors/Strife/Monsters/sentinel.dec"
+#include "actors/Strife/Monsters/stalker.dec"
+#include "actors/Strife/Monsters/reaver.dec"
+#include "actors/Strife/Monsters/crusader.dec"
+#include "actors/Strife/Monsters/bishop.dec"
+#include "actors/Strife/Monsters/loremaster.dec"
+#include "actors/Strife/Monsters/inquisitor.dec"
+#include "actors/Strife/Monsters/programmer.dec"
+#include "actors/Strife/Monsters/spectre2.dec"
+#include "actors/Strife/Monsters/spectre3.dec"
+#include "actors/Strife/Monsters/spectre4.dec"
+#include "actors/Strife/Monsters/spectre5.dec"
+#include "actors/Strife/Monsters/entity.dec"
 
 /*
 ---------------------------------------------------------
@@ -118,19 +118,19 @@
 ---------------------------------------------------------
 */
 
-#include "actors/Virus/ranks.txt"
-#include "actors/Virus/misc.txt"
+#include "actors/Virus/ranks.dec"
+#include "actors/Virus/misc.dec"
 
-#include "actors/Virus/Monsters/drone.txt"
-#include "actors/Virus/Monsters/prism.txt"
-#include "actors/Virus/Monsters/spore.txt"
-#include "actors/Virus/Monsters/greaterprism.txt"
-#include "actors/Virus/Monsters/mill.txt"
-#include "actors/Virus/Monsters/virus.txt"
-#include "actors/Virus/Monsters/aircarrier.txt"
-#include "actors/Virus/Monsters/treadmill.txt"
-#include "actors/Virus/Monsters/meshflier.txt"
-#include "actors/Virus/Monsters/meshwalker.txt"
-#include "actors/Virus/Monsters/leader.txt"
-#include "actors/Virus/Monsters/landcarrier.txt"
-#include "actors/Virus/Monsters/felix.txt"
+#include "actors/Virus/Monsters/drone.dec"
+#include "actors/Virus/Monsters/prism.dec"
+#include "actors/Virus/Monsters/spore.dec"
+#include "actors/Virus/Monsters/greaterprism.dec"
+#include "actors/Virus/Monsters/mill.dec"
+#include "actors/Virus/Monsters/virus.dec"
+#include "actors/Virus/Monsters/aircarrier.dec"
+#include "actors/Virus/Monsters/treadmill.dec"
+#include "actors/Virus/Monsters/meshflier.dec"
+#include "actors/Virus/Monsters/meshwalker.dec"
+#include "actors/Virus/Monsters/leader.dec"
+#include "actors/Virus/Monsters/landcarrier.dec"
+#include "actors/Virus/Monsters/felix.dec"

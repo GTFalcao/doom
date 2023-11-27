@@ -1,0 +1,423 @@
+
+actor TraductusClass : MonsterPawnHexen
+{
+	player.morphweapon "TraductusWeapon"
+	health 800
+	player.maxhealth 800
+	gibhealth 400
+	speed 0.4
+	mass 250
+	player.soundclass "cler"
+	player.sidemove 0.5, 0.5
+	states
+	{
+		Spawn:
+			CLER A -1
+			loop
+		See:
+			CLER ABCD 4
+			loop
+		Pain:
+			CLER H 8 A_PlaySound("PlayerClericPain",2)
+			goto Spawn
+		Melee:
+			CLER EFG 6
+			goto Spawn
+		Missile:
+			CLER A 4
+			goto Spawn
+		Death:
+    		CLER I 6
+    		CLER J 6 A_PlayerScream
+    		CLER KL 6
+    		CLER M 6 A_NoBlocking
+    		CLER NOP 6
+			CLER Q -1
+    		stop
+		XDeath:
+    		CLER R 5
+    		CLER S 5 A_PlaySound("PlayerClericExtremeDeathPicker",2)
+    		CLER T 5 A_NoBlocking
+    		CLER UVWXYZ 5
+    		CLER [ -1
+    		stop
+		 Burn:
+			FDTH C 1 bright
+    		FDTH C 4 bright A_PlaySound("PlayerClericBurnDeath",1)
+   	 		FDTH D 4 bright
+    		FDTH G 5 bright A_PlaySound("PlayerClericCrazyDeath",2)
+    		FDTH H 4 bright
+    		FDTH I 5 bright
+    		FDTH J 4 bright
+    		FDTH K 5 bright
+    		FDTH L 4 bright
+    		FDTH M 5 bright
+   		 	FDTH N 4 bright
+    		FDTH O 5 bright
+    		FDTH P 4 bright
+    		FDTH Q 5 bright
+    		FDTH R 4 bright
+    		FDTH S 5 bright A_NoBlocking
+			FDTH T 4 bright
+    		FDTH U 5 bright
+    		FDTH V 4 bright
+			FDMN T -1
+    		stop
+	}
+}
+
+actor TraductusClassHitbox : TraductusClass
+{
+	height 64
+	radius 22
+	player.viewheight 52
+}
+
+actor TraductusWeapon : BaseMonsterWeapon
+{
+	obituary "%o was baptized by %k."
+	tag "Wraithverge"
+	weapon.sisterweapon "TraductusWeaponPowered"
+	weapon.ammotype1 "MonsterManaBlue"
+	weapon.ammotype2 "MonsterManaGreen"
+	+WEAPON.NOALERT
+	states
+	{
+  		Ready:
+    		WPX3 A 1 A_WeaponReady
+    		loop
+  		Select:
+   			WPX3 A 1 A_Raise
+    		loop
+  		Deselect:
+    		WPX3 A 1 A_Lower
+    		loop
+  		Fire:
+			WPX3 A 2 bright Offset (0, 40) A_GunFlash
+			WPX3 B 2 bright Offset (0, 41) 
+    		WPX3 C 2 bright Offset (0, 42)
+			WPX3 D 2 bright Offset (0, 43) A_AlertMonsters
+			WPX3 E 0 A_PlaySound("HolySymbolFire",CHAN_WEAPON)
+    		WPX3 E 2 bright Offset (0, 45) ACS_ExecuteAlways(451,0,5,0)
+    		WPX3 F 6 bright Offset (0, 48) A_FireCustomMissile("HolyMissile0",0,0,0,9)
+    		WPX3 A 2 bright Offset (0, 44) A_TakeInventory("MonsterManaBlue",4)
+    		WPX3 A 2 bright Offset (0, 40) A_TakeInventory("MonsterManaGreen",4)
+    		WPX3 A 2 Offset (0, 36)
+			WPX3 A 5 Offset (0, 32)
+			WPX3 A 1 A_JumpIfInventory("MonsterManaBlue",4,1)
+			goto Delay
+			WPX3 A 1 A_JumpIfInventory("MonsterManaGreen",4,1)
+			goto Delay
+			WPX3 AAAA 2 A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+		Delay:
+			WPX3 A 70
+			WPX3 AAAA 2 A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+  		AltFire:
+			WPX3 A 0 A_Stop
+			WPX3 A 0 SetPlayerProperty(0,1,0)
+			WPX3 A 0 A_Jump(128,"Alt2")
+  			WPX3 AA 0 ThrustThing((angle*256/360)+64, 3, 0, 0)
+			WPX3 AAA 1 ThrustThing((angle*256/360)+64, 2, 0, 0)
+			WPX3 AAA 1 ThrustThing((angle*256/360)+64, 1, 0, 0)
+			WPX3 A 2
+			//WPX3 A 0 A_Stop
+			WPX3 A 2 SetPlayerProperty(0,0,0)
+			WPX3 AAAAAAAAAAAA 2 A_WeaponReady(WRF_NOSECONDARY)
+			goto Ready
+		Alt2:
+  			WPX3 AA 0 ThrustThing((angle*256/360)+192, 3, 0, 0)
+			WPX3 AAA 1 ThrustThing((angle*256/360)+192, 2, 0, 0)
+			WPX3 AAA 1 ThrustThing((angle*256/360)+192, 1, 0, 0)
+			goto AltFire+11
+	}
+}
+
+actor TraductusWeaponPowered : TraductusWeapon
+{
+	weapon.sisterweapon "TraductusWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPX3 A 2 bright Offset (0, 40) A_GunFlash
+			WPX3 B 2 bright Offset (0, 41) 
+    		WPX3 C 2 bright Offset (0, 42)
+			WPX3 D 2 bright Offset (0, 43) A_AlertMonsters
+			WPX3 E 0 A_PlaySound("HolySymbolFire",CHAN_WEAPON)
+    		WPX3 E 2 bright Offset (0, 45) ACS_ExecuteAlways(451,0,5,0)
+    		WPX3 F 6 bright Offset (0, 48) A_FireCustomMissile("HolyMissile02",0,0,0,9)
+    		WPX3 A 2 bright Offset (0, 44) A_TakeInventory("MonsterManaBlue",10)
+    		WPX3 A 2 bright Offset (0, 40) A_TakeInventory("MonsterManaGreen",10)
+    		WPX3 A 2 Offset (0, 36)
+			WPX3 A 5 Offset (0, 32)
+			WPX3 A 1 A_JumpIfInventory("MonsterManaBlue",8,1)
+			goto Delay
+			WPX3 A 1 A_JumpIfInventory("MonsterManaGreen",8,1)
+			goto Delay
+			WPX3 AAAA 2 A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+	}
+}
+
+actor HolyMissile0
+{
+	PROJECTILE
+	+NODAMAGETHRUST
+	+EXTREMEDEATH
+	+DONTREFLECT
+	+SKYEXPLODE
+	+MTHRUSPECIES
+	damage 1
+	speed 20
+	radius 8
+	height 8
+	reactiontime 4
+	states
+	{
+		Spawn:
+			SPIR P 0 A_Countdown
+    		SPIR P 3 bright A_SpawnItemEx("HolyMissilePuff")
+			loop
+  		Death:
+			SPIR P 0 A_CustomMissile("HolySpirit0",0,0,random(-20,-25),134,pitch * -1)
+			SPIR P 0 A_CustomMissile("HolySpirit0",0,0,random(20,25),134,pitch * -1)
+			SPIR P 0 A_CustomMissile("HolySpirit0",0,0,random(5,10),134,pitch * -1)
+    		SPIR P 1 bright A_CustomMissile("HolySpirit0",0,0,random(-10,-5),134,pitch * -1)
+    		stop
+	}
+}
+
+actor HolyMissile02 : HolyMissile0
+{
+	states
+	{
+		Death:
+			SPIR P 0 A_CustomMissile("HolySpirit02",0,0,random(-20,-25),134,pitch * -1)
+			SPIR P 0 A_CustomMissile("HolySpirit02",0,0,random(20,25),134,pitch * -1)
+			SPIR P 0 A_CustomMissile("HolySpirit02",0,0,random(5,10),134,pitch * -1)
+    		SPIR P 1 bright A_CustomMissile("HolySpirit02",0,0,random(-10,-5),134,pitch * -1)
+    		stop
+	}
+}
+
+actor HolySpirit0
+{
+	PROJECTILE
+	+EXTREMEDEATH
+	+SEEKERMISSILE
+	+SKYEXPLODE
+	+MTHRUSPECIES
+	speed 10
+	height 12
+	radius 10
+	reactiontime 105
+	renderstyle translucent
+	alpha 0.4
+	obituary "%o was baptized by %k."
+	damage (7 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Spawn:
+			SPIR A 0 A_Jump(20,"Active")	// 5/64 chance
+			SPIR A 0 A_Countdown
+			SPIR A 0 A_SpawnItemEx("HolyTail0",0,0,0,frandom(-0.25,0.25),frandom(-0.25,0.25),frandom(-0.2,0.2),0,168)
+			SPIR A 2 A_SeekerMissile(8,13,3,50,10)
+			SPIR A 0 A_Countdown
+			SPIR A 2 A_SeekerMissile(8,13,3,50,10)
+			SPIR B 0 A_Countdown
+			SPIR B 0 A_SpawnItemEx("HolyTail0",0,0,0,frandom(-0.25,0.25),frandom(-0.25,0.25),frandom(-0.2,0.2),0,168)
+			SPIR B 2 A_SeekerMissile(8,13,3,50,10)
+			SPIR B 0 A_Countdown
+			SPIR B 2 A_SeekerMissile(8,13,3,50,10)
+			loop
+		Active:
+			SPIR A 0 A_PlaySound("SpiritActive",CHAN_VOICE)
+			goto Spawn+1
+		Death:
+			SPIR E 4 A_PlaySound("SpiritDie",CHAN_VOICE)
+			SPIR FGHIJ 4
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,315 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Hexen1
+		Hexen1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Hexen4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen2")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3])
+			goto XDeath2
+		Hexen2:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 2)
+			goto XDeath2
+		Hexen4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen8")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 4)
+			goto XDeath2
+		Hexen8:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 8)
+			goto XDeath2
+		XDeath2:
+			SPIR A 0 A_ChangeVelocity(random(0,2) * cos(angle),0,frandom(-0.4,0.4),CVF_REPLACE)
+			SPIR A 3 A_PlaySound("SpiritAttack",CHAN_VOICE)
+			SPIR AAAAAAAAA 1 A_FadeOut(0.04)
+			stop
+	}
+}
+
+actor HolySpirit02 : HolySpirit0
+{
+	+DONTREFLECT
+	+NOCLIP
+	damage 0
+	speed 12
+	reactiontime 105
+	states
+	{
+		Spawn:
+			SPIR A 0 A_Jump(20,"Active")	// 5/64 chance
+			SPIR A 0 A_Countdown
+			SPIR A 0 A_SpawnItemEx("HolyTail0",0,0,0,frandom(-0.25,0.25),frandom(-0.25,0.25),frandom(-0.2,0.2),0,168)
+			SPIR A 0 A_SeekerMissile(8,18,3,50,10)
+			SPIR A 1 A_CustomMissile("HolySpirit02Rip",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			SPIR A 1 A_CustomMissile("HolySpirit02RipNoPain",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			SPIR A 0 A_Countdown
+			SPIR A 0 A_SeekerMissile(8,18,3,50,10)
+			SPIR AA 1 A_CustomMissile("HolySpirit02RipNoPain",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			SPIR A 0 A_Countdown
+			SPIR B 0 A_SpawnItemEx("HolyTail0",0,0,0,frandom(-0.25,0.25),frandom(-0.25,0.25),frandom(-0.2,0.2),0,168)
+			SPIR B 0 A_SeekerMissile(8,18,3,50,10)
+			SPIR B 1 A_CustomMissile("HolySpirit02Rip",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			SPIR B 1 A_CustomMissile("HolySpirit02RipNoPain",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			SPIR A 0 A_Countdown
+			SPIR B 0 A_SeekerMissile(8,18,3,50,10)
+			SPIR BB 1 A_CustomMissile("HolySpirit02RipNoPain",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			loop
+		Crash:
+		XDeath:
+			goto Super::Death
+	}
+}
+
+actor HolySpirit02Rip
+{
+	height 12
+	radius 10
+	speed 1
+	damage (random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	obituary "%o was baptized by %k."
+	PROJECTILE
+	+EXTREMEDEATH
+	+DONTREFLECT
+	+NODAMAGETHRUST
+	+FOILINVUL
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			TNT1 A 2
+			stop
+		Death:
+			TNT1 A 1
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_Jump(224,2)
+			TNT1 A 0 A_PlaySound("SpiritAttack",CHAN_VOICE)
+			TNT1 A 0 A_SetArg(3,45 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Hexen1
+		Hexen1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Hexen4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen2")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3])
+			goto Death
+		Hexen2:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 2)
+			goto Death
+		Hexen4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen8")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 4)
+			goto Death
+		Hexen8:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 8)
+			goto Death
+	}
+}
+
+actor HolySpirit02RipNoPain : HolySpirit02Rip { +PAINLESS }
+
+actor HolyTail0
+{
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	renderstyle translucent
+	alpha 0.6
+	states
+	{
+		Spawn:
+			SPIR C 0
+			SPIR C 0 A_Jump(128,"Spawn2")
+			SPIR CCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.03)
+			stop
+		Spawn2:
+			SPIR DDDDDDDDDDDDDDDDDDD 1 A_FadeOut(0.03)
+			stop
+	}
+}
+
+actor TraductusMorph : MonsterMorph
+{
+	tag "Traductus, Grand Patriarch of the Church"
+	inventory.icon "ARTICLER"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("TraductusHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9,0,2)
+			stop
+	}
+}
+
+actor TraductusMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9,0,2)
+			stop
+	}
+}
+
+actor TraductusHitboxCheck : BaseHitboxCheck
+{
+	height 64
+	radius 22
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_TakeFromTarget("TraductusMorph",1)
+			TNT1 A 0 A_GiveToTarget("TraductusMorphDirect",1)
+			stop
+	}
+}
+
+actor TraductusMorpher : MonsterMorpher { powerup.type MorphCler }
+
+actor PowerMorphCler : PowerMorphHexen { powermorph.playerclass "TraductusClass" }
+
+actor TraductusMorpherHitbox : MonsterMorpher { powerup.type MorphClerHitbox }
+
+actor PowerMorphClerHitbox : PowerMorphHexen { powermorph.playerclass "TraductusClassHitbox" }

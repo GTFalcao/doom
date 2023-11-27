@@ -1,0 +1,113 @@
+
+actor ShotguyClass : MonsterPawnDoom
+{
+	player.morphweapon "ShotguyWeapon"
+	health 30
+	player.maxhealth 30
+	gibhealth 30
+	speed 1.1
+	player.soundclass "zombie"
+	states
+	{
+		Spawn:
+			SP0S AB 10
+			loop
+		See:
+			SP0S ABCD 6
+			loop
+		Pain:
+			SP0S G 6 A_PlaySound("0shotguy/pain",2)
+			goto Spawn
+		Missile:
+			SP0S E 3
+			SP0S F 10 bright
+			SP0S E 10
+			goto Spawn
+		Death:
+			SP0S H 5
+    		SP0S I 5 A_PlayerScream
+    		SP0S J 5 A_NoBlocking
+    		SP0S K 5
+    		SP0S L -1
+    		Stop
+  		XDeath:
+    		SP0S M 5
+    		SP0S N 5 A_PlaySound("0misc/gibbed",CHAN_VOICE)
+    		SP0S O 5 A_NoBlocking
+    		SP0S PQRST 5
+    		SP0S U -1
+			stop
+	}
+}
+
+actor ShotguyWeapon : BaseMonsterWeapon
+{
+	obituary "%o was shot by %k's shotgun."
+	weapon.sisterweapon "ShotguyWeaponPowered"
+	weapon.ammotype1 "MonsterManaGreen"
+	tag "Shotgun"
+	states
+	{
+		Ready:
+    WPD0 D 1 A_WeaponReady
+    Loop
+  Deselect:
+    WPD0 D 1 A_Lower
+    Loop
+  Select:
+    WPD0 D 1 A_Raise
+    Loop
+  Fire:
+    WPD0 D 3 A_TakeInventory("MonsterManaGreen",1)
+	WPD0 DDD 0 A_FireCustomMissile("StandardBullet",random(-11,11),0,0,9)
+    WPD0 D 0 A_PlaySound ("0shotguy/attack", CHAN_WEAPON)
+    WPD0 D 7 A_GunFlash
+    WPD0 E 4
+    WPD0 F 8
+    WPD0 E 6
+    WPD0 D 6
+    WPD0 D 75 A_JumpIfInventory("MonsterManaGreen",1,"Ready")
+    Goto Ready
+  Flash:
+    WPD0 G 4 bright A_Light1
+    WPD0 G 3 bright A_Light2
+    Goto LightDone
+	}
+}
+
+actor ShotguyWeaponPowered : ShotguyWeapon
+{
+	+WEAPON.POWERED_UP
+	obituary "%o was blasted to bits by %k's powered shotgun."
+	weapon.sisterweapon ShotguyWeapon
+	states
+	{
+  Fire:
+    WPD0 D 3 A_TakeInventory("MonsterManaGreen",1)
+	WPD0 DDDDDDDD 0 A_FireCustomMissile("StandardBullet",random(-11,11),0,0,9)
+    WPD0 D 0 A_PlaySound ("0shotguy/attack2", CHAN_WEAPON)
+    WPD0 D 7 A_GunFlash
+    WPD0 E 4
+    WPD0 F 8
+    WPD0 E 6
+    WPD0 D 6
+    WPD0 D 75 A_JumpIfInventory("MonsterManaGreen",1,"Ready")
+    Goto Ready
+	}
+}
+
+actor ShotguyMorph : MonsterMorph
+{
+	tag "Shotgun Guy"
+	inventory.icon "ARTISPOS"
+	states
+	{
+		Use:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,1)
+			stop
+	}
+}
+
+actor ShotguyMorpher : MonsterMorpher { powerup.type MorphSpos }
+
+actor PowerMorphSpos : PowerMorphDoom { powermorph.playerclass "ShotguyClass" }

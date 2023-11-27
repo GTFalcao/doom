@@ -1,0 +1,326 @@
+
+actor ZedekClass : MonsterPawnHexen
+{
+	player.morphweapon "ZedekWeapon"
+	health 800
+	player.maxhealth 800
+	gibhealth 400
+	speed 0.4
+	mass 250
+	player.soundclass "figh"
+	player.sidemove 0.5, 0.5
+	states
+	{
+		Spawn:
+			FIGH A -1
+			loop
+		See:
+			FIGH ABCD 4
+			loop
+		Pain:
+			FIGH G 8 A_PlaySound("PlayerFighterPain",2)
+			goto Spawn
+		Missile:
+			FIGH A 4
+			goto Spawn
+		Melee:
+			FIGH EF 8
+			goto Spawn
+		Death:
+    		FIGH H 6
+    		FIGH I 6 A_PlayerScream
+    		FIGH JK 6
+    		FIGH L 6 A_NoBlocking
+    		FIGH M 6
+			FIGH N -1
+    		stop
+		XDeath:
+    		FIGH O 5
+    		FIGH P 5 A_PlaySound("PlayerFighterExtremeDeathPicker",2)
+    		FIGH R 5 A_NoBlocking
+    		FIGH STUV 5
+    		FIGH W -1
+    		stop
+		 Burn:
+			FDTH A 1 bright
+    		FDTH A 4 bright A_PlaySound("PlayerFighterBurnDeath",1)
+   	 		FDTH B 4 bright
+    		FDTH G 5 bright A_PlaySound("PlayerFighterCrazyDeath",2)
+    		FDTH H 4 bright
+    		FDTH I 5 bright
+    		FDTH J 4 bright
+    		FDTH K 5 bright
+    		FDTH L 4 bright
+    		FDTH M 5 bright
+   		 	FDTH N 4 bright
+    		FDTH O 5 bright
+    		FDTH P 4 bright
+    		FDTH Q 5 bright
+    		FDTH R 4 bright
+    		FDTH S 5 bright A_NoBlocking
+			FDTH T 4 bright
+    		FDTH U 5 bright
+    		FDTH V 4 bright
+			FDMN T -1
+    		stop
+	}
+}
+
+actor ZedekClassHitbox : ZedekClass
+{
+	height 64
+	radius 22
+	player.viewheight 52
+}
+
+actor ZedekWeapon : BaseMonsterWeapon
+{
+	obituary "%o wasn't macho enough for %k."
+	tag "Quietus"
+	weapon.sisterweapon "ZedekWeaponPowered"
+	weapon.ammotype1 "MonsterManaBlue"
+	weapon.ammotype2 "MonsterManaGreen"
+	+WEAPON.NOALERT
+	states
+	{
+  		Select:
+    		WPX2 A 1 bright A_Raise
+    		loop
+		Deselect:
+    		WPX2 A 1 bright A_Lower
+    		loop
+  		Ready:
+    		WPX2 AAAABBBBCCCC 1 bright A_WeaponReady
+    		loop
+  		Fire:
+			WPX2 D 0 A_GunFlash
+			WPX2 D 3 bright Offset(5, 36) A_PlaySound("FighterSwordFire",CHAN_WEAPON)
+			WPX2 E 3 bright Offset(5, 36) A_AlertMonsters
+			WPX2 F 2 bright Offset(5, 36) A_TakeInventory("MonsterManaBlue",4)
+			WPX2 F 0 A_TakeInventory("MonsterManaGreen",4)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile0",-11.5,0,0,19)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile0",-5.625,0,0,14)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile0",0,0,0,9)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile0",5.625,0,0,4)
+			WPX2 G 3 bright Offset(5, 36) A_FireCustomMissile("FSwordMissile0",11.5,0,0,-1)
+			WPX2 H 2 bright Offset(5, 36)
+			WPX2 I 2 bright Offset(5, 36)
+			WPX2 I 6 bright Offset(5, 150)
+			WPX2 A 1 bright Offset(5, 60)
+			WPX2 A 1 bright Offset(5, 55)
+			WPX2 B 1 bright Offset(4, 50)
+			WPX2 B 1 bright Offset(3, 45)
+			WPX2 C 1 bright Offset(2, 40)
+			WPX2 C 1 bright Offset(1, 35)
+			WPX2 A 2 bright Offset(0, 32) A_JumpIfInventory("MonsterManaBlue",4,1)
+			goto Delay
+			WPX2 A 2 bright Offset(0, 32) A_JumpIfInventory("MonsterManaGreen",4,1)
+			goto Delay
+			WPX2 AABB 2 bright A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+		Delay:
+			WPX2 ABBCCAABBCCAABBCCAABBCCAABBCCAABBCC 2 bright
+			WPX2 AABB 2 bright A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+  		AltFire:
+			WPX2 A 0 A_Stop
+			WPX2 A 0 SetPlayerProperty(0,1,0)
+			WPX2 A 0 A_Jump(128,"Alt2")
+  			WPX2 AA 0 ThrustThing((angle*256/360)+64, 3, 0, 0)
+			WPX2 AAA 1 bright ThrustThing((angle*256/360)+64, 2, 0, 0)
+			WPX2 BBB 1 bright ThrustThing((angle*256/360)+64, 1, 0, 0)
+			WPX2 C 2 bright
+			//WPX2 C 0 A_Stop
+			WPX2 C 2 bright SetPlayerProperty(0,0,0)
+			WPX2 AABBCCAABBCC 2 bright A_WeaponReady(WRF_NOSECONDARY)
+			goto Ready
+		Alt2:
+  			WPX2 AA 0 ThrustThing((angle*256/360)+192, 3, 0, 0)
+			WPX2 AAA 1 bright ThrustThing((angle*256/360)+192, 2, 0, 0)
+			WPX2 BBB 1 bright ThrustThing((angle*256/360)+192, 1, 0, 0)
+			goto AltFire+11
+	}
+}
+
+actor ZedekWeaponPowered : ZedekWeapon
+{
+	weapon.sisterweapon "ZedekWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPX2 D 0 A_GunFlash
+			WPX2 D 3 bright Offset(5, 36) A_PlaySound("FighterSwordFire",CHAN_WEAPON)
+			WPX2 E 3 bright Offset(5, 36) A_AlertMonsters
+			WPX2 F 2 bright Offset(5, 36) A_TakeInventory("MonsterManaBlue",8)
+			WPX2 F 0 A_TakeInventory("MonsterManaGreen",8)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile02",-11.5,0,0,19)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile02",-5.625,0,0,14)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile02",0,0,0,9)
+			WPX2 G 0 A_FireCustomMissile("FSwordMissile02",5.625,0,0,4)
+			WPX2 G 3 bright Offset(5, 36) A_FireCustomMissile("FSwordMissile02",11.5,0,0,-1)
+			WPX2 H 2 bright Offset(5, 36)
+			WPX2 I 2 bright Offset(5, 36)
+			WPX2 I 6 bright Offset(5, 150)
+			WPX2 A 1 bright Offset(5, 60)
+			WPX2 A 1 bright Offset(5, 55)
+			WPX2 B 1 bright Offset(4, 50)
+			WPX2 B 1 bright Offset(3, 45)
+			WPX2 C 1 bright Offset(2, 40)
+			WPX2 C 1 bright Offset(1, 35)
+			WPX2 A 2 bright Offset(0, 32) A_JumpIfInventory("MonsterManaBlue",8,1)
+			goto Delay
+			WPX2 A 2 bright Offset(0, 32) A_JumpIfInventory("MonsterManaGreen",8,1)
+			goto Delay
+			WPX2 AABB 2 bright A_WeaponReady(WRF_NOPRIMARY)
+			goto Ready
+	}
+}
+
+actor FSwordMissile0 : FSwordMissile
+{
+	obituary "%o wasn't macho enough for %k."
+	damage (2 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	+MTHRUSPECIES
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,3 * ACS_ExecuteWithResult(455,4))
+			goto Hexen1
+		Hexen1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Hexen4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen2")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3])
+			goto Death
+		Hexen2:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 2)
+			goto Death
+		Hexen4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen8")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 4)
+			goto Death
+		Hexen8:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 8)
+			goto Death
+  		Death:
+    		FSFX D 4 bright
+    		FSFX E 3 bright A_FSwordFlames
+    		FSFX F 4 bright A_Explode(random(18,28) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX G 3 bright
+    		FSFX H 4 bright
+    		FSFX I 3 bright
+    		FSFX J 4 bright
+    		FSFX KLM 3 bright
+    		stop
+	}
+}
+
+actor FSwordMissile02 : FSwordMissile0
+{
+	+DONTREFLECT
+	+FOILINVUL
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,6 * ACS_ExecuteWithResult(455,4))
+			goto Hexen1
+		Hexen1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Hexen4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen2")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3])
+			goto Death
+		Hexen2:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 2)
+			goto Death
+		Hexen4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Hexen8")
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 4)
+			goto Death
+		Hexen8:
+			TNT1 A 0 A_GiveToTarget("HexenDamagePoint",args[3] * 8)
+			goto Death
+  		Death:
+    		FSFX D 4 bright A_PlaySound("PlayerFighterBurnDeath",CHAN_BODY,0.6)
+			FSFX E 0 A_FSwordFlames
+    		FSFX E 3 bright A_Explode(random(7,13) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX F 4 bright A_Explode(random(7,12) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX G 3 bright A_Explode(random(7,13) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX H 4 bright A_Explode(random(7,12) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX I 3 bright A_Explode(random(7,11) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX J 4 bright A_Explode(random(7,10) * ACS_ExecuteWithResult(455,5) / 100, 128, 0)
+    		FSFX KLM 3 bright
+    		stop
+	}
+}
+
+actor ClassBossMorph : CustomInventory
+{
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	states
+	{
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ZedekMorph",1)
+			TNT1 A 0 A_GiveInventory("TraductusMorph",1)
+			TNT1 A 0 A_GiveInventory("MenelkirMorph",1)
+			stop
+	}
+}
+
+actor ZedekMorph : MonsterMorph
+{
+	tag "Zedek, Marshal of the Legion"
+	inventory.icon "ARTIFIGH"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("ZedekHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9,0,1)
+			stop
+	}
+}
+
+actor ZedekMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,9,0,1)
+			stop
+	}
+}
+
+actor ZedekHitboxCheck : BaseHitboxCheck
+{
+	height 64
+	radius 22
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_TakeFromTarget("ZedekMorph",1)
+			TNT1 A 0 A_GiveToTarget("ZedekMorphDirect",1)
+			stop
+	}
+}
+
+actor ZedekMorpher : MonsterMorpher { powerup.type MorphFigh }
+
+actor PowerMorphFigh : PowerMorphHexen { powermorph.playerclass "ZedekClass" }
+
+actor ZedekMorpherHitbox : MonsterMorpher { powerup.type MorphFighHitbox }
+
+actor PowerMorphFighHitbox : PowerMorphHexen { powermorph.playerclass "ZedekClassHitbox" }

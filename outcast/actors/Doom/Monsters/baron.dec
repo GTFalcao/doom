@@ -1,0 +1,310 @@
+
+actor BaronClass : MonsterPawnDoom
+{
+	player.morphweapon "BaronWeapon"
+	health 1000
+	player.maxhealth 1000
+	speed 0.7
+	mass 1000
+	painchance 128
+	player.soundclass "baron"
+	states
+	{
+		Spawn:
+			B0SS AB 10
+			loop
+		See:
+			B0SS ABCD 6
+			loop
+		Pain:
+			B0SS H 4 A_PlaySound("0baron/pain",2)
+			goto Spawn
+		Missile:
+			B0SS EFG 8
+			goto Spawn
+		Melee:
+			B0SS G 10
+			goto Spawn
+		Death:
+			B0SS I 8
+    		B0SS J 8 A_PlayerScream
+			B0SS K 8
+    		B0SS L 8 A_NoBlocking
+    		B0SS MN 8
+    		B0SS O -1
+    		Stop
+	}
+}
+
+actor BaronClassHitbox : BaronClass
+{
+	height 72
+	radius 24
+	player.viewheight 60
+	player.attackzoffset 4
+}
+
+actor BaronWeapon : BaseMonsterWeapon
+{
+	weapon.ammotype1 "MonsterManaGreen"
+	weapon.sisterweapon "BaronWeaponPowered"
+	tag "Bruiser claws"
+	obituary "%o was fucking goddamn ripped open by %k."
+	+WEAPON.NOALERT
+	states
+	{
+		Fire:
+			WPD4 G 8
+			WPD4 H 8 A_AlertMonsters
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 8 A_FireCustomMissile("BaronBall0",0,0,0,4)
+			WPD4 I 0 A_JumpIfInventory("MonsterManaGreen",2,1)
+			goto FireDone
+			WPD4 I 0 A_ReFire
+			goto AltFireDone
+		FireDone:
+			WPD4 I 1 offset(0,42)
+			WPD4 I 1 offset(0,52)
+			WPD4 I 1 offset(0,62)
+			WPD4 I 1 offset(0,72)
+			WPD4 I 1 offset(0,82)
+			WPD4 I 1 offset(0,92)
+			WPD4 I 1 offset(0,102)
+			WPD4 I 1 offset(0,112)
+			WPD4 I 1 offset(0,122)
+			WPD4 I 1 offset(0,132)
+			WPD4 I 1 offset(0,142)
+			WPD4 I 50 offset(0,153)
+			goto Ready
+		AltFire:
+			WPD4 G 8 
+			WPD4 H 8 A_PlaySound("0baron/melee",CHAN_WEAPON)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_FireCustomMissile("BaronMeleeProj",0,0,0,9)
+			WPD4 I 8 A_JumpIfInventory("BerserkTracker",1,2)
+			WPD4 I 0 A_ReFire
+			goto AltFireDone
+			WPD4 I 8 A_FireCustomMissile("BaronMeleeProj",0,0,0,9)
+			WPD4 I 0 A_ReFire
+		AltFireDone:
+			WPD4 I 1 offset(0,42)
+			WPD4 I 1 offset(0,52)
+			WPD4 I 1 offset(0,62)
+			WPD4 I 1 offset(0,72)
+			WPD4 I 1 offset(0,82)
+			WPD4 I 1 offset(0,92)
+			WPD4 I 1 offset(0,102)
+			WPD4 I 1 offset(0,112)
+			WPD4 I 1 offset(0,122)
+			WPD4 I 1 offset(0,132)
+			WPD4 I 1 offset(0,142)
+			WPD4 I 1 offset(0,153)
+			goto Ready
+	}
+}
+
+actor BaronWeaponPowered : BaronWeapon
+{
+	weapon.sisterweapon "BaronWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPD4 G 8
+			WPD4 H 8 A_AlertMonsters
+			WPD4 I 0 A_GunFlash
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_TakeInventory("MonsterManaGreen",2)
+			WPD4 I 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 0 A_GunFlash
+			WPD4 IIII 2 A_FireCustomMissile("BaronBall0",random(-8,8),0,0,4)
+			WPD4 I 1 offset(0,40)
+			WPD4 I 1 offset(0,48)
+			WPD4 I 1 offset(0,56)
+			WPD4 I 1 offset(0,64)
+			WPD4 I 1 offset(0,72)
+			WPD4 I 1 offset(0,80)
+			WPD4 I 1 offset(0,88)
+			WPD4 I 1 offset(0,96)
+			WPD4 I 1 offset(0,104)
+			WPD4 I 1 offset(0,112)
+			WPD4 I 1 offset(0,120)
+			WPD4 I 1 offset(0,128)
+			WPD4 I 1 offset(0,136)
+			WPD4 I 1 offset(0,144)
+			WPD4 I 1 offset(0,153)
+			TNT1 A 150 offset(0,32) A_JumpIfInventory("MonsterManaGreen",10,1)
+			TNT1 A 35 offset(0,32)
+			goto Ready
+		AltFire:
+			WPD4 G 8 
+			WPD4 H 8 A_PlaySound("0imp/melee2",CHAN_WEAPON)
+			WPD4 I 0 A_GunFlash
+			WPD4 I 0 A_FireCustomMissile("BaronMeleeProj2",0,0,0,9)
+			WPD4 I 8 A_JumpIfInventory("BerserkTracker",1,2)
+			goto AltFireDone
+			WPD4 I 8 A_FireCustomMissile("BaronMeleeProj2NoSound",0,0,0,9)
+		AltFireDone:
+			WPD4 I 1 offset(0,42)
+			WPD4 I 1 offset(0,52)
+			WPD4 I 1 offset(0,62)
+			WPD4 I 1 offset(0,72)
+			WPD4 I 1 offset(0,82)
+			WPD4 I 1 offset(0,92)
+			WPD4 I 1 offset(0,102)
+			WPD4 I 1 offset(0,112)
+			WPD4 I 1 offset(0,122)
+			WPD4 I 1 offset(0,132)
+			WPD4 I 1 offset(0,142)
+			WPD4 I 3 offset(0,153)
+			goto Ready
+	}
+}
+
+actor BaronBall0 : BaronBall
+{
+	obituary "%o was bruised by %k."
+	seesound "0baron/attack"
+	deathsound "0baron/shotx"
+	fastspeed 25
+	height 12
+	damage (8 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			BL07 AB 4 bright
+			loop
+		Death:
+			BL07 CDE 6 bright
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,36 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+		Doom1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Doom4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Doom2")
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3])
+			goto Death
+		Doom2:
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 2)
+			goto Death
+		Doom4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Doom8")
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 4)
+			goto Death
+		Doom8:
+			TNT1 A 0 A_GiveToTarget("DoomDamagePoint",args[3] * 8)
+			goto Death
+	}
+}
+
+actor BaronMeleeProj : ImpMeleeProj
+{
+	obituary "%o was fucking goddamn ripped open by %k."
+	damage (10 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,45 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Doom1
+	}
+}
+
+actor BaronMeleeProj2 : DemonMeleeProj2
+{
+	obituary "%o was fucking goddamn ripped open by %k."
+	damage (random(130,170))
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,15 * ACS_ExecuteWithResult(455,4))
+			TNT1 A 0 A_PlaySound("0demon/ouchbite")
+			TNT1 A 0 A_SpawnItemEx("DoomBloodClient",0,0,0,random(-6,6),random(-6,6),frandom(2.0,6.0),0,SXF_NOCHECKPOSITION|SXF_CLIENTSIDE,0)
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,6) > 0, 12) // sv_fastweapons, I'll spare your fps
+			TNT1 AAAAAAA 0 A_SpawnItemEx("DoomBloodClient",0,0,0,random(-6,6),random(-6,6),frandom(2.0,6.0),0,SXF_NOCHECKPOSITION|SXF_CLIENTSIDE,0)
+			TNT1 AAA 0 A_SpawnItemEx("DoomBloodClient",0,0,0,random(-6,6),random(-6,6),frandom(2.0,6.0),0,SXF_NOCHECKPOSITION|SXF_CLIENTSIDE,64)
+			TNT1 AAA 0 A_SpawnItemEx("DoomBloodClient",0,0,0,random(-6,6),random(-6,6),frandom(2.0,6.0),0,SXF_NOCHECKPOSITION|SXF_CLIENTSIDE,128)
+			goto Doom1
+	}
+}
+
+actor BaronMeleeProj2NoSound : BaronMeleeProj2
+{
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,15 * ACS_ExecuteWithResult(455,4))
+			goto Super::XDeath+2
+	}
+}
+
+actor BaronMorph : MonsterMorph
+{
+	tag "Baron of Hell"
+	inventory.icon "ARTIBOSS"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("BaronHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,8)
+			stop
+	}
+}
+
+actor BaronMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,8)
+			stop
+	}
+}
+
+actor BaronHitboxCheck : BaseHitboxCheck
+{
+	height 72
+	radius 24
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("BaronMorphDirect",1)
+			stop
+	}
+}
+
+actor BaronMorpher : MonsterMorpher { powerup.type MorphBoss }
+
+actor BaronMorpherHitbox : MonsterMorpher { powerup.type MorphBossHitbox }
+
+actor PowerMorphBoss : PowerMorphDoom { powermorph.playerclass "BaronClass" }
+
+actor PowerMorphBossHitbox : PowerMorphDoom { powermorph.playerclass "BaronClassHitbox" }

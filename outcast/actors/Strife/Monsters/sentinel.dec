@@ -1,0 +1,397 @@
+
+actor SentinelClass : MonsterPawnStrife
+{
+	player.morphweapon "SentinelWeapon"
+	health 100
+	mass 200
+	player.maxhealth 100
+	speed 0.6
+	bloodtype "StrifeSpark1"
+	player.soundclass "sent"
+	states
+	{
+		Spawn:
+			SEWR A -1
+			stop
+		See:
+			SEWR A 8
+			loop
+		Pain:
+			SEWR D 5
+			goto Spawn
+		Missile:
+			SEWR B 6
+			goto Spawn
+		Melee:
+			SEWR C 14 bright
+			goto Spawn
+		Death:
+			SEWR D 0 A_ChangeFlag("NOBLOOD",1)
+			SEWR D 7 A_Fall
+			SEWR E 8 bright A_PlayerScream
+			SEWR F 5 bright A_TossGib
+			SEWR GH 4 bright A_TossGib
+			SEWR I 4
+			SEWR J 5
+			JUNK K 10 A_CheckPlayerDone
+			wait
+	}
+}
+
+actor SentinelClassHitbox : SentinelClass
+{
+	radius 24
+	height 48
+	player.viewheight 32
+	player.attackzoffset 0
+}
+
+actor SentinelWeapon : BaseMonsterWeaponFlight
+{
+	obituary "%o was shot down by %k's laser."
+	weapon.ammotype1 "MonsterManaGreen"
+	weapon.sisterweapon "SentinelWeaponPowered"
+	+WEAPON.DONTBOB
+	states
+	{
+		Ready:
+			WPS1 Q 10
+			WPS1 Q 0 A_JumpIf(ACS_ExecuteWithResult(455,1) == 0,2)
+			WPS1 Q 0 A_GiveInventory("MonFlight",1)
+			WPS1 Q 1 A_WeaponReady
+			wait
+		Select:
+			WPS1 Q 1 A_Raise
+			wait
+		Deselect:
+			WPS1 Q 1 A_Lower
+			wait
+		Fire:
+			WPS1 R 0 A_JumpIfInventory("MonsterManaGreen",1,2)
+			WPS1 R 0 A_SetArg(0,5)
+			goto Burst
+		Hold:
+			WPS1 Q 2 A_GunFlash
+			WPS1 R 2 bright
+			WPS1 R 0 A_PlaySound("sentinel/plasma",CHAN_WEAPON)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX10",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX11",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX12",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX13",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX14",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX15",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX16",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX17",0,0,0,9)
+			WPS1 S 3 bright A_FireCustomMissile("SentinelFX20",0,0,0,9)
+			WPS1 R 2 bright A_TakeInventory("MonsterManaGreen",1)
+			WPS1 Q 3 A_JumpIfInventory("MonsterManaGreen",1,2)
+			WPS1 R 0 A_SetArg(0,5)
+			goto Burst
+			WPS1 Q 3
+			WPS1 Q 2 A_ReFire
+			goto Ready+3
+		Burst:
+			WPS1 Q 2
+			WPS1 R 2 bright A_GunFlash
+			WPS1 R 0 A_PlaySound("sentinel/plasma",CHAN_WEAPON)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX10",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX11",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX12",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX13",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX14",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX15",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX16",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX17",0,0,0,9)
+			WPS1 S 3 bright A_FireCustomMissile("SentinelFX20",0,0,0,9)
+			WPS1 R 2 bright
+			WPS1 Q 3 A_SetArg(0,args[0] - 1)
+			WPS1 Q 120 A_JumpIf(args[0] > 0,"Burst")
+			goto Ready+3
+	}
+}
+
+actor SentinelWeaponPowered : SentinelWeapon
+{
+	weapon.sisterweapon "SentinelWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPS1 R 0 A_JumpIfInventory("MonsterManaGreen",2,2)
+			WPS1 R 0 A_SetArg(0,5)
+			goto Burst
+		Hold:
+			WPS1 Q 2 A_GunFlash
+			WPS1 R 2 bright
+			WPS1 R 0 A_PlaySound("sentinel/plasma",CHAN_WEAPON)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX30",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX31",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX32",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX33",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX34",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX35",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX36",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX37",0,0,0,9)
+			WPS1 S 3 bright A_FireCustomMissile("SentinelFX40",0,0,0,9)
+			WPS1 R 2 bright A_TakeInventory("MonsterManaGreen",2)
+			WPS1 Q 3 A_JumpIfInventory("MonsterManaGreen",2,1)
+			goto Burst
+			WPS1 Q 3
+			WPS1 Q 2 A_ReFire
+			goto Ready+3
+		Burst:
+			WPS1 Q 2
+			WPS1 R 2 bright A_GunFlash
+			WPS1 R 0 A_PlaySound("sentinel/plasma",CHAN_WEAPON)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX30",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX31",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX32",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX33",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX34",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX35",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX36",0,0,0,9)
+			WPS1 R 0 A_FireCustomMissile("SentinelFX37",0,0,0,9)
+			WPS1 S 3 bright A_FireCustomMissile("SentinelFX40",0,0,0,9)
+			WPS1 R 2 bright
+			WPS1 Q 3 A_SetArg(0,args[0] - 1)
+			WPS1 Q 120 A_JumpIf(args[0] > 0,"Burst")
+			goto Ready+3
+	}
+}
+
+// Sentinel projectiles cannot be reflected for aesthetic reasons: the trail is
+// made up of several projectiles, so they'd be reflected at different angles.
+
+actor SentinelFX20 : SentinelFX2
+{
+	seesound ""
+	radius 8
+	damage (5 * random(1,4) * ACS_ExecuteWithResult(455,5) / 100)
+	-STRIFEDAMAGE
+	+DONTREFLECT
+	+MTHRUSPECIES
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,125 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Strife1
+		Strife1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Strife4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Strife2")
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3])
+			goto Super::Death
+		Strife2:
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 2)
+			goto Super::Death
+		Strife4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Strife8")
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 4)
+			goto Super::Death
+		Strife8:
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor SentinelFX10 : SentinelFX1
+{
+	+DONTREFLECT
+	+MTHRUSPECIES
+	radius 8
+	speed 38
+	health 38
+	states
+	{
+		Spawn:
+			SHT1 A 5
+			SHT1 A 0 A_ScaleVelocity(40.0 / health)
+			goto Spawn2
+		Spawn2:
+			SHT1 BA 4
+			loop
+	}
+}
+
+actor SentinelFX11 : SentinelFX10 { speed 36 health 36 }
+
+actor SentinelFX12 : SentinelFX10 { speed 34 health 34 }
+
+actor SentinelFX13 : SentinelFX10 { speed 32 health 32 }
+
+actor SentinelFX14 : SentinelFX10 { speed 30 health 30 }
+
+actor SentinelFX15 : SentinelFX10 { speed 28 health 28 }
+
+actor SentinelFX16 : SentinelFX10 { speed 26 health 26 }
+
+actor SentinelFX17 : SentinelFX10 { speed 24 health 24 }
+
+actor SentinelFX40 : SentinelFX20
+{
+	+THRUACTORS
+	damage 0
+	states
+	{
+		Spawn:
+			SHT1 AAAABBBB 1 A_CustomMissile("SentinelFX41",0,0,0,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			loop
+		Crash:
+		XDeath:
+			goto SentinelFX2::Death
+	}
+}
+
+actor SentinelFX41
+{
+	damage (random(4,8) * ACS_ExecuteWithResult(455,5) / 100)
+	height 8
+	radius 8
+	speed 1
+	PROJECTILE
+	+MTHRUSPECIES
+	+DONTREFLECT
+	+NODAMAGETHRUST
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			stop
+		Death:
+			TNT1 A 1
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,6 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Strife1
+		Strife1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Strife4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Strife2")
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3])
+			goto Super::Death
+		Strife2:
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 2)
+			goto Super::Death
+		Strife4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Strife8")
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 4)
+			goto Super::Death
+		Strife8:
+			TNT1 A 0 A_GiveToTarget("StrifeDamagePoint",args[3] * 8)
+			goto Super::Death
+	}
+}
+
+actor SentinelFX30 : SentinelFX10 { +THRUACTORS }
+
+actor SentinelFX31 : SentinelFX11 { +THRUACTORS }
+
+actor SentinelFX32 : SentinelFX12 { +THRUACTORS }
+
+actor SentinelFX33 : SentinelFX13 { +THRUACTORS }
+
+actor SentinelFX34 : SentinelFX14 { +THRUACTORS }
+
+actor SentinelFX35 : SentinelFX15 { +THRUACTORS }
+
+actor SentinelFX36 : SentinelFX16 { +THRUACTORS }
+
+actor SentinelFX37 : SentinelFX17 { +THRUACTORS }
+
+actor ChooseSentinel : MonsterMorph
+{
+	tag "Sentinel"
+	inventory.icon "ARTISEWR"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("SentinelHitboxCheck2",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(453,0,3,3)
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0,3)
+			stop
+	}
+}
+
+actor SentinelMorph : MonsterMorph
+{
+	tag "Sentinel"
+	inventory.icon "ARTISEWR"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("SentinelHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0,3)
+			stop
+	}
+}
+
+actor SentinelMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0,3)
+			stop
+	}
+}
+
+actor SentinelHitboxCheck : BaseHitboxCheck
+{
+	height 48
+	radius 24
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("SentinelMorphDirect",1)
+			stop
+	}
+}
+
+actor SentinelMorphDirect2 : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(453,0,3,3)
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0,3)
+			stop
+	}
+}
+
+actor SentinelHitboxCheck2 : BaseHitboxCheck
+{
+	height 48
+	radius 24
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("SentinelMorphDirect2",1)
+			stop
+	}
+}
+
+actor SentinelMorpher : MonsterMorpher { powerup.type MorphSewr }
+
+actor PowerMorphSewr : PowerMorphStrife { powermorph.playerclass "SentinelClass" }
+
+actor SentinelMorpherHitbox : MonsterMorpher { powerup.type MorphSewrHitbox }
+
+actor PowerMorphSewrHitbox : PowerMorphStrife { powermorph.playerclass "SentinelClassHitbox" }

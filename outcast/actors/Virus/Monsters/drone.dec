@@ -1,0 +1,198 @@
+
+actor DroneClass : MonsterPawnVirus
+{
+	player.morphweapon "DroneWeapon"
+	health 40
+	player.maxhealth 40
+	mass 40
+	player.soundclass "drone"
+	states
+	{
+		Spawn:
+			DRON A -1
+			stop
+		See:
+			DRON A 8
+			loop
+		Pain:
+			DRON A 4 A_PlaySound("drone/pain",CHAN_VOICE)
+			goto Spawn
+		Missile:
+			DRON B 8
+			goto Spawn
+		Melee:
+			DRON C 6 bright
+			goto Spawn
+		Death:
+			DRON D 6 bright A_SpawnItemEx("DroneBit0", 0, 0, 10, random(2,4), random(2,4), random(3,5), random(0,360), SXF_ABSOLUTEVELOCITY)
+    		DRON E 6 bright A_PlayerScream
+    		DRON F 6 bright A_NoBlocking
+    		DRON GH 6 bright
+    		DRON I -1
+    		Stop
+	}
+}
+
+actor DroneClassHitbox : DroneClass
+{
+	height 16
+	radius 8
+	player.viewheight 13
+	player.attackzoffset -4
+}
+
+actor DroneBit0
+{
+	height 8
+	radius 8
+	speed 5
+	bouncetype Doom
+	bouncesound "virus/snap"
+	PROJECTILE
+	+CANNOTPUSH
+	+BOUNCEONACTORS
+	-NOGRAVITY
+	states
+	{
+		Spawn:
+			DBIT ABCB 4
+			loop
+		Death:
+			DBIT C 50
+			stop
+	}
+}
+
+actor DroneWeapon : BaseMonsterWeaponFlight
+{
+	weapon.sisterweapon "DroneWeaponPowered"
+	obituary "%o somehow died to drone %k."
+	weapon.ammotype1 "MonsterManaBlue"
+	tag "Basic shooter"
+	states
+	{
+		Fire:
+			TNT1 A 6 A_TakeInventory("MonsterManaBlue",1)
+			TNT1 A 0 A_GunFlash
+			TNT1 A 6 A_FireCustomMissile("BasicShot0",0,0,0,9)
+			TNT1 A 32 A_JumpIfInventory("MonsterManaBlue",1,1)
+			TNT1 A 4
+			TNT1 A 1 A_ReFire
+			goto Ready+3
+	}
+}
+
+actor DroneWeaponPowered : DroneWeapon
+{
+	weapon.sisterweapon "DroneWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			TNT1 A 6 A_TakeInventory("MonsterManaBlue",2)
+			TNT1 A 0 A_GunFlash
+			TNT1 AA 2 A_FireCustomMissile("BasicShot0",random(-2,2),0,0,9)
+			TNT1 A 0 A_GunFlash
+			TNT1 AA 2 A_FireCustomMissile("BasicShot0",random(-2,2),0,0,9)
+			TNT1 A 0 A_GunFlash
+			TNT1 AA 2 A_FireCustomMissile("BasicShot0",random(-2,2),0,0,9)
+			TNT1 A 80 A_JumpIfInventory("MonsterManaBlue",2,1)
+			TNT1 A 22
+			goto Ready+3
+	}
+}
+
+actor BasicShot0
+{
+	seesound "weapons/basic"
+	deathsound "weapons/basic"
+	obituary "%o somehow died to drone %k."
+	renderstyle add
+	speed 20
+	fastspeed 28
+	height 8
+	radius 4
+	damage (2 * random(1,8) * ACS_ExecuteWithResult(455,5) / 100)
+	PROJECTILE
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			BASC AB 6 bright
+			loop
+		Death:
+			BASC BCDEF 4 bright
+			stop
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,9 * ACS_ExecuteWithResult(455,4) / 10)
+			goto Virus1
+		Virus1:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,3),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("PowerQuadDamage",1,"Virus4")
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Virus2")
+			TNT1 A 0 A_GiveToTarget("VirusDamagePoint",args[3])
+			goto Death
+		Virus2:
+			TNT1 A 0 A_GiveToTarget("VirusDamagePoint",args[3] * 2)
+			goto Death
+		Virus4:
+			TNT1 A 0 A_JumpIf(!ACS_ExecuteWithResult(455,2),2)
+			TNT1 A 0 A_JumpIfInTargetInventory("RuneDoubleDamage",1,"Virus8")
+			TNT1 A 0 A_GiveToTarget("VirusDamagePoint",args[3] * 4)
+			goto Death
+		Virus8:
+			TNT1 A 0 A_GiveToTarget("VirusDamagePoint",args[3] * 8)
+			goto Death
+	}
+}
+
+actor DroneMorph : MonsterMorph
+{
+	tag "Drone"
+	inventory.icon "ARTIDRON"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("DroneHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0)
+			stop
+	}
+}
+
+actor DroneMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0)
+			stop
+	}
+}
+
+actor DroneHitboxCheck : BaseHitboxCheck
+{
+	height 16
+	radius 8
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("DroneMorphDirect",1)
+			stop
+	}
+}
+
+actor DroneMorpher : MonsterMorpher { powerup.type MorphDron }
+
+actor DroneMorpherHitbox : MonsterMorpher { powerup.type MorphDronHitbox }
+
+actor PowerMorphDron : PowerMorphVirus { powermorph.playerclass "DroneClass" }
+
+actor PowerMorphDronHitbox : PowerMorphVirus { powermorph.playerclass "DroneClassHitbox" }

@@ -1,6 +1,6 @@
 
-#include "gldefs/doom.txt"
-#include "gldefs/heretic.txt"
-#include "gldefs/hexen.txt"
-#include "gldefs/strife.txt"
-#include "gldefs/core.txt"
+#include "gldefs/doom.gldefs"
+#include "gldefs/heretic.gldefs"
+#include "gldefs/hexen.gldefs"
+#include "gldefs/strife.gldefs"
+#include "gldefs/core.gldefs"

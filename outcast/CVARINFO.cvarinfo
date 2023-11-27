@@ -1,0 +1,147 @@
+
+server 	bool	outcast_flight						=	true;
+
+// Allows flying monsters to retain their power. If false, they will only walk.
+// Normally this should be turned on for competitive gamemodes or maps that
+// won't have their flow broken by flight, such as most invasion/slaughter maps,
+// but turned off if playing vanilla Doom/Heretic wads.
+
+
+server	bool	outcast_hitbox						=	false;
+
+// Monsters retain their real size for collision checking, instead of having
+// the same hitbox as the doom marine.
+// Normally this should be turned on for competitive gamemodes only.
+
+
+server 	bool	outcast_hubrank 					=	false;
+server	bool	outcast_globalrank					=	false;
+
+// Keeps your rank and subrank during a hub, or during the entire game.
+// Global takes precedence (if it is set, your ranks will never be reset)
+
+
+server	bool	outcast_survivalkeeprank			=	true;
+
+// Keeps your rank after running out of lives on Survival. If all players die,
+// this also resets your stats back to how they were when the level started. 
+// Logically this only works when combined with globalrank, as the engine does
+// not support survival for hubs.
+
+// Some further insight: if globalrank is on and survivalkeeprank is off, you
+// will keep everything across levels, but should you ever run out of lives on
+// a map, you lose everything. This makes for a very high risk gameplay style.
+
+
+server 	bool	outcast_doublepointswithstrength 	= 	true;
+server 	bool	outcast_quadpointswithdoomsphere 	= 	false;
+
+// Somewhat self-explanatory; Doomsphere is particularly game-breaking
+// so quad points are off by default, while Strength is acceptable since it
+// competes with Rage and Spread at about the same level.
+
+
+server	bool	outcast_pointpickups				=	true;
+
+// If set to false, no pickups will give points. The Krater of Might will heal
+// players by up to 200 health points if this is off
+
+
+server  bool	outcast_morphrandom 				= 	false;
+
+// If enabled, players spawn as a random monster of their class.
+// Ranks are ignored and disabled entirely when this is on.
+//Bots always morph into a random monster, and ignore the hitbox CVar.
+
+
+server  bool	outcast_tomefrag 					= 	false;
+
+// If enabled, players receive a Tome of Power upon fragging another player,
+// as is the default behavior for morphed classes (before ZDoom 2.6)
+
+
+server 	int		outcast_pointmultiplier				=	100;
+
+// This is a multiplier of the default value (100%) of points received.
+// For example, setting it to 200 doubles the amount of points you get every
+// shot, while setting it to 20 reduces the amount by five times.
+
+
+server 	int		outcast_damagemultiplier			=	100;
+
+// The same as the above, but scales the actual damage dealt by players.
+// Great for difficulty adjusting; keep both variables set to the same
+// value if you want to keep rank progression!
+
+
+server  int		outcast_startrank 					= 	0;
+
+// Which rank players start the game on.
+// If you want all monsters to be unlocked, set it to 14.
+
+
+server  int		outcast_startmana 					= 	40;
+
+// The amount of mana you spawn with: if you have less than this amount
+// when ranking up, you also receive mana to reach it.
+
+
+server	int		outcast_fraglimit					=	10;
+
+// Frags needed for the Terminator to win in the gamemode of the same name.
+
+
+user	bool	outcast_showhelp					=	true;
+
+// Whether to display the help messages upon starting a new game.
+// You can set this to 0 in the console to disable them for you.
+
+
+server	bool	outcast_usedamagefactors			=	true;
+
+// Whether player damagefactors are changed or not. This is very useful for
+// Survival but with unlimited lives it doesn't matter as much. This only works
+// in cooperative gamemodes. More info on damagefactors below.
+
+
+server	float	outcast_damagefactor_doom_initial		=	0.5;
+server	float	outcast_damagefactor_heretic_initial	=	0.5;
+server	float	outcast_damagefactor_hexen_initial		=	1.0;
+server	float	outcast_damagefactor_strife_initial		=	0.75;
+server	float	outcast_damagefactor_virus_initial		=	0.6;
+
+// The base damagefactor applied to the player at rank 0 (initial rank).
+// Standard damage is 1.0; lower values mean you take less damage.
+// e.g. Doom takes half damage at rank 0 (Zombieman).
+
+
+server	float	outcast_damagefactor_doom_per_rank		=	0.1;
+server	float	outcast_damagefactor_heretic_per_rank	=	0.1;
+server	float	outcast_damagefactor_hexen_per_rank		=	0.25;
+server	float	outcast_damagefactor_strife_per_rank	=	0.25;
+server	float	outcast_damagefactor_virus_per_rank		=	0.15;
+
+// How much the player's damagefactor increases with each rank gained.
+// e.g. Doom takes 0.6 damage at rank 1 (Shotgun Guy), 0.7 at rank 2 (Imp), 1.5
+// at rank 10 (Arachnotron) and so on.
+
+
+server	int		outcast_damagefactor_doom_first_rank	=	0;
+server	int		outcast_damagefactor_heretic_first_rank	=	0;
+server	int		outcast_damagefactor_hexen_first_rank	=	8;
+server	int		outcast_damagefactor_strife_first_rank	=	0;
+server	int		outcast_damagefactor_virus_first_rank	=	1;
+
+// At which rank the player's damagefactor will start to increase.
+// This makes more steep difficulty curves possible, but only after a certain
+// point of the game so as not to ruin the early part of it.
+// e.g. Hexen has ranks up to 8 with base damagefactor; it will then finally
+// increase on rank 9, and keep increasing as normal from there.
+
+// Note: this is essentially which rank is treated as "rank 0" for damagefactor
+// purposes; a value of 3 means rank 3 (e.g. Demon/NitroGolem) will use the base
+// damagefactor and it starts increasing from rank 4.
+
+// Note: Strife only applies damagefactors after a sub-rank is chosen.
+// Stalker, Acolyte and Sentinel are treated as rank 0, using the base value;
+// Reaver, Macil and Crusader are rank 1, and so forth.

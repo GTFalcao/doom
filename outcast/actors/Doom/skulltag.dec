@@ -1,0 +1,41 @@
+
+// Bonuses
+
+actor MaxHealthBonus0 : HealthBonus0 replaces MaxHealthBonus
+{
+	states
+	{
+		Spawn:
+			BON3 ABCDCB 6
+			loop
+	}
+}
+
+actor MaxArmorBonus0 : ArmorBonus0 replaces MaxArmorBonus
+{
+	states
+	{
+		Spawn:
+			BON4 ABCDCB 6
+			loop
+	}
+}
+
+// Powerups
+
+//actor ProsperityRune0 : Megasphere0 replaces ProsperityRune { } // Prosperity forces max health to 250
+
+actor Turbosphere0 : Megasphere0 replaces Turbosphere { } // PowerSpeed doesn't appear to work with morphed classes
+
+actor TimeFreezeSphere0 : TimeFreezeSphere replaces TimeFreezeSphere { inventory.pickupsound "*fistgrunt" }
+
+actor Doomsphere0 : Doomsphere replaces Doomsphere { inventory.pickupsound "*fistgrunt" }
+
+actor Guardsphere0 : Guardsphere replaces Guardsphere { inventory.pickupsound "*fistgrunt" }
+
+actor InvisibilitySphere0 : InvisibilitySphere replaces InvisibilitySphere
+{
+	inventory.pickupsound "*fistgrunt"
+	powerup.type Shadow
+	powerup.strength 90
+}

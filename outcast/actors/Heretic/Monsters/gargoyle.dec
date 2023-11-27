@@ -1,0 +1,179 @@
+
+actor GargoyleClass : MonsterPawnHeretic
+{
+	player.morphweapon "GargoyleWeapon"
+	health 40
+	player.maxhealth 40
+	gibhealth 20
+	speed 1.5
+	player.soundclass "garg"
+	states
+	{
+		Spawn:
+			IMPX ABCB 10
+			loop
+		See:
+			IMPX ABCB 5
+			loop
+		Pain:
+			IMPX G 6 A_PlaySound("himp/pain",2)
+			goto Spawn
+		Missile:
+			IMPX DE 5
+			IMPX F 8
+			goto Spawn
+		Death:
+			IMPX G 5
+    		IMPX H 5 A_PlayerScream
+    		IMPX I 7 A_NoBlocking
+    		IMPX JK 7
+    		IMPX L -1
+    		Stop
+  		XDeath:
+    		IMPX S 5
+    		IMPX T 5 A_PlayerScream
+    		IMPX U 5 A_NoBlocking
+    		IMPX VW 5
+			IMPX XY 7
+    		IMPX Z -1
+    		Stop
+	}
+}
+
+actor GargoyleClassHitbox : GargoyleClass
+{
+	height 36
+	player.viewheight 30
+	player.attackzoffset 4
+}
+
+actor GargoyleWeapon : BaseMonsterWeaponFlight
+{
+	tag "Gargoyle claws"
+	obituary "%o was hacked by gargoyle %k."
+	weapon.sisterweapon "GargoyleWeaponPowered"
+	+WEAPON.NOALERT
+	+WEAPON.MELEEWEAPON
+	+WEAPON.DONTBOB
+	states
+	{
+		Select:
+			WPH0 A 1 A_Raise
+			wait
+		Deselect:
+			WPH0 A 1 A_Lower
+			wait
+		Ready:
+			WPH0 A 10
+			WPH0 A 0 A_JumpIf(ACS_ExecuteWithResult(455,1) == 0,2)
+			WPH0 A 0 A_GiveInventory("MonFlight",1)
+			WPH0 A 1 A_WeaponReady
+			wait
+		Fire:
+			WPH0 B 4 A_PlaySound("himp/attack",CHAN_WEAPON)
+			WPH0 CD 4
+			WPH0 E 0 A_FireCustomMissile("GargoyleMeleeProj",0,0,0,9)
+			WPH0 E 4 A_JumpIfInventory("BerserkTracker",1,2)
+			WPH0 E 0 A_ReFire
+			goto FireDone
+			WPH0 E 4 A_FireCustomMissile("GargoyleMeleeProj",0,0,0,9)
+			WPH0 E 0 A_ReFire
+		FireDone:
+			WPH0 E 1 offset(8,40)
+			WPH0 E 1 offset(16,46)
+			WPH0 E 1 offset(24,52)
+			WPH0 E 1 offset(32,58)
+			WPH0 E 1 offset(40,64)
+			goto Ready+3
+	}
+}
+
+actor GargoyleWeaponPowered : GargoyleWeapon
+{
+	weapon.sisterweapon "GargoyleWeapon"
+	+WEAPON.POWERED_UP
+	states
+	{
+		Fire:
+			WPH0 B 6 A_PlaySound("himp/attack",CHAN_WEAPON)
+			WPH0 CD 5
+			WPH0 E 0 A_FireCustomMissile("GargoyleMeleeProj2",0,0,0,9)
+			WPH0 E 7 A_JumpIfInventory("BerserkTracker",1,1)
+			goto FireDone
+			WPH0 E 7 A_FireCustomMissile("GargoyleMeleeProj2",0,0,0,9)
+			goto FireDone
+	}
+}
+
+actor GargoyleMeleeProj : ImpMeleeProj
+{
+	obituary "%o was hacked by gargoyle %k."
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_SetArg(3,135 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Heretic1
+	}
+}
+
+actor GargoyleMeleeProj2 : GargoyleMeleeProj
+{
+	states
+	{
+		Crash:
+		XDeath:
+			TNT1 A 0 A_CustomMissile("HereticImpBall0",0,0,20,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			TNT1 A 0 A_CustomMissile("HereticImpBall0",0,0,-20,CMF_AIMDIRECTION|CMF_TRACKOWNER)
+			TNT1 A 0 A_SetArg(3,135 * ACS_ExecuteWithResult(455,4) / 100)
+			goto Heretic1
+	}
+}
+
+actor GargoyleMorph : MonsterMorph
+{
+	tag "Gargoyle"
+	inventory.icon "ARTIIMPX"
+	states
+	{
+		Use:
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(455,7) > 0,"Check")
+			goto DoMorph
+		Check:
+			TNT1 A 0 A_SpawnItemEx("GargoyleHitboxCheck",0,0,0,cos(angle),sin(angle),1)
+			fail
+		DoMorph:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0)
+			stop
+	}
+}
+
+actor GargoyleMorphDirect : MonsterMorphDirect
+{
+	states
+	{
+		Pickup:
+			TNT1 A 0 ACS_ExecuteAlways(450,0,0)
+			stop
+	}
+}
+
+actor GargoyleHitboxCheck : BaseHitboxCheck
+{
+	height 36
+	states
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("GargoyleMorphDirect",1)
+			stop
+	}
+}
+
+actor GargoyleMorpher : MonsterMorpher { powerup.type MorphImpx }
+
+actor PowerMorphImpx : PowerMorphHeretic { powermorph.playerclass "GargoyleClass" }
+
+actor GargoyleMorpherHitbox : MonsterMorpher { powerup.type MorphImpxHitbox }
+
+actor PowerMorphImpxHitbox : PowerMorphHeretic { powermorph.playerclass "GargoyleClassHitbox" }
