@@ -356,7 +356,7 @@ function void ClearPowers (void)
 
 function void ClearMorphs (int soft, bool keep)
 {
-	if (!keep && !GetCVar("outcast_morphrandom")) {
+	if (!keep || GetCVar("outcast_morphrandom") || !GetCVar("outcast_keepmorphs")) {
     for(int a = 0; a <= maxrank[0]; a++)
 		{
 			TakeInventory(invmorphdoom[a],1);
