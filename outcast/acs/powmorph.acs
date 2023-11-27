@@ -81,6 +81,8 @@ script 450 (int power, int subpower, int immacho)
         terminate;
     }
     
+		int healthPercentage = Ceil(GetActorProperty(0, APROP_HEALTH) * 10000 / GetActorProperty(0, APROP_SPAWNHEALTH));
+
     ClearMorphs(0, true);
     TakeInventory("PowerInvulnerable",1);
     TakeInventory("PowerInvisibility",1);
@@ -117,6 +119,10 @@ script 450 (int power, int subpower, int immacho)
 			
 		GiveInventory("MakeMeShootable",1);
 		GiveInventory("IsDoom",1);
+
+    if(GetCVar("outcast_keepmorphs")) {
+			SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+		}
         
         if(power == 10)      // Arachnotron spawn sequence
         {
@@ -132,7 +138,6 @@ script 450 (int power, int subpower, int immacho)
 				GiveInventory("HexenArmor0BonusSingle",hexenarmor[me()]);
 				hexenarmor[me()] = 0;
 			}
-                
             terminate;
         }
 		
@@ -167,6 +172,10 @@ script 450 (int power, int subpower, int immacho)
 			
 		GiveInventory("MakeMeShootable",1);
 		GiveInventory("IsHeretic",1);
+
+    if(GetCVar("outcast_keepmorphs")) {
+			SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+		}
 		
 		if(power == 11)
 			AmbientSound("minotaur/sight",127);
@@ -222,6 +231,10 @@ script 450 (int power, int subpower, int immacho)
                 VerifySpecies();
 				GiveInventory("MakeMeShootable",1);
 				GiveInventory("IsHexen",1);
+
+        if(GetCVar("outcast_keepmorphs")) {
+					SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+				}
 	
 				if(hexenarmor[me()] > 0)
 				{
@@ -259,6 +272,11 @@ script 450 (int power, int subpower, int immacho)
     
 		GiveInventory("MakeMeShootable",1);
 		GiveInventory("IsHexen",1);
+
+    if(GetCVar("outcast_keepmorphs")) {
+			SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+		}
+
         break;
         
         //////////////// 3 - Strife
@@ -321,6 +339,10 @@ script 450 (int power, int subpower, int immacho)
 			
 		GiveInventory("MakeMeShootable",1);
 		GiveInventory("IsStrife",1);
+
+    if(GetCVar("outcast_keepmorphs")) {
+			SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+		}
             
         if( (subpower == 2) && (power == 3) )      // Programmer spawn sequence
         {
@@ -376,6 +398,10 @@ script 450 (int power, int subpower, int immacho)
 			
 		GiveInventory("MakeMeShootable",1);
 		GiveInventory("IsVirus",1);
+
+    if(GetCVar("outcast_keepmorphs")) {
+			SetActorProperty(0, APROP_HEALTH, Ceil(healthPercentage * GetActorProperty(0, APROP_SPAWNHEALTH) / 10000));
+		}
 		
 		if(power == 10)
 			AmbientSound("leader/sight",127);

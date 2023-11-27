@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node ."
+    "build": "node .",
+    "start": "dist\\outcast.pk3"
   },
   "author": "Guilherme Falcao (SG)",
   "dependencies": {

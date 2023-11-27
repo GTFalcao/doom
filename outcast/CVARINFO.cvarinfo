@@ -104,7 +104,7 @@ server	bool	outcast_usedamagefactors			=	true;
 // in cooperative gamemodes. More info on damagefactors below.
 
 
-server  int		outcast_keepmorphs					= 	true;
+server  bool		outcast_keepmorphs					= true;
 
 // Whether to keep morph items in the inventory after morphing.
 // If disabled, morphing will clear all other morph items, but will also
