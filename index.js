@@ -30,5 +30,7 @@ async function build() {
     )
   );
 
-  await zip("/outcast", "dist/outcast.pk3");
+  await zip(path.join(__dirname, "/outcast"), path.join(__dirname, "/dist/outcast.pk3"));
 }
+
+build();
