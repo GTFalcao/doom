@@ -57,9 +57,13 @@ actor MeshwalkerWeapon : BaseMonsterWeapon
 	tag "Rapid-fire Blaster and dual missiles"
 	states
 	{
+		Ready:
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,40)
+			TNT1 A 1 A_WeaponReady
+			wait
 		Fire:
 			TNT1 A 0 A_GiveInventory("shooting",1)
-			TNT1 A 4 SetPlayerProperty(0,1,0)
+			TNT1 AA 2 ACS_ExecuteAlways(451,0,6,8)
 			TNT1 A 0 A_JumpIfInventory("MonsterManaGreen",1,1)
 			goto Burst
 		Hold:
@@ -70,7 +74,7 @@ actor MeshwalkerWeapon : BaseMonsterWeapon
 			goto Burst
 			TNT1 A 2 A_ReFire
 			TNT1 A 0 A_TakeInventory("shooting",1)
-			TNT1 A 2 SetPlayerProperty(0,0,0)
+			TNT1 A 2 ACS_ExecuteAlways(451,0,6,40)
 			goto Ready
 		Burst:
 			TNT1 A 3 A_GunFlash
@@ -83,18 +87,22 @@ actor MeshwalkerWeapon : BaseMonsterWeapon
 			TNT1 A 4 A_FireCustomMissile("MeshwalkerShot0",0,0,-24,9)
 			TNT1 A 3 A_GunFlash
 			TNT1 A 4 A_FireCustomMissile("MeshwalkerShot0",0,0,-24,9)
-			TNT1 A 2
-			TNT1 A 67 SetPlayerProperty(0,0,0)
+			TNT1 A 2 ACS_ExecuteAlways(451,0,6,40)
+			TNT1 A 67 ACS_ExecuteAlways(451,0,6,40)
 			goto Ready
 		AltFire:
-			TNT1 A 0 SetPlayerProperty(0,1,0)
-			TNT1 AAA 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
 			TNT1 A 0 A_TakeInventory("MonsterManaBlue",6)
 			TNT1 A 0 A_FireCustomMissile("MeshwalkerMissile0",0,0,10,36)
 			TNT1 A 7 A_FireCustomMissile("MeshwalkerMissile0",0,0,-10,36)
-			TNT1 A 2 SetPlayerProperty(0,0,0)
+			TNT1 AA 4 ACS_ExecuteAlways(451,0,6,40)
 			TNT1 A 120 A_JumpIfInventory("MonsterManaBlue",6,1)
-			TNT1 A 30
+			TNT1 A 24
 			goto Ready
 	}
 }
@@ -105,9 +113,13 @@ actor MeshwalkerWeaponPowered : MeshwalkerWeapon
 	+WEAPON.POWERED_UP
 	states
 	{
+		Ready:
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,40)
+			TNT1 A 1 A_WeaponReady
+			wait
 		Fire:
 			TNT1 A 0 A_GiveInventory("shooting",1)
-			TNT1 A 4 SetPlayerProperty(0,1,0)
+			TNT1 AA 2 ACS_ExecuteAlways(451,0,6,8)
 			TNT1 A 0 A_JumpIfInventory("MonsterManaGreen",2,1)
 			goto Burst
 		Hold:
@@ -118,7 +130,7 @@ actor MeshwalkerWeaponPowered : MeshwalkerWeapon
 			goto Burst
 			TNT1 A 2 A_ReFire
 			TNT1 A 0 A_TakeInventory("shooting",1)
-			TNT1 A 2 SetPlayerProperty(0,0,0)
+			TNT1 A 2 ACS_ExecuteAlways(451,0,6,40)
 			goto Ready
 		Burst:
 			TNT1 A 3 A_GunFlash
@@ -131,12 +143,16 @@ actor MeshwalkerWeaponPowered : MeshwalkerWeapon
 			TNT1 A 4 A_FireCustomMissile("MeshwalkerShot02",0,0,-24,9)
 			TNT1 A 3 A_GunFlash
 			TNT1 A 4 A_FireCustomMissile("MeshwalkerShot02",0,0,-24,9)
-			TNT1 A 2
-			TNT1 A 67 SetPlayerProperty(0,0,0)
+			TNT1 A 2 ACS_ExecuteAlways(451,0,6,40)
+			TNT1 A 67 ACS_ExecuteAlways(451,0,6,40)
 			goto Ready
 		AltFire:
-			TNT1 A 0 SetPlayerProperty(0,1,0)
-			TNT1 AAA 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
+			TNT1 A 0 ACS_ExecuteAlways(451,0,6,8)
+			TNT1 A 7 A_PlaySound("meshwalker/beep",CHAN_WEAPON)
 			TNT1 A 0 A_TakeInventory("MonsterManaBlue",6)
 			TNT1 A 0 A_FireCustomMissile("MeshwalkerMissile0",0,0,10,36)
 			TNT1 A 4 A_FireCustomMissile("MeshwalkerMissile0",0,0,-10,36)
@@ -146,9 +162,9 @@ actor MeshwalkerWeaponPowered : MeshwalkerWeapon
 			TNT1 A 0 A_TakeInventory("MonsterManaBlue",6)
 			TNT1 A 0 A_FireCustomMissile("MeshwalkerMissile0",0,0,10,36)
 			TNT1 A 7 A_FireCustomMissile("MeshwalkerMissile0",0,0,-10,36)
-			TNT1 A 2 SetPlayerProperty(0,0,0)
+			TNT1 AA 4 ACS_ExecuteAlways(451,0,6,40)
 			TNT1 A 180 A_JumpIfInventory("MonsterManaBlue",18,1)
-			TNT1 A 52
+			TNT1 A 24
 			goto Ready
 	}
 }

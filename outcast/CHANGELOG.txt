@@ -1,6 +1,23 @@
 /*
 
 
+--------------------------------------------------------------
+####   version 1.7   ####
+
+*** General ***
+
+- CVar "outcast_keepmorphs" has been added and enabled by default.
+When enabled, you keep all morph items in your inventory when morphing,
+but you also keep your health percentage. Disabling this returns the old
+behavior of only being able to change monsters when ranking up or respawning,
+and always resetting health to full when doing so.
+
+
+*** Virus***
+
+- Meshwalker can now move slowly (20% of normal speed) while firing
+
+- Slightly sped up the Felix weapon change speed
 
 
 
