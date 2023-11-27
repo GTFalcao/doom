@@ -22,7 +22,7 @@ and always resetting health to full when doing so.
 
 - Meshwalker can now move slowly (20% of normal speed) while firing
 
-- Slightly sped up the Felix weapon change speed
+- Significantly sped up the Felix weapon change (altfire)
 
 
 
