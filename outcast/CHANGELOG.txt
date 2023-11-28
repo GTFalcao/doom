@@ -12,6 +12,12 @@ but you also keep your health percentage. Disabling this returns the old
 behavior of only being able to change monsters when ranking up or respawning,
 and always resetting health to full when doing so.
 
+
+*** Heretic***
+
+- D'Sparil can no longer telefrag when teleporting with altfire
+
+
 *** Strife ***
 
 - Tome-powered rifle bullet (Rebel, Acolyte and Macil) damage increased by 20%

@@ -706,10 +706,12 @@ actor DSparilWeapon : BaseMonsterWeapon
 			WPH2 H 0 SetPlayerProperty(0,1,0)
 			WPH2 H 0 A_GunFlash
 			WPH2 H 2 ACS_ExecuteAlways(451,0,8)
+			WPH2 H 0 A_ChangeFlag("TELESTOMP", 0)
 			WPH2 H 0 A_UnSetShootable
 			WPH2 H 0 A_SpawnItemEx("Sorcerer2Telefade0",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_CLIENTSIDE)
 			WPH2 H 0 Teleport_NoFog(4066,1)
 			WPH2 H 10 A_PlaySound("unmorph/heretic",CHAN_ITEM)
+			WPH2 H 0 A_ChangeFlag("TELESTOMP", 1)
 			WPH2 H 20 A_JumpIfInventory("PowerWeaponLevel2",1,1)
 			goto EndTele
 			WPH2 H 20 A_JumpIfInventory("MonsterManaBlue",15,1)
