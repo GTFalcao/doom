@@ -597,7 +597,9 @@ script 451 (int what, int amount)
 			
 		case 10:
 		
-			Delay(350);
+			if(PlayerCount() > 1)
+				Delay(250);
+			Delay(20);
 			TakeInventory("JustGotTome",1);
 			
 			break;

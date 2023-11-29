@@ -40,7 +40,7 @@ actor MenelkirClass : MonsterPawnHexen
     		MAGE P 5 A_PlaySound("PlayerMageExtremeDeathPicker",2)
     		MAGE R 5 A_NoBlocking
     		MAGE STUVW 5
-    		MAGE W -1
+    		MAGE X -1
     		stop
 		 Burn:
 			FDTH E 1 bright

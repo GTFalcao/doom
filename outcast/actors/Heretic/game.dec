@@ -133,7 +133,7 @@ actor SuperMap0 : SuperMap replaces SuperMap { inventory.pickupsound "*fistgrunt
 
 actor EggFX0 : EggFX replaces EggFX { +MTHRUSPECIES }
 
-actor Gauntlets0 : NoTelefog replaces Gauntlets { }
+actor Gauntlets0 : ArtiTomeOfPower0 replaces Gauntlets { }
 
 actor Mace0 : ArtiTomeOfPower0 replaces Mace { }
 
@@ -198,7 +198,7 @@ actor CrossbowHefty0 : MonsterManaCombined replaces CrossbowHefty
 	}
 }
 
-actor Crossbow0 : MonsterManaGreen replaces Crossbow { inventory.amount 60 }
+actor Crossbow0 : ArtiTomeOfPower0 replaces Crossbow { }
 
 // Dragon Claw -> blue mana
 
@@ -228,7 +228,7 @@ actor BlasterHefty0 : MonsterManaCombined replaces BlasterHefty
 	}
 }
 
-actor Blaster0 : MonsterManaBlue replaces Blaster { inventory.amount 75 }
+actor Blaster0 : ArtiTomeOfPower0 replaces Blaster { }
 
 // Hellstaff -> green mana
 
@@ -257,7 +257,7 @@ actor SkullRodHefty0 : MonsterManaCombined replaces SkullRodHefty
 	}
 }
 
-actor SkullRod0 : MonsterManaGreen replaces SkullRod { inventory.amount 75 }
+actor SkullRod0 : ArtiTomeOfPower0 replaces SkullRod { }
 
 // Phoenix Rod -> blue mana
 
@@ -289,7 +289,7 @@ actor PhoenixRodHefty0 : MonsterManaCombined replaces PhoenixRodHefty
 	}
 }
 
-actor PhoenixRod0 : MonsterManaBlue replaces PhoenixRod { inventory.amount 40 }
+actor PhoenixRod0 : ArtiTomeOfPower0 replaces PhoenixRod { }
 
 // Firemace -> green mana
 
