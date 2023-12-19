@@ -22,7 +22,7 @@ async function build() {
                 console.log(err);
               }
               resolve();
-              // console.log(stdout);
+              // console.log(stdout); // test
               // console.log(stderr);
             }
           );
